@@ -16,8 +16,9 @@ namespace Great_Hero
         Bitmap playerWalkSheet = new Bitmap(@"..\..\..\..\Sprites\PlayerWalk.png");
         Point playerCoords;
         int currentFrame;
-        int currentDirection;
-        int currentAnimation;
+        Direction currentDirection;
+        int playerSpeed;
+        AnimationType currentAnimation;
         enum Direction
         {
             Right = 0,
@@ -32,9 +33,11 @@ namespace Great_Hero
         public Form1()
         {
             InitializeComponent();
+            DoubleBuffered = true;
             playerCoords = new Point(150, 150);
-            currentDirection = (int)Direction.Right;
-            currentAnimation = (int)AnimationType.Walk;
+            currentDirection = Direction.Right;
+            currentAnimation = AnimationType.Walk;
+            playerSpeed = 5;
             var timer = new Timer();
             timer.Interval = 100;
             timer.Tick += (sender, args) =>
@@ -56,8 +59,26 @@ namespace Great_Hero
         {
             var g = e.Graphics;
             g.DrawImage(playerWalkSheet, playerCoords.X, playerCoords.Y,
-                new Rectangle(50 * currentFrame, 140 * currentDirection, 50, 140),
+                new Rectangle(50 * currentFrame, 140 * (int)currentDirection, 50, 140),
                 GraphicsUnit.Pixel);
+        }
+
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            var key = e.KeyChar;
+            switch(key)
+            {
+                case 'a':
+                    if (currentDirection == Direction.Right)
+                        currentDirection = Direction.Left;
+                    playerCoords.X -= playerSpeed;
+                    break;
+                case 'd':
+                    if (currentDirection == Direction.Left)
+                        currentDirection = Direction.Right;
+                    playerCoords.X += playerSpeed;
+                    break;
+            }
         }
     }
 }
