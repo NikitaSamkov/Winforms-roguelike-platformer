@@ -1,0 +1,9 @@
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\bin\Debug\Great Hero.exe.config
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\bin\Debug\Great Hero.exe
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\bin\Debug\Great Hero.pdb
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.csprojAssemblyReference.cache
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great_Hero.Properties.Resources.resources
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.csproj.GenerateResource.cache
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.csproj.CoreCompileInputs.cache
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.exe
+C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.pdb
