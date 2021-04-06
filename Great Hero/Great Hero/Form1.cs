@@ -12,73 +12,50 @@ namespace Great_Hero
 {
     public partial class Form1 : Form
     {
-        Bitmap playerIdleSheet = new Bitmap(@"..\..\..\..\Sprites\PlayerIdle.png");
-        Bitmap playerWalkSheet = new Bitmap(@"..\..\..\..\Sprites\PlayerWalk.png");
-        Point playerCoords;
-        int currentFrame;
-        Direction currentDirection;
-        int playerSpeed;
-        AnimationType currentAnimation;
-        enum Direction
-        {
-            Right = 0,
-            Left = 1
-        }
-        enum AnimationType
-        {
-            Idle = 0,
-            Walk = 1
-        }
-
+        Player player;
+        
         public Form1()
         {
             InitializeComponent();
             DoubleBuffered = true;
-            playerCoords = new Point(150, 150);
-            currentDirection = Direction.Right;
-            currentAnimation = AnimationType.Walk;
-            playerSpeed = 5;
+            player = new Player();
             var timer = new Timer();
             timer.Interval = 100;
             timer.Tick += (sender, args) =>
             {
-                StepFrame();
+                player.StepFrame();
                 Invalidate();
             };
             timer.Start();
         }
 
-        void StepFrame()
-        {
-            currentFrame++;
-            if (currentFrame > 1)
-                currentFrame = 0;
-        }
+        
 
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            g.DrawImage(playerWalkSheet, playerCoords.X, playerCoords.Y,
-                new Rectangle(50 * currentFrame, 140 * (int)currentDirection, 50, 140),
+            var sheet = player.GetSheet();
+            g.DrawImage(sheet, player.X, player.Y,
+                new Rectangle(50 * player.currentFrame, 140 * (int)player.currentDirection, 50, 140),
                 GraphicsUnit.Pixel);
         }
 
-        protected override void OnKeyPress(KeyPressEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            var key = e.KeyChar;
-            switch(key)
+            switch (e.KeyCode)
             {
-                case 'a':
-                    if (currentDirection == Direction.Right)
-                        currentDirection = Direction.Left;
-                    playerCoords.X -= playerSpeed;
+                case Keys.A:
+                    player.MovePlayer(Player.Direction.Left);
                     break;
-                case 'd':
-                    if (currentDirection == Direction.Left)
-                        currentDirection = Direction.Right;
-                    playerCoords.X += playerSpeed;
+                case Keys.D:
+                    player.MovePlayer(Player.Direction.Right);
                     break;
             }
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            player.SetIdle();
         }
     }
 }
