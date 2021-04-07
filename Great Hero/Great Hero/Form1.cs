@@ -18,7 +18,8 @@ namespace Great_Hero
         {
             InitializeComponent();
             DoubleBuffered = true;
-            player = new Player();
+
+            player = new Player(150, 150);
             var timer = new Timer();
             timer.Interval = 100;
             timer.Tick += (sender, args) =>
@@ -36,7 +37,10 @@ namespace Great_Hero
             var g = e.Graphics;
             var sheet = player.GetSheet();
             g.DrawImage(sheet, player.X, player.Y,
-                new Rectangle(50 * player.currentFrame, 140 * (int)player.currentDirection, 50, 140),
+                new Rectangle(player.spritesWidth * player.currentFrame, 
+                    player.spritesHeight * (int)player.currentDirection, 
+                    player.spritesWidth - 1, 
+                    player.spritesHeight - 1),
                 GraphicsUnit.Pixel);
         }
 

@@ -12,13 +12,13 @@ namespace Great_Hero
         public int X { get; protected set; }
         public int Y { get; protected set; }
         public int currentFrame { get; protected set; }
-        protected int maxFrames;
+        protected int currentMaxFrames;
         protected int ySpeedup;
 
         public void StepFrame()
         {
             currentFrame++;
-            if (currentFrame >= maxFrames)
+            if (currentFrame >= currentMaxFrames)
                 currentFrame = 0;
         }
     }

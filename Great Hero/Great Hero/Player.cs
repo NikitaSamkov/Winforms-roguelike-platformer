@@ -14,17 +14,24 @@ namespace Great_Hero
     {
         public readonly Bitmap idleSheet;
         public readonly Bitmap moveSheet;
+        public readonly Bitmap fullSizeSprite;
+        public readonly int spritesWidth;
+        public readonly int spritesHeight;
 
-        public Player()
+        public Player(int x, int y)
         {
-            X = 150;
-            Y = 150;
+            X = x;
+            Y = y;
             currentDirection = Direction.Right;
             currentAnimation = AnimationType.Idle;
             speed = 5;
             idleSheet = new Bitmap(@"..\..\..\..\Sprites\PlayerIdle.png");
             moveSheet = new Bitmap(@"..\..\..\..\Sprites\PlayerMove.png");
-            ySpeedup = 10;
+            fullSizeSprite = new Bitmap(@"..\..\..\..\Sprites\PlayerFullSize.png");
+            spritesWidth = fullSizeSprite.Width;
+            spritesHeight = fullSizeSprite.Height;
+            idleMaxFrames = idleSheet.Width / fullSizeSprite.Width;
+            moveMaxFrames = moveSheet.Width / fullSizeSprite.Width;
         }
 
         public Bitmap GetSheet()

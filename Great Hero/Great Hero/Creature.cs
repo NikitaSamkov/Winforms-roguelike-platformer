@@ -11,11 +11,13 @@ namespace Great_Hero
         public Direction currentDirection { get; protected set; }
         protected int speed;
         protected AnimationType currentAnimation;
+        protected int idleMaxFrames;
+        protected int moveMaxFrames;
 
         public void Move(Direction direction)
         {
             currentAnimation = AnimationType.Move;
-            maxFrames = 2;
+            currentMaxFrames = moveMaxFrames;
             currentDirection = direction;
             switch (direction)
             {
@@ -31,7 +33,7 @@ namespace Great_Hero
         public void SetIdle()
         {
             currentAnimation = AnimationType.Idle;
-            maxFrames = 1;
+            currentMaxFrames = idleMaxFrames;
             currentFrame = 0;
         }
     }
