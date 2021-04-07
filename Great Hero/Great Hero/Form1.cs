@@ -45,10 +45,10 @@ namespace Great_Hero
             switch (e.KeyCode)
             {
                 case Keys.A:
-                    player.MovePlayer(Player.Direction.Left);
+                    player.Move(Direction.Left);
                     break;
                 case Keys.D:
-                    player.MovePlayer(Player.Direction.Right);
+                    player.Move(Direction.Right);
                     break;
             }
         }
