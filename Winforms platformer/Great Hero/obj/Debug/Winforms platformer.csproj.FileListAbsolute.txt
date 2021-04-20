@@ -7,3 +7,12 @@ C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Winforms p
 C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Winforms platformer.csproj.CoreCompileInputs.cache
 C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.exe
 C:\Users\Nikita\Desktop\C#\Great Hero\Great Hero\Great Hero\obj\Debug\Great Hero.pdb
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\obj\Debug\Winforms platformer.csprojAssemblyReference.cache
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\obj\Debug\Winforms platformer.csproj.GenerateResource.cache
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\obj\Debug\Winforms platformer.csproj.CoreCompileInputs.cache
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\bin\Debug\Winforms_platformer.exe.config
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\bin\Debug\Winforms_platformer.exe
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\bin\Debug\Winforms_platformer.pdb
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\obj\Debug\Winforms_platformer.Properties.Resources.resources
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\obj\Debug\Winforms_platformer.exe
+C:\Users\Nikita\Desktop\C#\Winforms platformer\Winforms platformer\Great Hero\obj\Debug\Winforms_platformer.pdb

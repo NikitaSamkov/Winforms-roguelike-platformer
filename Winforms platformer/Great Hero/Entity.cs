@@ -7,31 +7,18 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    class Entity
+    public class Entity
     {
-
-        public Bitmap idleSheet { get; protected set; }
-        public Bitmap fullSizeSprite { get; protected set; }
-        public int spritesWidth { get; protected set; }
-        public int spritesHeight { get; protected set; }
-        public int X { get; protected set; }
-        public int Y { get; protected set; }
-        public int currentFrame { get; protected set; }
-        protected int currentMaxFrames;
+        public int x { get; protected set; }
+        public int y { get; protected set; }
+        public int width { get; protected set; }
         protected Func<int, int, int, int> GetYSpeed;
         protected int ySpeed;
 
         protected void MoveY()
         {
-            ySpeed = GetYSpeed(X, Y - spritesHeight, ySpeed);
-            Y += ySpeed;
-        }
-
-        public void StepFrame()
-        {
-            currentFrame++;
-            if (currentFrame >= currentMaxFrames)
-                currentFrame = 0;
+            ySpeed = GetYSpeed(x, y, ySpeed);
+            y += ySpeed;
         }
     }
 }

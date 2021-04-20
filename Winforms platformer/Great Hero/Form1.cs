@@ -12,23 +12,25 @@ namespace Winforms_platformer
 {
     public partial class Form1 : Form
     {
-        Player player;
+        CreatureRender playerRender;
         Room room;
 
         public Form1()
         {
             InitializeComponent();
             DoubleBuffered = true;
-            Load += (sender, args) => OnSizeChanged(EventArgs.Empty);
 
             room = new Room(800, 600);
-            player = new Player(150, 150, room.GetYSpeed);
+            var playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
+                new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
+                new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"));
+            playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth, room.GetYSpeed), playerSprite);
             var timer = new Timer();
             timer.Interval = 100;
             timer.Tick += (sender, args) =>
             {
-                player.StepFrame();
-                player.Move();
+                playerRender.sprite.StepFrame();
+                playerRender.creature.Move(playerRender.sprite.currentStatus);
                 Invalidate();
             };
             timer.Start();
@@ -43,13 +45,17 @@ namespace Winforms_platformer
             g.DrawImage(room.wallSheet, 0, 0, 800, 600);
             g.DrawImage(room.groundSheet, 800 - groundSheet.Width, 600 - groundSheet.Height,
                 groundSheet.Width, groundSheet.Height);
-            g.DrawImage(player.GetSheet(), player.X, player.Y,
-                new Rectangle(player.spritesWidth * player.currentFrame,
-                    player.spritesHeight * (int)player.currentDirection,
-                    player.spritesWidth,
-                    player.spritesHeight),
+            g.DrawImage(playerRender.sprite.GetSheet(), playerRender.creature.x, 
+                playerRender.creature.y - playerRender.sprite.spriteHeight,
+                new Rectangle(playerRender.sprite.spriteWidth * playerRender.sprite.currentFrame,
+                    playerRender.sprite.spriteHeight * (int)playerRender.creature.currentDirection,
+                    playerRender.sprite.spriteWidth,
+                    playerRender.sprite.spriteHeight),
                 GraphicsUnit.Pixel);
-            g.DrawEllipse(new Pen(Color.Red), player.X, player.Y, 1, 1);
+            g.DrawEllipse(new Pen(Color.Red), playerRender.creature.x, playerRender.creature.y, 1, 1);
+            g.DrawEllipse(new Pen(Color.Blue), playerRender.creature.x, playerRender.creature.y - playerRender.sprite.spriteHeight, 1, 1);
+            g.DrawRectangle(new Pen(Color.Green), 150, 400, playerRender.sprite.spriteWidth, playerRender.sprite.spriteHeight);
+            g.DrawRectangle(new Pen(Color.Yellow), 350, 400, 40, 112);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -57,17 +63,19 @@ namespace Winforms_platformer
             switch (e.KeyCode)
             {
                 case Keys.A:
-                    player.MoveTo(Direction.Left);
+                    playerRender.creature.currentDirection = Direction.Left;
+                    playerRender.sprite.SetMoving();
                     break;
                 case Keys.D:
-                    player.MoveTo(Direction.Right);
+                    playerRender.creature.currentDirection = Direction.Right;
+                    playerRender.sprite.SetMoving();
                     break;
             }
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            player.SetIdle();
+            playerRender.sprite.SetIdle();
         }
     }
 }
