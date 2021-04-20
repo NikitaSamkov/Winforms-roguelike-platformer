@@ -30,10 +30,9 @@ namespace Winforms_platformer
             this.moveSheet = moveSheet;
             spriteWidth = fullSize.Width;
             spriteHeight = fullSize.Height;
-            if (idleSheet != null)
-                idleMaxFrames = idleSheet.Width / fullSizeSprite.Width;
-            if (moveSheet != null)
-                moveMaxFrames = moveSheet.Width / fullSizeSprite.Width;
+            idleMaxFrames = this.idleSheet.Width / fullSize.Width;
+            if (this.moveSheet != null)
+                moveMaxFrames = this.moveSheet.Width / fullSize.Width;
             SetIdle();
         }
 

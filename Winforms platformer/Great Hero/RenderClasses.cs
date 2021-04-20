@@ -30,4 +30,19 @@ namespace Winforms_platformer
             sprite = creatureSprite;
         }
     }
+
+    class RoomRender
+    {
+        public Room room;
+        public Sprite wallSprite;
+        public Sprite groundSprite;
+        //TODO public platformSprite
+
+        public RoomRender(Bitmap wall, Bitmap ground)
+        {
+            room = new Room(wall.Height - ground.Height);
+            wallSprite = new Sprite(wall);
+            groundSprite = new Sprite(ground);
+        }
+    }
 }

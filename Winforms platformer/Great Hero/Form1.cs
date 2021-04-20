@@ -13,20 +13,22 @@ namespace Winforms_platformer
     public partial class Form1 : Form
     {
         CreatureRender playerRender;
-        Room room;
+        RoomRender roomRender;
 
         public Form1()
         {
             InitializeComponent();
             DoubleBuffered = true;
 
-            room = new Room(800, 600);
+            roomRender = new RoomRender(new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png"), 
+                new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png"));
             var playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"));
-            playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth, room.GetYSpeed), playerSprite);
+            playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth, roomRender.room.GetYSpeed), 
+                playerSprite);
             var timer = new Timer();
-            timer.Interval = 100;
+            timer.Interval = 60;
             timer.Tick += (sender, args) =>
             {
                 playerRender.sprite.StepFrame();
@@ -41,9 +43,11 @@ namespace Winforms_platformer
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            var groundSheet = room.groundSheet;
-            g.DrawImage(room.wallSheet, 0, 0, 800, 600);
-            g.DrawImage(room.groundSheet, 800 - groundSheet.Width, 600 - groundSheet.Height,
+            var groundSheet = roomRender.groundSprite.idleSheet;
+            g.DrawImage(roomRender.wallSprite.idleSheet, 0, 0, roomRender.wallSprite.spriteWidth, 
+                roomRender.wallSprite.spriteHeight);
+            g.DrawImage(roomRender.groundSprite.idleSheet, roomRender.wallSprite.spriteWidth - groundSheet.Width, 
+                roomRender.wallSprite.spriteHeight - groundSheet.Height,
                 groundSheet.Width, groundSheet.Height);
             g.DrawImage(playerRender.sprite.GetSheet(), playerRender.creature.x, 
                 playerRender.creature.y - playerRender.sprite.spriteHeight,
@@ -68,6 +72,9 @@ namespace Winforms_platformer
                     playerRender.creature.currentDirection = Direction.Right;
                     playerRender.sprite.SetMoving();
                     break;
+                case Keys.Up:
+                case Keys.W:
+
             }
         }
 

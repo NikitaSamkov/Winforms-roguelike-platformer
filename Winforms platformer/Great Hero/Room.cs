@@ -9,24 +9,15 @@ namespace Winforms_platformer
 {
     class Room
     {
-        public Bitmap groundSheet { get; private set; }
-        private Bitmap platformSheet;
-        public Bitmap wallSheet { get; private set; }
         public int gravitation { get; private set; }
         private int groundLevel;
         private List<Platform> platforms;
-        private int roomWidth;
-        private int roomHeight;
 
-        public Room(int roomWidth, int roomHeight)
+        public Room(int groundLevel)
         {
-            this.roomWidth = roomWidth;
-            this.roomHeight = roomHeight;
             platforms = new List<Platform>();
-            gravitation = 10;
-            groundSheet = new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png");
-            wallSheet = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
-            groundLevel = groundSheet.Height;
+            gravitation = 5;
+            this.groundLevel = groundLevel;
         }
 
         public int GetYSpeed(int x, int y, int speed)
@@ -35,8 +26,8 @@ namespace Winforms_platformer
             foreach (var platform in platforms)
                 if (platform.field.Top <= y && platform.field.Top > newY)
                     newY = platform.field.Top;
-            if (newY > roomHeight - groundLevel)
-                newY = roomHeight - groundLevel;
+            if (newY > groundLevel)
+                newY = groundLevel;
             return newY - y;
         }
     }

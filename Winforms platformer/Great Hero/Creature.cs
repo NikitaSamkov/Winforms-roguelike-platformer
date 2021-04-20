@@ -11,7 +11,7 @@ namespace Winforms_platformer
     {
         public Direction currentDirection { get; set; }
         protected int xSpeed;
-
+        private int hp;
 
         public void Move(Status currentStatus)
         {

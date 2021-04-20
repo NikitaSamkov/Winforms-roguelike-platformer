@@ -12,7 +12,6 @@ namespace Winforms_platformer
 {
     class Player : Creature
     {
-        private int hp;
         public Player(int x, int y, int width, Func<int, int, int, int> moveY)
         {
             base.x = x;
