@@ -11,7 +11,9 @@ namespace Winforms_platformer
     {
         public Direction currentDirection { get; set; }
         protected int xSpeed;
-        private int hp;
+        protected int jumpStrength;
+        protected int hp;
+        protected Func<int, int, int, bool> canJump;
 
         public void Move(Status currentStatus)
         {
@@ -26,6 +28,12 @@ namespace Winforms_platformer
                         break;
                 }
             MoveY();
+        }
+
+        public void Jump()
+        {
+            if (canJump(x, y, width) && ySpeed == 0)
+                ySpeed -= jumpStrength;
         }
     }
 }

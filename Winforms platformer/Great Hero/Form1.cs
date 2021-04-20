@@ -22,10 +22,12 @@ namespace Winforms_platformer
 
             roomRender = new RoomRender(new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png"), 
                 new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png"));
+
             var playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"));
-            playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth, roomRender.room.GetYSpeed), 
+            playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth, 
+                roomRender.room.GetYSpeed, roomRender.room.OnTheSurface), 
                 playerSprite);
             var timer = new Timer();
             timer.Interval = 60;
@@ -74,13 +76,15 @@ namespace Winforms_platformer
                     break;
                 case Keys.Up:
                 case Keys.W:
-
+                    playerRender.creature.Jump();
+                    break;
             }
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            playerRender.sprite.SetIdle();
+            if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left || e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
+                playerRender.sprite.SetIdle();
         }
     }
 }
