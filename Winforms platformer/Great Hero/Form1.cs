@@ -52,20 +52,18 @@ namespace Winforms_platformer
                     playerRender.sprite.spriteWidth,
                     playerRender.sprite.spriteHeight),
                 GraphicsUnit.Pixel);
-            g.DrawEllipse(new Pen(Color.Red), playerRender.creature.x, playerRender.creature.y, 1, 1);
-            g.DrawEllipse(new Pen(Color.Blue), playerRender.creature.x, playerRender.creature.y - playerRender.sprite.spriteHeight, 1, 1);
-            g.DrawRectangle(new Pen(Color.Green), 150, 400, playerRender.sprite.spriteWidth, playerRender.sprite.spriteHeight);
-            g.DrawRectangle(new Pen(Color.Yellow), 350, 400, 40, 112);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
+                case Keys.Left:
                 case Keys.A:
                     playerRender.creature.currentDirection = Direction.Left;
                     playerRender.sprite.SetMoving();
                     break;
+                case Keys.Right:
                 case Keys.D:
                     playerRender.creature.currentDirection = Direction.Right;
                     playerRender.sprite.SetMoving();
