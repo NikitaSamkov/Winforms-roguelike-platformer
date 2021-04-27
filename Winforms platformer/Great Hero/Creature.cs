@@ -57,6 +57,17 @@ namespace Winforms_platformer
             y += 1;
         }
 
+        public void TeleportTo(int x)
+        {
+            this.x = x;
+        }
+
+        public void TeleportTo(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
         public IEnumerable<Point> GetJumpTrajectory()
         {
             var trajectoryXSpeed = (currentDirection == Direction.Right) ? xSpeed : -xSpeed;
@@ -71,6 +82,12 @@ namespace Winforms_platformer
                 trajectoryX += trajectoryXSpeed;
                 trajectoryY += trajectoryYSpeed;
             }
+        }
+
+        public void UpdateRoom(Func<int, int, int, bool> onTheSurface, Func<int, int, int, int, int> getYSpeed)
+        {
+            canJump = onTheSurface;
+            this.getYSpeed = getYSpeed;
         }
     }
 }

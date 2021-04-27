@@ -13,7 +13,7 @@ namespace Winforms_platformer
         public readonly int groundLevel;
         public readonly List<Platform> platforms;
 
-        public Room(int groundLevel, List<Platform> platforms, int gravitationForce = 5)
+        public Room(List<Platform> platforms, int gravitationForce = 7, int groundLevel = 486)
         {
             this.platforms = platforms;
             gForce = gravitationForce;

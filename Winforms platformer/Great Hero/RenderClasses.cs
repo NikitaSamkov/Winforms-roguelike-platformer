@@ -36,13 +36,17 @@ namespace Winforms_platformer
         public Room room;
         public Sprite wallSprite;
         public Sprite groundSprite;
-        public Sprite platformSprite;
 
-        public RoomRender(Room room, Bitmap wall, Bitmap ground)
+        public RoomRender(Room room)
         {
             this.room = room;
-            wallSprite = new Sprite(wall);
-            groundSprite = new Sprite(ground);
+            wallSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png"));
+            groundSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png"));
+        }
+
+        public void ChangeRoom(Room room)
+        {
+            this.room = room;
         }
     }
 }

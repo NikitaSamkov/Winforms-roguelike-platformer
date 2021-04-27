@@ -15,6 +15,7 @@ namespace Winforms_platformer
         CreatureRender playerRender;
         RoomRender roomRender;
         List<CreatureRender> enemyList;
+        Map map;
         Sprite playerSprite;
         Sprite dummySprite;
 
@@ -23,12 +24,10 @@ namespace Winforms_platformer
             InitializeComponent();
             DoubleBuffered = true;
 
-            roomRender = new RoomRender(new Room(486, new List<Platform> 
-                { 
-                    new Platform(300, 500, 300)
-                }), 
-                new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png"),
-                new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png"));
+            map = new Map();
+            map.GenerateRooms();
+
+            roomRender = new RoomRender(map.Current());
 
             playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
@@ -47,8 +46,6 @@ namespace Winforms_platformer
             timer.Interval = 60;
             timer.Tick += (sender, args) =>
             {
-                playerRender.creature.Move(playerRender.sprite.currentStatus);
-                playerRender.sprite.StepFrame();
                 foreach (var enemy in enemyList)
                 {
                     if (enemy.sprite.currentStatus == Status.Move && playerRender.creature.x == enemy.creature.x)
@@ -60,12 +57,31 @@ namespace Winforms_platformer
                     enemy.creature.Move(enemy.sprite.currentStatus);
                     enemy.sprite.StepFrame();
                 }
+                playerRender.creature.Move(playerRender.sprite.currentStatus);
+                playerRender.sprite.StepFrame();
+                if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x < 0) && enemyList.Count == 0)
+                {
+                    ChangeRoom();
+                    playerRender.creature.UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
+                }
                 Invalidate();
             };
             timer.Start();
         }
 
-
+        private void ChangeRoom()
+        {
+            if (playerRender.creature.x > ClientSize.Width && !map.IsCurrentRoomLast())
+            {
+                roomRender.ChangeRoom(map.GoToNext());
+                playerRender.creature.TeleportTo(0);
+            }
+            if (playerRender.creature.x < 0 && !map.IsCurrentRoomFirst())
+            {
+                roomRender.ChangeRoom(map.GoToPrevious());
+                playerRender.creature.TeleportTo(ClientSize.Width);
+            }
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -124,7 +140,6 @@ namespace Winforms_platformer
                     if (enemyList.Count > 0)
                         enemyList.RemoveAt(0);
                     break;
-
             }
         }
 
