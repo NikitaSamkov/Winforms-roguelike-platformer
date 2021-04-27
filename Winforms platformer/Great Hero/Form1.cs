@@ -25,7 +25,6 @@ namespace Winforms_platformer
 
             roomRender = new RoomRender(new Room(486, new List<Platform> 
                 { 
-                    new Platform(50, 100, 470),
                     new Platform(300, 500, 300)
                 }), 
                 new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png"),
@@ -112,6 +111,10 @@ namespace Winforms_platformer
                 case Keys.Up:
                 case Keys.W:
                     playerRender.creature.Jump();
+                    break;
+                case Keys.Down:
+                case Keys.S:
+                    playerRender.creature.GoDown();
                     break;
                 case Keys.D0:
                     enemyList.Add(new CreatureRender(new Dummy(playerRender.creature.x, playerRender.creature.y,

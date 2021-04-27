@@ -52,6 +52,11 @@ namespace Winforms_platformer
                 ySpeed -= jumpStrength;
         }
 
+        public void GoDown()
+        {
+            y += 1;
+        }
+
         public IEnumerable<Point> GetJumpTrajectory()
         {
             var trajectoryXSpeed = (currentDirection == Direction.Right) ? xSpeed : -xSpeed;
