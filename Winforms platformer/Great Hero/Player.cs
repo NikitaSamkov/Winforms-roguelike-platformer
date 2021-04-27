@@ -12,16 +12,12 @@ namespace Winforms_platformer
 {
     class Player : Creature
     {
-        public Player(int x, int y, int width, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump)
+        public Player(int x, int y, int playerWidth, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump) 
+            : base(x, y, playerWidth, moveY, canJump)
         {
-            this.x = x;
-            this.y = y;
-            getYSpeed = moveY;
-            this.canJump = canJump;
             currentDirection = Direction.Right;
-            xSpeed = 5;
+            xSpeed = 10;
             jumpStrength = 50;
-            this.width = width;
         }
     }
 }

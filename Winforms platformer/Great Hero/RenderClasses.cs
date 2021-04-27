@@ -36,11 +36,11 @@ namespace Winforms_platformer
         public Room room;
         public Sprite wallSprite;
         public Sprite groundSprite;
-        //TODO public platformSprite
+        public Sprite platformSprite;
 
-        public RoomRender(Bitmap wall, Bitmap ground)
+        public RoomRender(Room room, Bitmap wall, Bitmap ground)
         {
-            room = new Room(wall.Height - ground.Height);
+            this.room = room;
             wallSprite = new Sprite(wall);
             groundSprite = new Sprite(ground);
         }

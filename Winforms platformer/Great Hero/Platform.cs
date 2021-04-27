@@ -9,13 +9,15 @@ namespace Winforms_platformer
 {
     class Platform
     {
-        public Rectangle field { get; private set; }
-        public readonly Bitmap sheet;
+        public readonly int level;
+        public readonly int leftBorder;
+        public readonly int rightBorder;
 
-        public Platform(Rectangle field, Bitmap sheet)
+        public Platform(int from, int to, int level)
         {
-            this.field = field;
-            this.sheet = sheet;
+            this.leftBorder = from;
+            this.rightBorder = to;
+            this.level = level;
         }
     }
 }

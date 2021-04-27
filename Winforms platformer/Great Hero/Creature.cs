@@ -9,11 +9,17 @@ namespace Winforms_platformer
 {
     public class Creature : Entity
     {
-        public Direction currentDirection { get; set; }
+        public Direction currentDirection { get; protected set; }
         protected int xSpeed;
         protected int jumpStrength;
         protected int hp;
         protected Func<int, int, int, bool> canJump;
+
+        public Creature(int x, int y, int creatureWidth, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump)
+            : base(x, y, creatureWidth, moveY)
+        {
+            this.canJump = canJump;
+        }
 
         public void Move(Status currentStatus)
         {
@@ -30,10 +36,36 @@ namespace Winforms_platformer
             MoveY();
         }
 
+        public void MoveTo(Direction direction)
+        {
+            currentDirection = direction;
+        }
+
+        public void MoveTo(Entity target)
+        {
+            currentDirection = (x - target.x >= 0) ? Direction.Left : Direction.Right;
+        }
+
         public void Jump()
         {
             if (canJump(x, y, width) && ySpeed == 0)
                 ySpeed -= jumpStrength;
+        }
+
+        public IEnumerable<Point> GetJumpTrajectory()
+        {
+            var trajectoryXSpeed = (currentDirection == Direction.Right) ? xSpeed : -xSpeed;
+            var trajectoryYSpeed = ySpeed - jumpStrength;
+            var trajectoryX = x + trajectoryXSpeed;
+            var trajectoryY = y + trajectoryYSpeed;
+            trajectoryYSpeed = getYSpeed(trajectoryX, trajectoryY, width, trajectoryYSpeed);
+            while(!canJump(trajectoryX, trajectoryY, width))
+            {
+                yield return new Point(trajectoryX, trajectoryY);
+                trajectoryYSpeed = getYSpeed(trajectoryX, trajectoryY, width, trajectoryYSpeed);
+                trajectoryX += trajectoryXSpeed;
+                trajectoryY += trajectoryYSpeed;
+            }
         }
     }
 }

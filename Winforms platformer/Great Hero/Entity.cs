@@ -15,6 +15,14 @@ namespace Winforms_platformer
         protected Func<int, int, int, int, int> getYSpeed;
         protected int ySpeed;
 
+        public Entity(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY)
+        {
+            this.x = x;
+            this.y = y;
+            width = entityWidth;
+            getYSpeed = moveY;
+        }
+
         protected void MoveY()
         {
             ySpeed = getYSpeed(x, y, width, ySpeed);
