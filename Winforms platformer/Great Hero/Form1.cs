@@ -24,8 +24,8 @@ namespace Winforms_platformer
             InitializeComponent();
             DoubleBuffered = true;
 
-            map = new Map();
-            map.GenerateRooms();
+            map = new Map(7138);
+            map.GenerateRooms(2);
 
             roomRender = new RoomRender(map.Current());
 
@@ -57,9 +57,16 @@ namespace Winforms_platformer
                     enemy.creature.Move(enemy.sprite.currentStatus);
                     enemy.sprite.StepFrame();
                 }
-                playerRender.creature.Move(playerRender.sprite.currentStatus);
+                if (!(map.IsCurrentRoomLast() && 
+                playerRender.creature.x + playerRender.creature.width >= ClientSize.Width && 
+                playerRender.creature.currentDirection == Direction.Right) &&
+                !(map.IsCurrentRoomFirst() && 
+                playerRender.creature.x == 0 &&
+                playerRender.creature.currentDirection == Direction.Left))
+                    playerRender.creature.Move(playerRender.sprite.currentStatus);
                 playerRender.sprite.StepFrame();
-                if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x < 0) && enemyList.Count == 0)
+                if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x + playerRender.creature.width < 0) && 
+                enemyList.Count == 0)
                 {
                     ChangeRoom();
                     playerRender.creature.UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
@@ -79,7 +86,7 @@ namespace Winforms_platformer
             if (playerRender.creature.x < 0 && !map.IsCurrentRoomFirst())
             {
                 roomRender.ChangeRoom(map.GoToPrevious());
-                playerRender.creature.TeleportTo(ClientSize.Width);
+                playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width);
             }
         }
 
@@ -130,6 +137,9 @@ namespace Winforms_platformer
                 case Keys.Down:
                 case Keys.S:
                     playerRender.creature.GoDown();
+                    break;
+                case Keys.M:
+                    Console.WriteLine(map.seed);
                     break;
                 case Keys.D0:
                     enemyList.Add(new CreatureRender(new Dummy(playerRender.creature.x, playerRender.creature.y,

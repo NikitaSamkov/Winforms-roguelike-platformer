@@ -9,10 +9,10 @@ namespace Winforms_platformer
     class Map
     {
         private List<Room> roomSamples;
-        private int seed;
         private Random roomSequenceRandom;
         private List<Room> rooms;
         private int currentRoom;
+        public readonly int seed;
 
 
 
@@ -61,7 +61,7 @@ namespace Winforms_platformer
                     rooms.Add(roomSamples[roomSequenceRandom.Next(roomSamples.Count)]);
         }
 
-        public bool IsCurrentRoomLast() => currentRoom >= rooms.Count;
+        public bool IsCurrentRoomLast() => currentRoom == rooms.Count - 1;
 
         public bool IsCurrentRoomFirst() => currentRoom <= 0;
 
