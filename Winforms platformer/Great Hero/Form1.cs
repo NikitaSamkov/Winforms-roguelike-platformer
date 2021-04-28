@@ -24,8 +24,8 @@ namespace Winforms_platformer
             InitializeComponent();
             DoubleBuffered = true;
 
-            map = new Map(7138);
-            map.GenerateRooms(2);
+            map = new Map();
+            map.GenerateRooms(1);
 
             roomRender = new RoomRender(map.Current());
 
@@ -57,15 +57,16 @@ namespace Winforms_platformer
                     enemy.creature.Move(enemy.sprite.currentStatus);
                     enemy.sprite.StepFrame();
                 }
-                if (!(map.IsCurrentRoomLast() && 
-                playerRender.creature.x + playerRender.creature.width >= ClientSize.Width && 
-                playerRender.creature.currentDirection == Direction.Right) &&
-                !(map.IsCurrentRoomFirst() && 
+                if ((map.IsCurrentRoomLast() &&
+                playerRender.creature.x + playerRender.creature.width >= ClientSize.Width &&
+                playerRender.creature.currentDirection == Direction.Right) ||
+                (map.IsCurrentRoomFirst() &&
                 playerRender.creature.x == 0 &&
                 playerRender.creature.currentDirection == Direction.Left))
-                    playerRender.creature.Move(playerRender.sprite.currentStatus);
+                    playerRender.sprite.SetIdle();
+                playerRender.creature.Move(playerRender.sprite.currentStatus);
                 playerRender.sprite.StepFrame();
-                if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x + playerRender.creature.width < 0) && 
+                if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x + playerRender.creature.width < 0) &&
                 enemyList.Count == 0)
                 {
                     ChangeRoom();
