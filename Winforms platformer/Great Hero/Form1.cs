@@ -31,7 +31,7 @@ namespace Winforms_platformer
 
             playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
-                new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"));
+                new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"), 3);
             playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth,
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
                 playerSprite);
@@ -86,12 +86,11 @@ namespace Winforms_platformer
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            var groundSheet = roomRender.groundSprite.idleSheet;
             g.DrawImage(roomRender.wallSprite.idleSheet, 0, 0, roomRender.wallSprite.spriteWidth,
                 roomRender.wallSprite.spriteHeight);
-            g.DrawImage(roomRender.groundSprite.idleSheet, roomRender.wallSprite.spriteWidth - groundSheet.Width,
+            g.DrawImage(roomRender.groundSprite.idleSheet, roomRender.wallSprite.spriteWidth - roomRender.groundSprite.spriteWidth,
                 roomRender.room.groundLevel,
-                groundSheet.Width, groundSheet.Height);
+                roomRender.groundSprite.spriteWidth, roomRender.groundSprite.spriteHeight);
             foreach (var platform in roomRender.room.platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
             foreach (var enemy in enemyList)
