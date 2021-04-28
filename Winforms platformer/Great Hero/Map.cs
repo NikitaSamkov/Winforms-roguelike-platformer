@@ -41,7 +41,8 @@ namespace Winforms_platformer
                     new Platform(500, 700, 400),
                     new Platform(300, 500, 300)
                 }, 
-                10)
+                10),
+                new Room(new List<Platform>(), 7, 250)
             };
         }
 

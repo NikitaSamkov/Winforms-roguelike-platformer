@@ -25,7 +25,7 @@ namespace Winforms_platformer
             DoubleBuffered = true;
 
             map = new Map();
-            map.GenerateRooms(1);
+            map.GenerateRooms();
 
             roomRender = new RoomRender(map.Current());
 
@@ -67,7 +67,8 @@ namespace Winforms_platformer
                     if (playerRender.creature.x < 0)
                         playerRender.creature.TeleportTo(0);
                     if (playerRender.creature.x + playerRender.creature.width > ClientSize.Width)
-                        playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width);
+                        playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width, 
+                            playerRender.creature.y + roomRender.room.groundLevel);
                     playerRender.sprite.SetIdle();
                 }
                 playerRender.creature.Move(playerRender.sprite.currentStatus);
@@ -85,15 +86,17 @@ namespace Winforms_platformer
 
         private void ChangeRoom()
         {
+            var heightAboveFloor = roomRender.room.groundLevel - playerRender.creature.y;
             if (playerRender.creature.x > ClientSize.Width && !map.IsCurrentRoomLast())
             {
                 roomRender.ChangeRoom(map.GoToNext());
-                playerRender.creature.TeleportTo(0);
+                playerRender.creature.TeleportTo(0, roomRender.room.groundLevel - heightAboveFloor);
             }
             if (playerRender.creature.x < 0 && !map.IsCurrentRoomFirst())
             {
                 roomRender.ChangeRoom(map.GoToPrevious());
-                playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width);
+                playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width, 
+                    roomRender.room.groundLevel - heightAboveFloor);
             }
         }
 
