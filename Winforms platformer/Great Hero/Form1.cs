@@ -58,12 +58,18 @@ namespace Winforms_platformer
                     enemy.sprite.StepFrame();
                 }
                 if ((map.IsCurrentRoomLast() &&
-                playerRender.creature.x + playerRender.creature.width >= ClientSize.Width &&
-                playerRender.creature.currentDirection == Direction.Right) ||
-                (map.IsCurrentRoomFirst() &&
-                playerRender.creature.x == 0 &&
-                playerRender.creature.currentDirection == Direction.Left))
+                    playerRender.creature.x + playerRender.creature.width >= ClientSize.Width &&
+                    playerRender.creature.currentDirection == Direction.Right) ||
+                    (map.IsCurrentRoomFirst() &&
+                    playerRender.creature.x == 0 &&
+                    playerRender.creature.currentDirection == Direction.Left))
+                {
+                    if (playerRender.creature.x < 0)
+                        playerRender.creature.TeleportTo(0);
+                    if (playerRender.creature.x + playerRender.creature.width > ClientSize.Width)
+                        playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width);
                     playerRender.sprite.SetIdle();
+                }
                 playerRender.creature.Move(playerRender.sprite.currentStatus);
                 playerRender.sprite.StepFrame();
                 if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x + playerRender.creature.width < 0) &&
