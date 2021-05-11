@@ -46,7 +46,7 @@ namespace Winforms_platformer
                         x += xSpeed;
                         break;
                 }
-            MoveY();
+                MoveY();
         }
 
         public void MoveTo(Direction direction)
@@ -62,18 +62,14 @@ namespace Winforms_platformer
         public void Jump()
         {
             if (canJump(x, y, width) && ySpeed == 0)
+            {
                 ySpeed -= jumpStrength;
+            }
         }
 
-        public void GoDown()
-        {
-            y += 1;
-        }
+        public void GoDown() => y += 1;
 
-        public void TeleportTo(int x)
-        {
-            this.x = x;
-        }
+        public void TeleportTo(int x) => TeleportTo(x, y);
 
         public void TeleportTo(int x, int y)
         {

@@ -17,6 +17,7 @@ namespace Winforms_platformer
     public static class DummyBitmaps
     {
         public static Bitmap FullSize = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyFullSize.png");
+        public static Bitmap Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyIdle.png");
         public static Bitmap Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyWalk.png");
     }
 

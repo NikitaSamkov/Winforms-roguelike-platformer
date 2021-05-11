@@ -35,7 +35,7 @@ namespace Winforms_platformer
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
                 playerSprite);
 
-            dummySprite = new Sprite(DummyBitmaps.FullSize, null, DummyBitmaps.Move);
+            dummySprite = new Sprite(DummyBitmaps.FullSize, DummyBitmaps.Idle, DummyBitmaps.Move);
             dummySprite.SetMoving();
 
             enemyList = new List<EntityRender>();
