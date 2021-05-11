@@ -29,15 +29,13 @@ namespace Winforms_platformer
 
             roomRender = new RoomRender(map.Current());
 
-            playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
-                new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
-                new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"), 3);
+            
+            playerSprite = new Sprite(PlayerBitmaps.FullSize, PlayerBitmaps.Idle, PlayerBitmaps.Move, 3);
             playerRender = new EntityRender(new Player(150, 150, playerSprite.spriteWidth,
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
                 playerSprite);
 
-            dummySprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyFullSize.png"), null,
-                        new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyWalk.png"));
+            dummySprite = new Sprite(DummyBitmaps.FullSize, null, DummyBitmaps.Move);
             dummySprite.SetMoving();
 
             enemyList = new List<EntityRender>();

@@ -28,8 +28,8 @@ namespace Winforms_platformer
         public RoomRender(Room room)
         {
             this.room = room;
-            wallSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png"));
-            groundSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png"));
+            wallSprite = new Sprite(RoomBitmaps.Wall);
+            groundSprite = new Sprite(RoomBitmaps.Ground);
         }
 
         public void ChangeRoom(Room room)
