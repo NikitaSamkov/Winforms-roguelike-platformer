@@ -12,9 +12,9 @@ namespace Winforms_platformer
 {
     public partial class Form1 : Form
     {
-        CreatureRender playerRender;
+        EntityRender playerRender;
         RoomRender roomRender;
-        List<CreatureRender> enemyList;
+        List<EntityRender> enemyList;
         Map map;
         Sprite playerSprite;
         Sprite dummySprite;
@@ -32,7 +32,7 @@ namespace Winforms_platformer
             playerSprite = new Sprite(new Bitmap(@"..\..\..\..\Sprites\Player\PlayerFullSize.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png"),
                 new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png"), 3);
-            playerRender = new CreatureRender(new Player(150, 150, playerSprite.spriteWidth,
+            playerRender = new EntityRender(new Player(150, 150, playerSprite.spriteWidth,
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
                 playerSprite);
 
@@ -40,7 +40,7 @@ namespace Winforms_platformer
                         new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyWalk.png"));
             dummySprite.SetMoving();
 
-            enemyList = new List<CreatureRender>();
+            enemyList = new List<EntityRender>();
 
             var timer = new Timer();
             timer.Interval = 60;
@@ -48,36 +48,35 @@ namespace Winforms_platformer
             {
                 foreach (var enemy in enemyList)
                 {
-                    if (enemy.sprite.currentStatus == Status.Move && playerRender.creature.x == enemy.creature.x)
+                    if (enemy.sprite.currentStatus == Status.Move && playerRender.entity.x == enemy.entity.x)
                         enemy.sprite.SetIdle();
-                    else if (enemy.sprite.currentStatus == Status.Idle && playerRender.creature.x != enemy.creature.x)
+                    else if (enemy.sprite.currentStatus == Status.Idle && playerRender.entity.x != enemy.entity.x)
                         enemy.sprite.SetMoving();
                     else
-                        enemy.creature.MoveTo(playerRender.creature);
-                    enemy.creature.Move(enemy.sprite.currentStatus);
+                        enemy.entity.MoveTo(playerRender.entity);
+                    enemy.entity.Move(enemy.sprite.currentStatus);
                     enemy.sprite.StepFrame();
                 }
                 if ((map.IsCurrentRoomLast() &&
-                    playerRender.creature.x + playerRender.creature.width >= ClientSize.Width &&
-                    playerRender.creature.currentDirection == Direction.Right) ||
+                    playerRender.entity.x + playerRender.entity.width >= ClientSize.Width &&
+                    playerRender.entity.currentDirection == Direction.Right) ||
                     (map.IsCurrentRoomFirst() &&
-                    playerRender.creature.x == 0 &&
-                    playerRender.creature.currentDirection == Direction.Left))
+                    playerRender.entity.x == 0 &&
+                    playerRender.entity.currentDirection == Direction.Left))
                 {
-                    if (playerRender.creature.x < 0)
-                        playerRender.creature.TeleportTo(0);
-                    if (playerRender.creature.x + playerRender.creature.width > ClientSize.Width)
-                        playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width, 
-                            playerRender.creature.y + roomRender.room.groundLevel);
+                    if (playerRender.entity.x < 0)
+                        playerRender.entity.TeleportTo(0);
+                    if (playerRender.entity.x + playerRender.entity.width > ClientSize.Width)
+                        playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width);
                     playerRender.sprite.SetIdle();
                 }
-                playerRender.creature.Move(playerRender.sprite.currentStatus);
+                playerRender.entity.Move(playerRender.sprite.currentStatus);
                 playerRender.sprite.StepFrame();
-                if ((playerRender.creature.x > ClientSize.Width || playerRender.creature.x + playerRender.creature.width < 0) &&
+                if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0) &&
                 enemyList.Count == 0)
                 {
                     ChangeRoom();
-                    playerRender.creature.UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
+                    playerRender.entity.UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
                 }
                 Invalidate();
             };
@@ -86,16 +85,16 @@ namespace Winforms_platformer
 
         private void ChangeRoom()
         {
-            var heightAboveFloor = roomRender.room.groundLevel - playerRender.creature.y;
-            if (playerRender.creature.x > ClientSize.Width && !map.IsCurrentRoomLast())
+            var heightAboveFloor = roomRender.room.groundLevel - playerRender.entity.y;
+            if (playerRender.entity.x > ClientSize.Width && !map.IsCurrentRoomLast())
             {
                 roomRender.ChangeRoom(map.GoToNext());
-                playerRender.creature.TeleportTo(0, roomRender.room.groundLevel - heightAboveFloor);
+                playerRender.entity.TeleportTo(0, roomRender.room.groundLevel - heightAboveFloor);
             }
-            if (playerRender.creature.x < 0 && !map.IsCurrentRoomFirst())
+            if (playerRender.entity.x < 0 && !map.IsCurrentRoomFirst())
             {
                 roomRender.ChangeRoom(map.GoToPrevious());
-                playerRender.creature.TeleportTo(ClientSize.Width - playerRender.creature.width, 
+                playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width, 
                     roomRender.room.groundLevel - heightAboveFloor);
             }
         }
@@ -111,16 +110,16 @@ namespace Winforms_platformer
             foreach (var platform in roomRender.room.platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
             foreach (var enemy in enemyList)
-                g.DrawImage(enemy.sprite.GetSheet(), enemy.creature.x, enemy.creature.y - enemy.sprite.spriteHeight,
+                g.DrawImage(enemy.sprite.GetSheet(), enemy.entity.x, enemy.entity.y - enemy.sprite.spriteHeight,
                     new Rectangle(enemy.sprite.spriteWidth * enemy.sprite.currentFrame,
-                    enemy.sprite.spriteHeight * (int)enemy.creature.currentDirection,
+                    enemy.sprite.spriteHeight * (int)enemy.entity.currentDirection,
                     enemy.sprite.spriteWidth,
                     enemy.sprite.spriteHeight),
                     GraphicsUnit.Pixel);
-            g.DrawImage(playerRender.sprite.GetSheet(), playerRender.creature.x,
-                playerRender.creature.y - playerRender.sprite.spriteHeight,
+            g.DrawImage(playerRender.sprite.GetSheet(), playerRender.entity.x,
+                playerRender.entity.y - playerRender.sprite.spriteHeight,
                 new Rectangle(playerRender.sprite.spriteWidth * playerRender.sprite.currentFrame,
-                    playerRender.sprite.spriteHeight * (int)playerRender.creature.currentDirection,
+                    playerRender.sprite.spriteHeight * (int)playerRender.entity.currentDirection,
                     playerRender.sprite.spriteWidth,
                     playerRender.sprite.spriteHeight),
                 GraphicsUnit.Pixel);
@@ -132,27 +131,27 @@ namespace Winforms_platformer
             {
                 case Keys.Left:
                 case Keys.A:
-                    playerRender.creature.MoveTo(Direction.Left);
+                    playerRender.entity.MoveTo(Direction.Left);
                     playerRender.sprite.SetMoving();
                     break;
                 case Keys.Right:
                 case Keys.D:
-                    playerRender.creature.MoveTo(Direction.Right);
+                    playerRender.entity.MoveTo(Direction.Right);
                     playerRender.sprite.SetMoving();
                     break;
                 case Keys.Up:
                 case Keys.W:
-                    playerRender.creature.Jump();
+                    playerRender.entity.Jump();
                     break;
                 case Keys.Down:
                 case Keys.S:
-                    playerRender.creature.GoDown();
+                    playerRender.entity.GoDown();
                     break;
                 case Keys.M:
                     Console.WriteLine(map.seed);
                     break;
                 case Keys.D0:
-                    enemyList.Add(new CreatureRender(new Dummy(playerRender.creature.x, playerRender.creature.y,
+                    enemyList.Add(new EntityRender(new Dummy(playerRender.entity.x, playerRender.entity.y,
                         dummySprite.spriteWidth, roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 5), dummySprite));
                     break;
                 case Keys.D9:

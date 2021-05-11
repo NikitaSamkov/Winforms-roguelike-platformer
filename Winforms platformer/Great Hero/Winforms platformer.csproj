@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Enemy.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Creature.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Platform.cs" />

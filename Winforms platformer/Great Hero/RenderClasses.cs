@@ -19,18 +19,6 @@ namespace Winforms_platformer
         }
     }
 
-    class CreatureRender
-    {
-        public Creature creature;
-        public Sprite sprite;
-
-        public CreatureRender(Creature creature, Sprite creatureSprite)
-        {
-            this.creature = creature;
-            sprite = creatureSprite;
-        }
-    }
-
     class RoomRender
     {
         public Room room;

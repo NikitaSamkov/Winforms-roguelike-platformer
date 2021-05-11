@@ -40,9 +40,11 @@ namespace Winforms_platformer
                     new Platform(100, 300, 400),
                     new Platform(500, 700, 400),
                     new Platform(300, 500, 300)
-                }, 
+                },
                 10),
-                new Room(new List<Platform>(), 7, 250)
+                new Room(new List<Platform>(), 7, 250),
+                new Room(new List<Platform>(), 1),
+                new Room(new List<Platform> {new Platform(0, 800, 10) }, 0)
             };
         }
 
