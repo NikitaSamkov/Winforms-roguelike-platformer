@@ -10,14 +10,17 @@ using System.Windows.Forms;
 
 namespace Winforms_platformer
 {
-    class Player : Entity
+    public class Player : Entity
     {
-        public Player(int x, int y, int playerWidth, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump) 
+        public List<ITreasure> treasures { get; set; }
+        public Player(int x, int y, int playerWidth, Func<int, int, int, int, int> moveY, 
+            Func<int, int, int, bool> canJump) 
             : base(x, y, playerWidth, moveY, canJump)
         {
             currentDirection = Direction.Right;
             xSpeed = 20;
             jumpStrength = 50;
+            treasures = new List<ITreasure>();
         }
     }
 }

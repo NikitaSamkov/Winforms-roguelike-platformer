@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    class EntityRender
+    public class EntityRender
     {
         public Entity entity;
         public Sprite sprite;
@@ -17,9 +17,21 @@ namespace Winforms_platformer
             this.entity = entity;
             sprite = entitySprite;
         }
+
+        public void SetIdle()
+        {
+            entity.status = Status.Idle;
+            sprite.SetIdle();
+        }
+
+        public void SetMoving()
+        {
+            entity.status = Status.Move;
+            sprite.SetMoving();
+        }
     }
 
-    class RoomRender
+    public class RoomRender
     {
         public Room room;
         public Sprite wallSprite;

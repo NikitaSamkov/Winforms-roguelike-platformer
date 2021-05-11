@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    class Sprite
+    public class Sprite
     {
-        public readonly Bitmap idleSheet;
-        private int idleMaxFrames;
-        public readonly Bitmap moveSheet;
-        private int moveMaxFrames;
-        private int currentMaxFrames;
         private int currentFrameTime;
         private readonly int framePause;
-        public Bitmap fullSize { get; private set; }
+        private Status currentStatus;
+        private int currentMaxFrames;
+        public readonly int idleMaxFrames;
+        public readonly int moveMaxFrames;
+        public readonly Bitmap fullSize;
+        public readonly Bitmap idleSheet;
+        public readonly Bitmap moveSheet;
         public int spriteWidth { get; private set; }
         public int spriteHeight { get; private set; }
         public int currentFrame { get; private set; }
-        public Status currentStatus { get; private set; }
 
         public Sprite(Bitmap fullSizeSprite, Bitmap idleSheet = null, Bitmap moveSheet = null, int oneFramePause = 1)
         {

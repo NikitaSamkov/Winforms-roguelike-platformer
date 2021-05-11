@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    class Platform
+    public class Platform
     {
         public readonly int level;
         public readonly int leftBorder;

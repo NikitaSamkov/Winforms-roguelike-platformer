@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    class Room
+    public class Room
     {
         public int gForce { get; private set; }
         public readonly int groundLevel;

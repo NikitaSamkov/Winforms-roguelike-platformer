@@ -27,9 +27,11 @@ namespace Winforms_platformer
             map = new Map();
             map.GenerateRooms();
 
+            TreasurePool.SortPool();
+
             roomRender = new RoomRender(map.Current());
 
-            
+
             playerSprite = new Sprite(PlayerBitmaps.FullSize, PlayerBitmaps.Idle, PlayerBitmaps.Move, 3);
             playerRender = new EntityRender(new Player(150, 150, playerSprite.spriteWidth,
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
@@ -46,13 +48,13 @@ namespace Winforms_platformer
             {
                 foreach (var enemy in enemyList)
                 {
-                    if (enemy.sprite.currentStatus == Status.Move && playerRender.entity.x == enemy.entity.x)
+                    if (enemy.entity.status == Status.Move && playerRender.entity.x == enemy.entity.x)
                         enemy.sprite.SetIdle();
-                    else if (enemy.sprite.currentStatus == Status.Idle && playerRender.entity.x != enemy.entity.x)
+                    else if (enemy.entity.status == Status.Idle && playerRender.entity.x != enemy.entity.x)
                         enemy.sprite.SetMoving();
                     else
                         enemy.entity.MoveTo(playerRender.entity);
-                    enemy.entity.Move(enemy.sprite.currentStatus);
+                    enemy.entity.Move();
                     enemy.sprite.StepFrame();
                 }
                 if ((map.IsCurrentRoomLast() &&
@@ -68,7 +70,7 @@ namespace Winforms_platformer
                         playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width);
                     playerRender.sprite.SetIdle();
                 }
-                playerRender.entity.Move(playerRender.sprite.currentStatus);
+                playerRender.entity.Move();
                 playerRender.sprite.StepFrame();
                 if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0) &&
                 enemyList.Count == 0)
@@ -92,7 +94,7 @@ namespace Winforms_platformer
             if (playerRender.entity.x < 0 && !map.IsCurrentRoomFirst())
             {
                 roomRender.ChangeRoom(map.GoToPrevious());
-                playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width, 
+                playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width,
                     roomRender.room.groundLevel - heightAboveFloor);
             }
         }
@@ -130,20 +132,26 @@ namespace Winforms_platformer
                 case Keys.Left:
                 case Keys.A:
                     playerRender.entity.MoveTo(Direction.Left);
-                    playerRender.sprite.SetMoving();
+                        playerRender.SetMoving();
                     break;
                 case Keys.Right:
                 case Keys.D:
                     playerRender.entity.MoveTo(Direction.Right);
-                    playerRender.sprite.SetMoving();
+                        playerRender.SetMoving();
                     break;
                 case Keys.Up:
                 case Keys.W:
-                    playerRender.entity.Jump();
+                    if (playerRender.entity.flying)
+                        playerRender.entity.MoveUp();
+                    else
+                        playerRender.entity.Jump();
                     break;
                 case Keys.Down:
                 case Keys.S:
-                    playerRender.entity.GoDown();
+                    if (playerRender.entity.flying)
+                        playerRender.entity.MoveDown();
+                    else
+                        playerRender.entity.MoveDown(1);
                     break;
                 case Keys.M:
                     Console.WriteLine(map.seed);
@@ -156,13 +164,16 @@ namespace Winforms_platformer
                     if (enemyList.Count > 0)
                         enemyList.RemoveAt(0);
                     break;
+                case Keys.D8:
+                    TreasurePool.GiveToPlayer(playerRender, 0);
+                    break;
             }
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left || e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
-                playerRender.sprite.SetIdle();
+                playerRender.SetIdle();
         }
     }
 }

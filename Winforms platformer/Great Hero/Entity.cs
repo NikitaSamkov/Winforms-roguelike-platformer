@@ -9,9 +9,11 @@ namespace Winforms_platformer
 {
     public class Entity
     {
-        public int x { get; protected set; } 
+        public int x { get; protected set; }
         public int y { get; protected set; } // (x, y) - левый нижний угол
         public Direction currentDirection { get; protected set; }
+        public Status status { get; set; }
+        public bool flying { get; set; }
         public int width { get; protected set; }
         protected Func<int, int, int, int, int> getYSpeed;
         protected int ySpeed;
@@ -25,8 +27,9 @@ namespace Winforms_platformer
             this.x = x;
             this.y = y;
             width = entityWidth;
-            getYSpeed = moveY; 
+            getYSpeed = moveY;
             this.canJump = canJump;
+            this.status = status;
         }
 
         protected void MoveY()
@@ -34,9 +37,9 @@ namespace Winforms_platformer
             ySpeed = getYSpeed(x, y, width, ySpeed);
             y += ySpeed;
         }
-        public void Move(Status currentStatus)
+        public void Move()
         {
-            if (currentStatus == Status.Move)
+            if (status == Status.Move || (flying && !(status == Status.Idle)))
                 switch (currentDirection)
                 {
                     case Direction.Left:
@@ -46,18 +49,13 @@ namespace Winforms_platformer
                         x += xSpeed;
                         break;
                 }
+            if (!flying)
                 MoveY();
         }
 
-        public void MoveTo(Direction direction)
-        {
-            currentDirection = direction;
-        }
+        public void MoveTo(Direction direction) => currentDirection = direction;
 
-        public void MoveTo(Entity target)
-        {
-            currentDirection = (x - target.x >= 0) ? Direction.Left : Direction.Right;
-        }
+        public void MoveTo(Entity target) => currentDirection = (x - target.x >= 0) ? Direction.Left : Direction.Right;
 
         public void Jump()
         {
@@ -67,7 +65,11 @@ namespace Winforms_platformer
             }
         }
 
-        public void GoDown() => y += 1;
+        public void MoveDown(int distance) => y += distance;
+        public void MoveDown() => y += xSpeed;
+
+        public void MoveUp(int distance) => y += distance;
+        public void MoveUp() => y -= xSpeed;
 
         public void TeleportTo(int x) => TeleportTo(x, y);
 

@@ -50,6 +50,8 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Treasure\TreasurePool.cs" />
+    <Compile Include="Treasure\ITreasure.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
@@ -87,5 +89,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
