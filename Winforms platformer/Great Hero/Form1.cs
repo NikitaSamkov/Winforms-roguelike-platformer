@@ -49,9 +49,9 @@ namespace Winforms_platformer
                 foreach (var enemy in enemyList)
                 {
                     if (enemy.entity.status == Status.Move && playerRender.entity.x == enemy.entity.x)
-                        enemy.sprite.SetIdle();
+                        enemy.SetIdle();
                     else if (enemy.entity.status == Status.Idle && playerRender.entity.x != enemy.entity.x)
-                        enemy.sprite.SetMoving();
+                        enemy.SetMoving();
                     else
                         enemy.entity.MoveTo(playerRender.entity);
                     enemy.entity.Move();
@@ -68,7 +68,7 @@ namespace Winforms_platformer
                         playerRender.entity.TeleportTo(0);
                     if (playerRender.entity.x + playerRender.entity.width > ClientSize.Width)
                         playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width);
-                    playerRender.sprite.SetIdle();
+                    playerRender.SetIdle();
                 }
                 playerRender.entity.Move();
                 playerRender.sprite.StepFrame();
