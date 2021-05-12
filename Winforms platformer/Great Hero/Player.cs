@@ -19,7 +19,6 @@ namespace Winforms_platformer
         {
             currentDirection = Direction.Right;
             xSpeed = 20;
-            jumpStrength = 50;
             treasures = new List<ITreasure>();
         }
     }

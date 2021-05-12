@@ -46,16 +46,16 @@ namespace Winforms_platformer
             timer.Interval = 60;
             timer.Tick += (sender, args) =>
             {
-                foreach (var enemy in enemyList)
+                foreach (var enemyRender in enemyList)
                 {
-                    if (enemy.entity.status == Status.Move && playerRender.entity.x == enemy.entity.x)
-                        enemy.SetIdle();
-                    else if (enemy.entity.status == Status.Idle && playerRender.entity.x != enemy.entity.x)
-                        enemy.SetMoving();
+                    if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x)
+                        enemyRender.SetIdle();
+                    else if (enemyRender.entity.status == Status.Idle && playerRender.entity.x != enemyRender.entity.x)
+                        enemyRender.SetMoving();
                     else
-                        enemy.entity.MoveTo(playerRender.entity);
-                    enemy.entity.Move();
-                    enemy.sprite.StepFrame();
+                        (enemyRender.entity as Enemy).MoveToPlayer();
+                    enemyRender.entity.Move();
+                    enemyRender.sprite.StepFrame();
                 }
                 if ((map.IsCurrentRoomLast() &&
                     playerRender.entity.x + playerRender.entity.width >= ClientSize.Width &&
@@ -157,8 +157,9 @@ namespace Winforms_platformer
                     Console.WriteLine(map.seed);
                     break;
                 case Keys.D0:
-                    enemyList.Add(new EntityRender(new Dummy(playerRender.entity.x, playerRender.entity.y,
-                        dummySprite.spriteWidth, roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 5), dummySprite));
+                    enemyList.Add(new EntityRender(new Enemy(playerRender.entity.x, playerRender.entity.y,
+                        dummySprite.spriteWidth, roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 
+                        (Player)playerRender.entity), dummySprite));
                     break;
                 case Keys.D9:
                     if (enemyList.Count > 0)
@@ -166,6 +167,9 @@ namespace Winforms_platformer
                     break;
                 case Keys.D8:
                     TreasurePool.GiveToPlayer(playerRender, 0);
+                    break;
+                case Keys.D7:
+                    (playerRender.entity as Player).treasures = new List<ITreasure>();
                     break;
             }
         }
