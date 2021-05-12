@@ -57,11 +57,11 @@ namespace Winforms_platformer
                     enemy.entity.Move();
                     enemy.sprite.StepFrame();
                 }
-                if ((map.IsCurrentRoomLast() &&
+                if (((map.IsCurrentRoomLast() || enemyList.Count != 0) &&
                     playerRender.entity.x + playerRender.entity.width >= ClientSize.Width &&
                     playerRender.entity.currentDirection == Direction.Right) ||
-                    (map.IsCurrentRoomFirst() &&
-                    playerRender.entity.x == 0 &&
+                    ((map.IsCurrentRoomFirst() || enemyList.Count != 0) &&
+                    playerRender.entity.x <= 0 &&
                     playerRender.entity.currentDirection == Direction.Left))
                 {
                     if (playerRender.entity.x < 0)
@@ -72,8 +72,7 @@ namespace Winforms_platformer
                 }
                 playerRender.entity.Move();
                 playerRender.sprite.StepFrame();
-                if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0) &&
-                enemyList.Count == 0)
+                if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0))
                 {
                     ChangeRoom();
                     playerRender.entity.UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
