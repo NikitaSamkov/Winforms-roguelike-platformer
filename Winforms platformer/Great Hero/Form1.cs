@@ -32,12 +32,16 @@ namespace Winforms_platformer
             roomRender = new RoomRender(map.Current());
 
 
-            playerSprite = new Sprite(PlayerBitmaps.FullSize, PlayerBitmaps.Idle, PlayerBitmaps.Move, 3);
-            playerRender = new EntityRender(new Player(150, 150, playerSprite.spriteWidth,
+            playerSprite = new Sprite(PlayerBitmaps.Idle, PlayerBitmaps.IdleSize,
+                PlayerBitmaps.Move, PlayerBitmaps.MoveSize,
+                null, new Size(), 3);
+            playerRender = new EntityRender(new Player(150, 150, PlayerBitmaps.IdleSize.Width,
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
                 playerSprite);
 
-            dummySprite = new Sprite(DummyBitmaps.FullSize, DummyBitmaps.Idle, DummyBitmaps.Move);
+            dummySprite = new Sprite(DummyBitmaps.Idle, DummyBitmaps.IdleSize,
+                DummyBitmaps.Move, DummyBitmaps.MoveSize,
+                null, new Size(), 3);
             dummySprite.SetMoving();
 
             enemyList = new List<EntityRender>();
@@ -46,6 +50,7 @@ namespace Winforms_platformer
             timer.Interval = 60;
             timer.Tick += (sender, args) =>
             {
+                //механика, не позволяющая игроку перейти в след./пред. комнату, если текущая комната конечная/начальная или есть враги
                 if (((map.IsCurrentRoomLast() || enemyList.Count != 0) &&
                     playerRender.entity.x + playerRender.entity.width >= ClientSize.Width &&
                     playerRender.entity.currentDirection == Direction.Right) ||
@@ -59,7 +64,13 @@ namespace Winforms_platformer
                         playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width);
                     playerRender.SetIdle();
                 }
-
+                //смена комнаты
+                if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0))
+                {
+                    ChangeRoom();
+                    (playerRender.entity as Player).UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
+                }
+                //обновление противников
                 foreach (var enemyRender in enemyList)
                 {
                     if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x)
@@ -70,12 +81,7 @@ namespace Winforms_platformer
                         (enemyRender.entity as Enemy).MoveToPlayer();
                     enemyRender.Update();
                 }
-                
-                if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0))
-                {
-                    ChangeRoom();
-                    (playerRender.entity as Player).UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
-                }
+                //обновление игрока
                 playerRender.Update();
 
                 Invalidate();
@@ -102,26 +108,32 @@ namespace Winforms_platformer
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            g.DrawImage(roomRender.wallSprite.idleSheet, 0, 0, roomRender.wallSprite.spriteWidth,
-                roomRender.wallSprite.spriteHeight);
-            g.DrawImage(roomRender.groundSprite.idleSheet, roomRender.wallSprite.spriteWidth - roomRender.groundSprite.spriteWidth,
+            //отрисовка комнаты
+            g.DrawImage(roomRender.wallSprite.idleSheet, 0, 0, roomRender.wallSprite.idleSize.Width,
+                roomRender.wallSprite.idleSize.Height);
+            g.DrawImage(roomRender.groundSprite.idleSheet, 
+                roomRender.wallSprite.idleSize.Width - roomRender.groundSprite.idleSize.Width,
                 roomRender.room.groundLevel,
-                roomRender.groundSprite.spriteWidth, roomRender.groundSprite.spriteHeight);
+                roomRender.groundSprite.idleSize.Width, roomRender.groundSprite.idleSize.Height);
             foreach (var platform in roomRender.room.platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
+            //отрисовка врагов
             foreach (var enemy in enemyList)
-                g.DrawImage(enemy.sprite.GetSheet(), enemy.entity.x, enemy.entity.y - enemy.sprite.spriteHeight,
-                    new Rectangle(enemy.sprite.spriteWidth * enemy.sprite.currentFrame,
-                    enemy.sprite.spriteHeight * (int)enemy.entity.currentDirection,
-                    enemy.sprite.spriteWidth,
-                    enemy.sprite.spriteHeight),
+            {
+                var size = enemy.sprite.GetSize();
+                g.DrawImage(enemy.sprite.GetSheet(), enemy.entity.x, enemy.entity.y - size.Height,
+                    new Rectangle(size.Width * enemy.sprite.currentFrame,
+                    size.Height * (int)enemy.entity.currentDirection,
+                    size.Width, size.Height),
                     GraphicsUnit.Pixel);
+            }
+            //отрисовка игрока
+            var playerSize = playerRender.sprite.GetSize();
             g.DrawImage(playerRender.sprite.GetSheet(), playerRender.entity.x,
-                playerRender.entity.y - playerRender.sprite.spriteHeight,
-                new Rectangle(playerRender.sprite.spriteWidth * playerRender.sprite.currentFrame,
-                    playerRender.sprite.spriteHeight * (int)playerRender.entity.currentDirection,
-                    playerRender.sprite.spriteWidth,
-                    playerRender.sprite.spriteHeight),
+                playerRender.entity.y - playerSize.Height,
+                new Rectangle(playerSize.Width * playerRender.sprite.currentFrame,
+                    playerSize.Height * (int)playerRender.entity.currentDirection,
+                    playerSize.Width, playerSize.Height),
                 GraphicsUnit.Pixel);
         }
 
@@ -158,7 +170,7 @@ namespace Winforms_platformer
                     break;
                 case Keys.D0:
                     enemyList.Add(new EntityRender(new Enemy(playerRender.entity.x, playerRender.entity.y,
-                        dummySprite.spriteWidth, roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 
+                        dummySprite.idleSize.Width, roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 
                         (Player)playerRender.entity), dummySprite));
                     break;
                 case Keys.D9:

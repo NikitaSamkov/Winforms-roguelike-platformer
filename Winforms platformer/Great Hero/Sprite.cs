@@ -15,28 +15,33 @@ namespace Winforms_platformer
         private int currentMaxFrames;
         public readonly int idleMaxFrames;
         public readonly int moveMaxFrames;
-        public readonly Bitmap fullSize;
+        public readonly int attackMaxFrames;
         public readonly Bitmap idleSheet;
         public readonly Bitmap moveSheet;
-        public int spriteWidth { get; private set; }
-        public int spriteHeight { get; private set; }
+        public readonly Bitmap attackSheet;
+        public Size idleSize { get; private set; }
+        public Size moveSize { get; private set; }
+        public Size attackSize { get; private set; }
         public int currentFrame { get; private set; }
 
-        public Sprite(Bitmap fullSizeSprite, Bitmap idleSheet = null, Bitmap moveSheet = null, int oneFramePause = 1)
+        public Sprite(Bitmap idleSheet, Size idleSize,
+            Bitmap moveSheet = null, Size moveSize = new Size(),
+            Bitmap attackSheet = null, Size attackSize = new Size(),
+            int oneFramePause = 1)
         {
-            fullSize = fullSizeSprite;
-            if (idleSheet == null)
-                this.idleSheet = fullSize;
-            else
-                this.idleSheet = idleSheet;
+            this.idleSheet = idleSheet;
             this.moveSheet = moveSheet;
-            spriteWidth = fullSize.Width;
-            spriteHeight = fullSize.Height;
-            idleMaxFrames = this.idleSheet.Width / fullSize.Width;
+            this.attackSheet = attackSheet;
+            this.idleSize = idleSize;
+            this.moveSize = moveSize;
+            this.attackSize = attackSize;
+            idleMaxFrames = this.idleSheet.Width / idleSize.Width;
             currentFrameTime = 0;
             framePause = oneFramePause;
             if (this.moveSheet != null)
-                moveMaxFrames = this.moveSheet.Width / fullSize.Width;
+                moveMaxFrames = this.moveSheet.Width / moveSize.Width;
+            if (this.attackSheet != null)
+                attackMaxFrames = this.attackSheet.Width / attackSize.Width;
             SetIdle();
         }
 
@@ -72,7 +77,23 @@ namespace Winforms_platformer
                     return idleSheet;
                 case Status.Move:
                     return moveSheet;
+                case Status.Attack:
+                    return moveSheet;
                 default: return null;
+            }
+        }
+
+        public Size GetSize()
+        {
+            switch (currentStatus)
+            {
+                case Status.Idle:
+                    return idleSize;
+                case Status.Move:
+                    return moveSize;
+                case Status.Attack:
+                    return moveSize;
+                default: return new Size();
             }
         }
     }

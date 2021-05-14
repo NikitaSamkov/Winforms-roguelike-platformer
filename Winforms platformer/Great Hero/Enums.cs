@@ -15,6 +15,7 @@ namespace Winforms_platformer
     public enum Status
     {
         Idle = 0,
-        Move = 1
+        Move = 1,
+        Attack = 2
     }
 }

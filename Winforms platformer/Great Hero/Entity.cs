@@ -18,6 +18,7 @@ namespace Winforms_platformer
         protected int ySpeed;
         protected int xSpeed = 5;
         protected int hp = 100;
+        protected int damage = 0;
 
         public Entity(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY)
         {

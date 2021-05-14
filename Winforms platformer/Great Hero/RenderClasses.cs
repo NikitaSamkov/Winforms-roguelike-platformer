@@ -46,8 +46,8 @@ namespace Winforms_platformer
         public RoomRender(Room room)
         {
             this.room = room;
-            wallSprite = new Sprite(RoomBitmaps.Wall);
-            groundSprite = new Sprite(RoomBitmaps.Ground);
+            wallSprite = new Sprite(RoomBitmaps.Wall, new Size(800, 600));
+            groundSprite = new Sprite(RoomBitmaps.Ground, new Size(800, 600));
         }
 
         public void ChangeRoom(Room room)
