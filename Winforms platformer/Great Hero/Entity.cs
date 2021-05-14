@@ -17,9 +17,9 @@ namespace Winforms_platformer
         public int width { get; protected set; }
         protected Func<int, int, int, int, int> getYSpeed;
         protected int ySpeed;
-        protected int xSpeed;
-        protected int jumpStrength;
-        protected int hp;
+        protected int xSpeed = 5;
+        protected int jumpStrength = 50;
+        protected int hp = 100;
         protected Func<int, int, int, bool> canJump;
 
         public Entity(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump)
@@ -55,8 +55,6 @@ namespace Winforms_platformer
 
         public void MoveTo(Direction direction) => currentDirection = direction;
 
-        public void MoveTo(Entity target) => currentDirection = (x - target.x >= 0) ? Direction.Left : Direction.Right;
-
         public void Jump()
         {
             if (canJump(x, y, width) && ySpeed == 0)
@@ -78,6 +76,8 @@ namespace Winforms_platformer
             this.x = x;
             this.y = y;
         }
+
+        public int GetDistanceTo(int x, int y)=> (int)Math.Sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
 
         public IEnumerable<Point> GetJumpTrajectory()
         {

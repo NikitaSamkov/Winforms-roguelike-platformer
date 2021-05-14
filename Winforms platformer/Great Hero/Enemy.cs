@@ -6,12 +6,28 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    class Dummy : Entity
+    public class Enemy : Entity
     {
-        public Dummy(int x, int y, int dummyWidth, Func<int, int,int,int,int> moveY, Func<int,int,int,bool> canJump, int dummySpeed) 
+        private Player player;
+        public Enemy(int x, int y, int dummyWidth, Func<int, int,int,int,int> moveY, Func<int,int,int,bool> canJump,
+            Player player) 
             : base(x, y, dummyWidth, moveY, canJump)
         {
-            xSpeed = dummySpeed;
+            this.player = player;
+        }
+        
+        public void MoveToPlayer()
+        {
+            currentDirection = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+            var distance = GetDistanceTo(player.x, player.y);
+            if (distance > 150 && xSpeed < 25)
+                xSpeed++;
+            else if (distance <= 100 && xSpeed > 10)
+                xSpeed--;
+            if (Math.Abs(x - player.x) < xSpeed)
+                xSpeed = Math.Abs(x - player.x);
+            if (player.y < y && distance < 150)
+                Jump();
         }
     }
 }
