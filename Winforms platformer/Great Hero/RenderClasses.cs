@@ -18,6 +18,12 @@ namespace Winforms_platformer
             sprite = entitySprite;
         }
 
+        public void Update()
+        {
+            entity.Move();
+            sprite.StepFrame();
+        }
+
         public void SetIdle()
         {
             entity.status = Status.Idle;

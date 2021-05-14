@@ -42,7 +42,7 @@ namespace Winforms_platformer
 
         public void Apply(EntityRender target)
         {
-            target.entity.flying = true;
+            (target.entity as Player).flying = true;
         }
     }
 }

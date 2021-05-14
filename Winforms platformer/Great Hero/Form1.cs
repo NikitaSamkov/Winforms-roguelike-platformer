@@ -46,17 +46,6 @@ namespace Winforms_platformer
             timer.Interval = 60;
             timer.Tick += (sender, args) =>
             {
-                foreach (var enemyRender in enemyList)
-                {
-                    if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x)
-                        enemyRender.SetIdle();
-                    else if (enemyRender.entity.status == Status.Idle && playerRender.entity.x != enemyRender.entity.x)
-                        enemyRender.SetMoving();
-                    else
-                        (enemyRender.entity as Enemy).MoveToPlayer();
-                    enemyRender.entity.Move();
-                    enemyRender.sprite.StepFrame();
-                }
                 if (((map.IsCurrentRoomLast() || enemyList.Count != 0) &&
                     playerRender.entity.x + playerRender.entity.width >= ClientSize.Width &&
                     playerRender.entity.currentDirection == Direction.Right) ||
@@ -70,13 +59,25 @@ namespace Winforms_platformer
                         playerRender.entity.TeleportTo(ClientSize.Width - playerRender.entity.width);
                     playerRender.SetIdle();
                 }
-                playerRender.entity.Move();
-                playerRender.sprite.StepFrame();
+
+                foreach (var enemyRender in enemyList)
+                {
+                    if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x)
+                        enemyRender.SetIdle();
+                    else if (enemyRender.entity.status == Status.Idle && playerRender.entity.x != enemyRender.entity.x)
+                        enemyRender.SetMoving();
+                    else
+                        (enemyRender.entity as Enemy).MoveToPlayer();
+                    enemyRender.Update();
+                }
+                
                 if ((playerRender.entity.x > ClientSize.Width || playerRender.entity.x + playerRender.entity.width < 0))
                 {
                     ChangeRoom();
-                    playerRender.entity.UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
+                    (playerRender.entity as Player).UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
                 }
+                playerRender.Update();
+
                 Invalidate();
             };
             timer.Start();
@@ -140,14 +141,14 @@ namespace Winforms_platformer
                     break;
                 case Keys.Up:
                 case Keys.W:
-                    if (playerRender.entity.flying)
+                    if ((playerRender.entity as Player).flying)
                         playerRender.entity.MoveUp();
                     else
-                        playerRender.entity.Jump();
+                        (playerRender.entity as Player).Jump();
                     break;
                 case Keys.Down:
                 case Keys.S:
-                    if (playerRender.entity.flying)
+                    if ((playerRender.entity as Player).flying)
                         playerRender.entity.MoveDown();
                     else
                         playerRender.entity.MoveDown(1);

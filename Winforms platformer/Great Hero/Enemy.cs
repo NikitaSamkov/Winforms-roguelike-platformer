@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    public class Enemy : Entity
+    public class Enemy : Creature
     {
         private Player player;
         public Enemy(int x, int y, int dummyWidth, Func<int, int,int,int,int> moveY, Func<int,int,int,bool> canJump,

@@ -13,22 +13,18 @@ namespace Winforms_platformer
         public int y { get; protected set; } // (x, y) - левый нижний угол
         public Direction currentDirection { get; protected set; }
         public Status status { get; set; }
-        public bool flying { get; set; }
         public int width { get; protected set; }
         protected Func<int, int, int, int, int> getYSpeed;
         protected int ySpeed;
         protected int xSpeed = 5;
-        protected int jumpStrength = 50;
         protected int hp = 100;
-        protected Func<int, int, int, bool> canJump;
 
-        public Entity(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump)
+        public Entity(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY)
         {
             this.x = x;
             this.y = y;
             width = entityWidth;
             getYSpeed = moveY;
-            this.canJump = canJump;
             this.status = status;
         }
 
@@ -37,9 +33,10 @@ namespace Winforms_platformer
             ySpeed = getYSpeed(x, y, width, ySpeed);
             y += ySpeed;
         }
-        public void Move()
+
+        public virtual void Move()
         {
-            if (status == Status.Move || (flying && !(status == Status.Idle)))
+            if (status == Status.Move)
                 switch (currentDirection)
                 {
                     case Direction.Left:
@@ -49,56 +46,19 @@ namespace Winforms_platformer
                         x += xSpeed;
                         break;
                 }
-            if (!flying)
-                MoveY();
+            MoveY();
         }
 
         public void MoveTo(Direction direction) => currentDirection = direction;
-
-        public void Jump()
-        {
-            if (canJump(x, y, width) && ySpeed == 0)
-            {
-                ySpeed -= jumpStrength;
-            }
-        }
-
         public void MoveDown(int distance) => y += distance;
         public void MoveDown() => y += xSpeed;
-
-        public void MoveUp(int distance) => y += distance;
         public void MoveUp() => y -= xSpeed;
-
         public void TeleportTo(int x) => TeleportTo(x, y);
-
+        public int GetDistanceTo(int x, int y) => (int)Math.Sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
         public void TeleportTo(int x, int y)
         {
             this.x = x;
             this.y = y;
-        }
-
-        public int GetDistanceTo(int x, int y)=> (int)Math.Sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
-
-        public IEnumerable<Point> GetJumpTrajectory()
-        {
-            var trajectoryXSpeed = (currentDirection == Direction.Right) ? xSpeed : -xSpeed;
-            var trajectoryYSpeed = ySpeed - jumpStrength;
-            var trajectoryX = x + trajectoryXSpeed;
-            var trajectoryY = y + trajectoryYSpeed;
-            trajectoryYSpeed = getYSpeed(trajectoryX, trajectoryY, width, trajectoryYSpeed);
-            while (!canJump(trajectoryX, trajectoryY, width))
-            {
-                yield return new Point(trajectoryX, trajectoryY);
-                trajectoryYSpeed = getYSpeed(trajectoryX, trajectoryY, width, trajectoryYSpeed);
-                trajectoryX += trajectoryXSpeed;
-                trajectoryY += trajectoryYSpeed;
-            }
-        }
-
-        public void UpdateRoom(Func<int, int, int, bool> onTheSurface, Func<int, int, int, int, int> getYSpeed)
-        {
-            canJump = onTheSurface;
-            this.getYSpeed = getYSpeed;
         }
     }
 }
