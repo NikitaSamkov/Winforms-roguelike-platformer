@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace Winforms_platformer
     public class Enemy : Creature
     {
         private Player player;
-        public Enemy(int x, int y, int dummyWidth, Func<int, int,int,int,int> moveY, Func<int,int,int,bool> canJump,
+        public Enemy(int x, int y, Collider collider, Func<int, int,int,int,int> moveY, Func<int,int,int,bool> canJump,
             Player player) 
-            : base(x, y, dummyWidth, moveY, canJump)
+            : base(x, y, collider, moveY, canJump)
         {
             this.player = player;
         }

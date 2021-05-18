@@ -13,25 +13,25 @@ namespace Winforms_platformer
         public int y { get; protected set; } // (x, y) - левый нижний угол
         public Direction currentDirection { get; protected set; }
         public Status status { get; set; }
-        public int width { get; protected set; }
+        public Collider collider { get; protected set; }
         protected Func<int, int, int, int, int> getYSpeed;
         protected int ySpeed;
         protected int xSpeed = 5;
         protected int hp = 100;
         protected int damage = 0;
 
-        public Entity(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY)
+        public Entity(int x, int y, Collider collider, Func<int, int, int, int, int> moveY)
         {
             this.x = x;
             this.y = y;
-            width = entityWidth;
+            this.collider = collider;
             getYSpeed = moveY;
             this.status = status;
         }
 
         protected void MoveY()
         {
-            ySpeed = getYSpeed(x, y, width, ySpeed);
+            ySpeed = getYSpeed(x, y, collider.field.Width, ySpeed);
             y += ySpeed;
         }
 

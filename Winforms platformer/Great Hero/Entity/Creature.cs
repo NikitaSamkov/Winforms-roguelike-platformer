@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,8 @@ namespace Winforms_platformer
         protected int jumpStrength = 50;
         protected Func<int, int, int, bool> canJump;
 
-        public Creature(int x, int y, int entityWidth, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump) 
-            : base(x, y, entityWidth, moveY)
+        public Creature(int x, int y, Collider collider, Func<int, int, int, int, int> moveY, Func<int, int, int, bool> canJump) 
+            : base(x, y, collider, moveY)
         {
             this.canJump = canJump;
         }
@@ -36,7 +37,7 @@ namespace Winforms_platformer
 
         public void Jump()
         {
-            if (canJump(x, y, width) && ySpeed == 0)
+            if (canJump(x, y, collider.field.Width) && ySpeed == 0)
             {
                 ySpeed -= jumpStrength;
             }
