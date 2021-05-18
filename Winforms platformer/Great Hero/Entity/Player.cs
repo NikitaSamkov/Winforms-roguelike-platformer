@@ -20,6 +20,8 @@ namespace Winforms_platformer
             currentDirection = Direction.Right;
             xSpeed = 20;
             treasures = new List<ITreasure>();
+            hp = 100;
+            damage = 10;
         }
     }
 }

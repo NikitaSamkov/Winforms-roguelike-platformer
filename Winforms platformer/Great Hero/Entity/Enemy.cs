@@ -15,6 +15,8 @@ namespace Winforms_platformer
             : base(x, y, collider, moveY, canJump)
         {
             this.player = player;
+            hp = 20;
+            damage = 0;
         }
         
         public void MoveToPlayer()

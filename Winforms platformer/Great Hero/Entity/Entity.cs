@@ -14,11 +14,11 @@ namespace Winforms_platformer
         public Direction currentDirection { get; protected set; }
         public Status status { get; set; }
         public Collider collider { get; protected set; }
+        public int hp { get; protected set; }
+        public int damage { get; protected set; }
         protected Func<int, int, int, int, int> getYSpeed;
         protected int ySpeed;
         protected int xSpeed = 5;
-        protected int hp = 100;
-        protected int damage = 0;
 
         public Entity(int x, int y, Collider collider, Func<int, int, int, int, int> moveY)
         {
@@ -50,10 +50,15 @@ namespace Winforms_platformer
             MoveY();
         }
 
+        public void Hurt(int damage)
+        {
+            hp -= damage;
+        }
+
         public bool Intersects(Entity target)
         {
-            return new Rectangle(new Point(collider.Left, collider.Top), collider.field)
-                .IntersectsWith(new Rectangle(new Point(target.collider.Left, target.collider.Top), target.collider.field));
+            return new Rectangle(new Point(collider.Left + x, collider.Top + x - collider.field.Height), collider.field)
+                .IntersectsWith(new Rectangle(new Point(target.collider.Left + target.x, target.collider.Top + x - collider.field.Height), target.collider.field));
         }
 
         public void MoveTo(Direction direction) => currentDirection = direction;

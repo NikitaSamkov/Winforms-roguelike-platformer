@@ -16,7 +16,6 @@ namespace Winforms_platformer
         RoomRender roomRender;
         List<EntityRender> enemyList;
         Map map;
-        Sprite dummySprite;
 
         public Form1()
         {
@@ -25,7 +24,7 @@ namespace Winforms_platformer
             //генерация карты
             map = new Map();
             map.GenerateRooms();
-            //мортировка сокровищницы
+            //сортировка сокровищницы
             TreasurePool.SortPool();
             //создание комнаты
             roomRender = new RoomRender(map.Current());
@@ -75,6 +74,8 @@ namespace Winforms_platformer
                         enemyRender.SetMoving();
                     else
                         (enemyRender.entity as Enemy).MoveToPlayer();
+                    if (enemyRender.entity.Intersects(playerRender.entity))
+                        playerRender.entity.Hurt(enemyRender.entity.damage);
                     enemyRender.Update();
                 }
                 //обновление игрока
@@ -131,6 +132,10 @@ namespace Winforms_platformer
                     playerSize.Height * (int)playerRender.entity.currentDirection,
                     playerSize.Width, playerSize.Height),
                 GraphicsUnit.Pixel);
+            g.DrawRectangle(new Pen(Color.Purple), new Rectangle(
+                new Point(playerRender.entity.x + playerRender.entity.collider.Left, 
+                playerRender.entity.y - PlayerBitmaps.IdleSize.Height + playerRender.entity.collider.Top), 
+                playerRender.entity.collider.field));
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
