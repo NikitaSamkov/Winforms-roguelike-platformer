@@ -135,16 +135,19 @@ namespace Winforms_platformer
         {
             switch (e.KeyCode)
             {
+                //влево
                 case Keys.Left:
                 case Keys.A:
                     playerRender.entity.MoveTo(Direction.Left);
                         playerRender.SetMoving();
                     break;
+                //вправо
                 case Keys.Right:
                 case Keys.D:
                     playerRender.entity.MoveTo(Direction.Right);
                         playerRender.SetMoving();
                     break;
+                //вверх
                 case Keys.Up:
                 case Keys.W:
                     if ((playerRender.entity as Player).flying)
@@ -152,6 +155,7 @@ namespace Winforms_platformer
                     else
                         (playerRender.entity as Player).Jump();
                     break;
+                //вниз
                 case Keys.Down:
                 case Keys.S:
                     if ((playerRender.entity as Player).flying)
@@ -159,9 +163,11 @@ namespace Winforms_platformer
                     else
                         playerRender.entity.MoveDown(1);
                     break;
+                //вывод в консоль seed
                 case Keys.M:
                     Console.WriteLine(map.seed);
                     break;
+                //спавн простого врага
                 case Keys.D0:
                     enemyList.Add(new EntityRender(new Enemy(playerRender.entity.x, playerRender.entity.y, 
                         new Collider(DummyBitmaps.IdleSize), roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 
@@ -169,15 +175,10 @@ namespace Winforms_platformer
                         new Sprite(DummyBitmaps.Idle, DummyBitmaps.IdleSize,
                         DummyBitmaps.Move, DummyBitmaps.MoveSize, null, new Size(), 3)));
                     break;
+                //уничтожение последнего врага в списке
                 case Keys.D9:
                     if (enemyList.Count > 0)
                         enemyList.RemoveAt(0);
-                    break;
-                case Keys.D8:
-                    TreasurePool.GiveToPlayer(playerRender, 0);
-                    break;
-                case Keys.D7:
-                    (playerRender.entity as Player).treasures = new List<ITreasure>();
                     break;
             }
         }
