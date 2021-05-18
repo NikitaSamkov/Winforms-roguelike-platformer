@@ -11,8 +11,12 @@ namespace Winforms_platformer
     {
         public static Bitmap Idle = new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png");
         public static Bitmap Move = new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png");
+        public static Bitmap Attack = new Bitmap(@"..\..\..\..\Sprites\Player\PlayerAttack.png");
+        public static Bitmap AttackMove = new Bitmap(@"..\..\..\..\Sprites\Player\PlayerAttack.png");
         public static Size IdleSize = new Size(40, 112);
         public static Size MoveSize = new Size(40, 112);
+        public static Size AttackSize = new Size(88, 112);
+        public static Size AttackMoveSize = new Size(88, 112);
     }
 
     public static class DummyBitmaps

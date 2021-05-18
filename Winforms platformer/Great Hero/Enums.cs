@@ -16,6 +16,7 @@ namespace Winforms_platformer
     {
         Idle = 0,
         Move = 1,
-        Attack = 2
+        Attack = 2,
+        AttackMove = 3
     }
 }

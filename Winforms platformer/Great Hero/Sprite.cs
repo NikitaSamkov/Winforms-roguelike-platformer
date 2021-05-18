@@ -11,37 +11,47 @@ namespace Winforms_platformer
     {
         private int currentFrameTime;
         private readonly int framePause;
-        private Status currentStatus;
         private int currentMaxFrames;
         public readonly int idleMaxFrames;
         public readonly int moveMaxFrames;
         public readonly int attackMaxFrames;
+        public readonly int attackMoveMaxFrames;
         public readonly Bitmap idleSheet;
         public readonly Bitmap moveSheet;
         public readonly Bitmap attackSheet;
+        public readonly Bitmap attackMoveSheet;
         public Size idleSize { get; private set; }
         public Size moveSize { get; private set; }
         public Size attackSize { get; private set; }
+        public Size attackMoveSize { get; private set; }
         public int currentFrame { get; private set; }
+        public Status currentStatus { get; private set; }
 
         public Sprite(Bitmap idleSheet, Size idleSize,
             Bitmap moveSheet = null, Size moveSize = new Size(),
             Bitmap attackSheet = null, Size attackSize = new Size(),
+            Bitmap attackMoveSheet = null, Size attackMoveSize = new Size(),
             int oneFramePause = 1)
         {
             this.idleSheet = idleSheet;
             this.moveSheet = moveSheet;
             this.attackSheet = attackSheet;
+            this.attackMoveSheet = attackSheet;
             this.idleSize = idleSize;
             this.moveSize = moveSize;
             this.attackSize = attackSize;
-            idleMaxFrames = this.idleSheet.Width / idleSize.Width;
+            this.attackMoveSize = attackSize;
+            idleMaxFrames = this.idleSheet.Width / this.idleSize.Width;
             currentFrameTime = 0;
             framePause = oneFramePause;
             if (this.moveSheet != null)
-                moveMaxFrames = this.moveSheet.Width / moveSize.Width;
+                moveMaxFrames = this.moveSheet.Width / this.moveSize.Width;
             if (this.attackSheet != null)
-                attackMaxFrames = this.attackSheet.Width / attackSize.Width;
+                attackMaxFrames = this.attackSheet.Width / this.attackSize.Width;
+            if (this.attackMoveSheet == null && this.attackSheet != null)
+                this.attackMoveSheet = this.attackSheet;
+            if (this.attackMoveSheet != null)
+                attackMoveMaxFrames = this.attackMoveSheet.Width / this.attackMoveSize.Width;
             SetIdle();
         }
 
@@ -53,8 +63,21 @@ namespace Winforms_platformer
                 currentFrame++;
                 currentFrameTime = 0;
             }
-            if (currentFrame >= currentMaxFrames)
+            if (currentFrame >= currentMaxFrames && (currentStatus != Status.Attack || currentStatus != Status.AttackMove))
                 currentFrame = 0;
+            else if (currentFrame >= currentMaxFrames && (currentStatus == Status.Attack || currentStatus == Status.AttackMove))
+                switch (currentStatus)
+                {
+                    case Status.Attack:
+                        currentStatus = Status.Idle;
+                        break;
+                    case Status.AttackMove:
+                        currentStatus = Status.Move;
+                        break;
+                    default:
+                        currentStatus = Status.Idle;
+                        break;
+                }
         }
 
         public void SetIdle()
@@ -65,8 +88,33 @@ namespace Winforms_platformer
 
         public void SetMoving()
         {
-            currentStatus = Status.Move;
-            currentMaxFrames = moveMaxFrames;
+            if (moveSheet != null)
+            {
+                currentStatus = Status.Move;
+                currentMaxFrames = moveMaxFrames;
+            }
+        }
+
+        public void SetAttacking()
+        {
+            if (attackSheet != null)
+            {
+                if (currentStatus != Status.Attack && currentStatus != Status.AttackMove)
+                    currentFrame = 0;
+                currentStatus = Status.Attack;
+                currentMaxFrames = attackMaxFrames;
+            }
+        }
+
+        public void SetAttackingMove()
+        {
+            if (attackMoveSheet != null)
+            {
+                if (currentStatus != Status.Attack && currentStatus != Status.AttackMove)
+                    currentFrame = 0;
+                currentStatus = Status.AttackMove;
+                currentMaxFrames = attackMoveMaxFrames;
+            }
         }
 
         public Bitmap GetSheet()
@@ -79,6 +127,8 @@ namespace Winforms_platformer
                     return moveSheet;
                 case Status.Attack:
                     return moveSheet;
+                case Status.AttackMove:
+                    return attackSheet;
                 default: return null;
             }
         }
@@ -93,6 +143,8 @@ namespace Winforms_platformer
                     return moveSize;
                 case Status.Attack:
                     return moveSize;
+                case Status.AttackMove:
+                    return attackSize;
                 default: return new Size();
             }
         }

@@ -26,14 +26,36 @@ namespace Winforms_platformer
 
         public void SetIdle()
         {
-            entity.status = Status.Idle;
-            sprite.SetIdle();
+            if (sprite.currentStatus == Status.AttackMove)
+            {
+                entity.status = Status.Attack;
+                sprite.SetAttacking();
+            }
+            if (sprite.currentStatus != Status.Attack)
+            {
+                entity.status = Status.Idle;
+                sprite.SetIdle();
+            }
         }
 
         public void SetMoving()
         {
-            entity.status = Status.Move;
-            sprite.SetMoving();
+            if (sprite.currentStatus == Status.Attack)
+            {
+                entity.status = Status.AttackMove;
+                sprite.SetAttackingMove();
+            }
+            if (sprite.currentStatus != Status.AttackMove)
+            {
+                entity.status = Status.Move;
+                sprite.SetMoving();
+            }
+        }
+
+        public void SetAttacking()
+        {
+            entity.status = Status.Attack;
+            sprite.SetAttacking();
         }
     }
 

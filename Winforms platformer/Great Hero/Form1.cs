@@ -34,7 +34,9 @@ namespace Winforms_platformer
                 roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
                 new Sprite(PlayerBitmaps.Idle, PlayerBitmaps.IdleSize,
                 PlayerBitmaps.Move, PlayerBitmaps.MoveSize,
-                null, new Size(), 3));
+                PlayerBitmaps.Attack, PlayerBitmaps.AttackSize,
+                PlayerBitmaps.Attack, PlayerBitmaps.AttackSize,
+                3));
             //создание списка врагов
             enemyList = new List<EntityRender>();
 
@@ -132,10 +134,6 @@ namespace Winforms_platformer
                     playerSize.Height * (int)playerRender.entity.currentDirection,
                     playerSize.Width, playerSize.Height),
                 GraphicsUnit.Pixel);
-            g.DrawRectangle(new Pen(Color.Purple), new Rectangle(
-                new Point(playerRender.entity.x + playerRender.entity.collider.Left, 
-                playerRender.entity.y - PlayerBitmaps.IdleSize.Height + playerRender.entity.collider.Top), 
-                playerRender.entity.collider.field));
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -180,12 +178,16 @@ namespace Winforms_platformer
                         new Collider(DummyBitmaps.IdleSize), roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 
                         (Player)playerRender.entity), 
                         new Sprite(DummyBitmaps.Idle, DummyBitmaps.IdleSize,
-                        DummyBitmaps.Move, DummyBitmaps.MoveSize, null, new Size(), 3)));
+                        DummyBitmaps.Move, DummyBitmaps.MoveSize, 
+                        null, new Size(),
+                        null, new Size(), 3)));
                     break;
                 //уничтожение последнего врага в списке
                 case Keys.D9:
                     if (enemyList.Count > 0)
                         enemyList.RemoveAt(0);
+                    break;
+                case Keys.E:
                     break;
             }
         }
