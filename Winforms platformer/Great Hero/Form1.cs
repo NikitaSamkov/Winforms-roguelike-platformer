@@ -67,9 +67,11 @@ namespace Winforms_platformer
                 //обновление противников
                 foreach (var enemyRender in enemyList)
                 {
-                    if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x)
+                    if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x
+                    && playerRender.entity.y == enemyRender.entity.y)
                         enemyRender.SetIdle();
-                    else if (enemyRender.entity.status == Status.Idle && playerRender.entity.x != enemyRender.entity.x)
+                    else if (enemyRender.entity.status == Status.Idle && (playerRender.entity.x != enemyRender.entity.x ||
+                    playerRender.entity.y != enemyRender.entity.y))
                         enemyRender.SetMoving();
                     else
                         (enemyRender.entity as Enemy).MoveToPlayer();

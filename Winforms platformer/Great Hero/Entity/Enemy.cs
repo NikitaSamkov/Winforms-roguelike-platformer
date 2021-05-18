@@ -21,7 +21,7 @@ namespace Winforms_platformer
         {
             currentDirection = (x - player.x >= 0) ? Direction.Left : Direction.Right;
             var distance = GetDistanceTo(player.x, player.y);
-            if (distance > 150 && xSpeed < 25)
+            if (distance > 150 && xSpeed < 25 || distance <= 100 && xSpeed < 10)
                 xSpeed++;
             else if (distance <= 100 && xSpeed > 10)
                 xSpeed--;
