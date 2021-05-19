@@ -16,6 +16,7 @@ namespace Winforms_platformer
         RoomRender roomRender;
         Map map;
         bool developerToolsON = true;
+        bool gameOver;
 
         public Form1()
         {
@@ -85,6 +86,11 @@ namespace Winforms_platformer
                     enemyRender.Update();
                 }
                 //обновление игрока
+                if (playerRender.entity.hp <= 0)
+                {
+                    gameOver = true;
+                    mainTimer.Stop();
+                }
                 playerRender.Update();
                 //обновление снарядов
                 foreach (var projectile in roomRender.room.allyProjectilesList)
@@ -106,7 +112,6 @@ namespace Winforms_platformer
                     }
                     projectile.Update();
                 }
-
                 Invalidate();
             };
             mainTimer.Start();
@@ -191,6 +196,8 @@ namespace Winforms_platformer
                     size.Width, size.Height),
                     GraphicsUnit.Pixel);
             }
+            if (gameOver)
+                g.DrawImage(RoomRes.Death, new Point(0, 0));
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

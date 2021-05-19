@@ -32,6 +32,7 @@ namespace Winforms_platformer
     {
         public static Bitmap Wall = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
         public static Bitmap Ground = new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png");
+        public static Bitmap Death = new Bitmap(@"..\..\..\..\Sprites\Room\Death.png");
     }
 
     public static class ProjectilesRes

@@ -16,7 +16,7 @@ namespace Winforms_platformer
         {
             this.player = player;
             hp = 20;
-            damage = 0;
+            damage = 10;
         }
         
         public void MoveToPlayer()
