@@ -144,13 +144,13 @@ namespace Winforms_platformer
                 case Keys.Left:
                 case Keys.A:
                     playerRender.entity.MoveTo(Direction.Left);
-                        playerRender.SetMoving();
+                    playerRender.SetMoving();
                     break;
                 //вправо
                 case Keys.Right:
                 case Keys.D:
                     playerRender.entity.MoveTo(Direction.Right);
-                        playerRender.SetMoving();
+                    playerRender.SetMoving();
                     break;
                 //вверх
                 case Keys.Up:
@@ -188,6 +188,7 @@ namespace Winforms_platformer
                         enemyList.RemoveAt(0);
                     break;
                 case Keys.E:
+                    playerRender.SetAttacking();
                     break;
             }
         }

@@ -20,6 +20,7 @@ namespace Winforms_platformer
 
         public void Update()
         {
+            entity.status = sprite.currentStatus;
             entity.Move();
             sprite.StepFrame();
         }
@@ -27,35 +28,25 @@ namespace Winforms_platformer
         public void SetIdle()
         {
             if (sprite.currentStatus == Status.AttackMove)
-            {
-                entity.status = Status.Attack;
                 sprite.SetAttacking();
-            }
             if (sprite.currentStatus != Status.Attack)
-            {
-                entity.status = Status.Idle;
                 sprite.SetIdle();
-            }
         }
 
         public void SetMoving()
         {
             if (sprite.currentStatus == Status.Attack)
-            {
-                entity.status = Status.AttackMove;
                 sprite.SetAttackingMove();
-            }
             if (sprite.currentStatus != Status.AttackMove)
-            {
-                entity.status = Status.Move;
                 sprite.SetMoving();
-            }
         }
 
         public void SetAttacking()
         {
-            entity.status = Status.Attack;
-            sprite.SetAttacking();
+            if (sprite.currentStatus == Status.Move)
+                sprite.SetAttackingMove();
+            if (sprite.currentStatus == Status.Idle)
+                sprite.SetAttacking();
         }
     }
 

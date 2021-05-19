@@ -63,19 +63,22 @@ namespace Winforms_platformer
                 currentFrame++;
                 currentFrameTime = 0;
             }
-            if (currentFrame >= currentMaxFrames && (currentStatus != Status.Attack || currentStatus != Status.AttackMove))
+            if (currentFrame >= currentMaxFrames && (currentStatus != Status.Attack && currentStatus != Status.AttackMove))
                 currentFrame = 0;
             else if (currentFrame >= currentMaxFrames && (currentStatus == Status.Attack || currentStatus == Status.AttackMove))
                 switch (currentStatus)
                 {
                     case Status.Attack:
-                        currentStatus = Status.Idle;
+                        SetIdle();
+                        currentFrame = 0;
                         break;
                     case Status.AttackMove:
-                        currentStatus = Status.Move;
+                        SetMoving();
+                        currentFrame = 0;
                         break;
                     default:
-                        currentStatus = Status.Idle;
+                        SetIdle();
+                        currentFrame = 0;
                         break;
                 }
         }
@@ -126,7 +129,7 @@ namespace Winforms_platformer
                 case Status.Move:
                     return moveSheet;
                 case Status.Attack:
-                    return moveSheet;
+                    return attackSheet;
                 case Status.AttackMove:
                     return attackSheet;
                 default: return null;
@@ -142,7 +145,7 @@ namespace Winforms_platformer
                 case Status.Move:
                     return moveSize;
                 case Status.Attack:
-                    return moveSize;
+                    return attackSize;
                 case Status.AttackMove:
                     return attackSize;
                 default: return new Size();

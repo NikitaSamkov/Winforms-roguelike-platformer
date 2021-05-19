@@ -21,7 +21,7 @@ namespace Winforms_platformer
 
         public override void Move()
         {
-            if (status == Status.Move || (flying && !(status == Status.Idle)))
+            if (status != Status.Idle && status != Status.Attack)
                 switch (currentDirection)
                 {
                     case Direction.Left:
