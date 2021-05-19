@@ -32,6 +32,8 @@ namespace Winforms_platformer
                 }
             if (!flying)
                 MoveY();
+            if (invincibility > 0)
+                invincibility--;
             if (status == Status.Attack || status == Status.AttackMove)
             {
                 var colliderX = ((int)currentDirection == 0) ?

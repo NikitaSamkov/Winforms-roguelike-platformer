@@ -11,6 +11,7 @@ namespace Winforms_platformer
     {
         protected int ySpeed;
         protected int xSpeed = 5;
+        protected int damageInvincibility;
         public int x { get; protected set; }
         public int y { get; protected set; }
         public Direction currentDirection { get; protected set; }
@@ -18,7 +19,7 @@ namespace Winforms_platformer
         public Collider collider { get; protected set; }
         public int hp { get; protected set; }
         public int damage { get; protected set; }
-        public int damageInvincibility { get; set; }
+        public int invincibility { get; protected set; }
         public Room room;
 
         public Entity(int x, int y, Collider collider, Room room)
@@ -49,17 +50,23 @@ namespace Winforms_platformer
                         break;
                 }
             MoveY();
+            if (invincibility > 0)
+                invincibility--;
         }
 
         public void Hurt(int damage)
         {
-            hp -= damage;
+            if (invincibility == 0)
+            {
+                invincibility = damageInvincibility;
+                hp -= damage;
+            }
         }
 
         public bool IntersectsWithBody(Entity target)
         {
             return new Rectangle(new Point(collider.Left + x, collider.Top + x - collider.field.Height), collider.field)
-                .IntersectsWith(new Rectangle(new Point(target.collider.Left + target.x, 
+                .IntersectsWith(new Rectangle(new Point(target.collider.Left + target.x,
                 target.collider.Top + x - collider.field.Height), target.collider.field));
         }
 
