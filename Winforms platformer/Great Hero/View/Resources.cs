@@ -17,7 +17,7 @@ namespace Winforms_platformer
         public static Size MoveSize = new Size(40, 112);
         public static Size AttackSize = new Size(88, 112);
         public static Size AttackMoveSize = new Size(88, 112);
-        public static Size AttackRange = new Size(48, 56);
+        public static Size AttackRange = new Size(60, 56);
     }
 
     public static class DummyRes

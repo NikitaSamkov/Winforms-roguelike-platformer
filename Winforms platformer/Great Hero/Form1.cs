@@ -15,7 +15,7 @@ namespace Winforms_platformer
         EntityRender playerRender;
         RoomRender roomRender;
         Map map;
-        bool developerToolsON;
+        bool developerToolsON = true;
 
         public Form1()
         {
@@ -39,9 +39,9 @@ namespace Winforms_platformer
                 PlayerRes.Attack, PlayerRes.AttackSize,
                 3));
 
-            var timer = new Timer();
-            timer.Interval = 60;
-            timer.Tick += (sender, args) =>
+            var mainTimer = new Timer();
+            mainTimer.Interval = 60;
+            mainTimer.Tick += (sender, args) =>
             {
                 //механика, не позволяющая игроку перейти в след./пред. комнату, если текущая комната конечная/начальная или есть враги
                 if (((map.IsCurrentRoomLast() || roomRender.room.enemyList.Count != 0) &&
@@ -89,7 +89,7 @@ namespace Winforms_platformer
 
                 Invalidate();
             };
-            timer.Start();
+            mainTimer.Start();
         }
 
         private void ChangeRoom()
@@ -129,10 +129,18 @@ namespace Winforms_platformer
                     size.Height * (int)enemy.entity.currentDirection,
                     size.Width, size.Height),
                     GraphicsUnit.Pixel);
+                if (developerToolsON)
+                {
+                    g.DrawRectangle(new Pen(Color.Blue), 
+                        new Rectangle(new Point(enemy.entity.x + enemy.entity.collider.x,
+                        enemy.entity.y + enemy.entity.collider.y), enemy.entity.collider.field));
+                }
             }
             //отрисовка игрока
             var playerSize = playerRender.sprite.GetSize();
-            g.DrawImage(playerRender.sprite.GetSheet(), playerRender.entity.x,
+            g.DrawImage(playerRender.sprite.GetSheet(), 
+                ((int)playerRender.entity.currentDirection == 0) ? playerRender.entity.x :
+                    playerRender.entity.x + playerRender.entity.collider.field.Width - playerSize.Width,
                 playerRender.entity.y,
                 new Rectangle(playerSize.Width * playerRender.sprite.currentFrame,
                     playerSize.Height * (int)playerRender.entity.currentDirection,
@@ -140,12 +148,14 @@ namespace Winforms_platformer
                 GraphicsUnit.Pixel);
             if (developerToolsON)
             {
-                g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(playerRender.entity.x + playerRender.entity.collider.x,
+                g.DrawRectangle(new Pen(Color.Green), 
+                    new Rectangle(new Point(playerRender.entity.x + playerRender.entity.collider.x,
                     playerRender.entity.y + playerRender.entity.collider.y), playerRender.entity.collider.field));
                 var colliderPoint = (playerRender.entity.currentDirection == 0) ?
                     new Point(PlayerRes.IdleSize.Width + playerRender.entity.collider.attackCollider.x + playerRender.entity.x,
                     playerRender.entity.y + playerRender.entity.collider.attackCollider.y) :
-                    new Point(-playerRender.entity.collider.attackCollider.x + playerRender.entity.x - playerRender.entity.collider.attackCollider.field.Width,
+                    new Point(-playerRender.entity.collider.attackCollider.x + playerRender.entity.x - 
+                    playerRender.entity.collider.attackCollider.field.Width,
                     playerRender.entity.y + playerRender.entity.collider.attackCollider.y);
                 g.DrawRectangle(new Pen(Color.IndianRed),
                     new Rectangle(colliderPoint,
