@@ -15,6 +15,7 @@ namespace Winforms_platformer
         EntityRender playerRender;
         RoomRender roomRender;
         Map map;
+        bool developerToolsON;
 
         public Form1()
         {
@@ -128,7 +129,6 @@ namespace Winforms_platformer
                     size.Height * (int)enemy.entity.currentDirection,
                     size.Width, size.Height),
                     GraphicsUnit.Pixel);
-                g.DrawEllipse(new Pen(Color.Blue), enemy.entity.x, enemy.entity.y, 1, 1);
             }
             //отрисовка игрока
             var playerSize = playerRender.sprite.GetSize();
@@ -138,17 +138,19 @@ namespace Winforms_platformer
                     playerSize.Height * (int)playerRender.entity.currentDirection,
                     playerSize.Width, playerSize.Height),
                 GraphicsUnit.Pixel);
-            g.DrawEllipse(new Pen(Color.Red), playerRender.entity.x, playerRender.entity.y, 1, 1);
-            g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(playerRender.entity.x + playerRender.entity.collider.x,
-                playerRender.entity.y + playerRender.entity.collider.y), playerRender.entity.collider.field));
-            var colliderPoint = (playerRender.entity.currentDirection == 0) ?
-                new Point(PlayerRes.IdleSize.Width + playerRender.entity.collider.attackCollider.x + playerRender.entity.x,
-                playerRender.entity.y + playerRender.entity.collider.attackCollider.y) :
-                new Point(-playerRender.entity.collider.attackCollider.x + playerRender.entity.x - playerRender.entity.collider.attackCollider.field.Width,
-                playerRender.entity.y + playerRender.entity.collider.attackCollider.y);
-            g.DrawRectangle(new Pen(Color.IndianRed),
-                new Rectangle(colliderPoint, 
-                    playerRender.entity.collider.attackCollider.field));
+            if (developerToolsON)
+            {
+                g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(playerRender.entity.x + playerRender.entity.collider.x,
+                    playerRender.entity.y + playerRender.entity.collider.y), playerRender.entity.collider.field));
+                var colliderPoint = (playerRender.entity.currentDirection == 0) ?
+                    new Point(PlayerRes.IdleSize.Width + playerRender.entity.collider.attackCollider.x + playerRender.entity.x,
+                    playerRender.entity.y + playerRender.entity.collider.attackCollider.y) :
+                    new Point(-playerRender.entity.collider.attackCollider.x + playerRender.entity.x - playerRender.entity.collider.attackCollider.field.Width,
+                    playerRender.entity.y + playerRender.entity.collider.attackCollider.y);
+                g.DrawRectangle(new Pen(Color.IndianRed),
+                    new Rectangle(colliderPoint,
+                        playerRender.entity.collider.attackCollider.field));
+            }
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
