@@ -33,13 +33,19 @@ namespace Winforms_platformer
             if (!flying)
                 MoveY();
             if (status == Status.Attack || status == Status.AttackMove)
-                foreach (var target in room.GetIntersectedEntities(collider, x + collider.x, y + collider.y))
+            {
+                var colliderX = ((int)currentDirection == 0) ?
+                    collider.field.Width + collider.attackCollider.x + x :
+                    x - collider.attackCollider.x - collider.attackCollider.field.Width;
+                var colliderY = y + collider.attackCollider.y;
+                foreach (var target in room.GetIntersectedEntities(collider, colliderX, colliderY))
                     target.Hurt(damage);
+            }
         }
 
         public void Jump()
         {
-            if (room.OnTheSurface(x, y, collider.field.Width) && ySpeed == 0)
+            if (room.OnTheSurface(x, y + collider.field.Height, collider.field.Width) && ySpeed == 0)
             {
                 ySpeed -= jumpStrength;
             }

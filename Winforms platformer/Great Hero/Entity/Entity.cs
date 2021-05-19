@@ -9,16 +9,17 @@ namespace Winforms_platformer
 {
     public class Entity
     {
+        protected int ySpeed;
+        protected int xSpeed = 5;
         public int x { get; protected set; }
-        public int y { get; protected set; } // (x, y) - левый нижний угол
+        public int y { get; protected set; }
         public Direction currentDirection { get; protected set; }
         public Status status { get; set; }
         public Collider collider { get; protected set; }
         public int hp { get; protected set; }
         public int damage { get; protected set; }
-        public Room room { get; set; }
-        protected int ySpeed;
-        protected int xSpeed = 5;
+        public int damageInvincibility { get; set; }
+        public Room room;
 
         public Entity(int x, int y, Collider collider, Room room)
         {
@@ -26,12 +27,12 @@ namespace Winforms_platformer
             this.y = y;
             this.collider = collider;
             this.room = room;
-            this.status = status;
+            damageInvincibility = 12;
         }
 
         protected void MoveY()
         {
-            ySpeed = room.GetYSpeed(x, y, collider.field.Width, ySpeed);
+            ySpeed = room.GetYSpeed(x, y + collider.field.Height, collider.field.Width, ySpeed);
             y += ySpeed;
         }
 

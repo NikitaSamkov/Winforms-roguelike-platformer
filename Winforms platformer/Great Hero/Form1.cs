@@ -30,7 +30,7 @@ namespace Winforms_platformer
 
             //создание игрока
             playerRender = new EntityRender(new Player(150, 150, new Collider(PlayerRes.IdleSize, 0, 0, 
-                new Collider(PlayerRes.AttackRange, PlayerRes.Idle.Width, PlayerRes.Idle.Height / 2)),
+                new Collider(PlayerRes.AttackRange, -10, PlayerRes.Idle.Height / 8)),
                 roomRender.room),
                 new Sprite(PlayerRes.Idle, PlayerRes.IdleSize,
                 PlayerRes.Move, PlayerRes.MoveSize,
@@ -66,6 +66,11 @@ namespace Winforms_platformer
                 //обновление противников
                 foreach (var enemyRender in roomRender.room.enemyList)
                 {
+                    if (enemyRender.entity.hp <= 0)
+                    {
+                        roomRender.room.enemyList.Remove(enemyRender);
+                        break;
+                    }
                     if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x
                     && playerRender.entity.y == enemyRender.entity.y)
                         enemyRender.SetIdle();
@@ -118,20 +123,32 @@ namespace Winforms_platformer
             foreach (var enemy in roomRender.room.enemyList)
             {
                 var size = enemy.sprite.GetSize();
-                g.DrawImage(enemy.sprite.GetSheet(), enemy.entity.x, enemy.entity.y - size.Height,
+                g.DrawImage(enemy.sprite.GetSheet(), enemy.entity.x, enemy.entity.y,
                     new Rectangle(size.Width * enemy.sprite.currentFrame,
                     size.Height * (int)enemy.entity.currentDirection,
                     size.Width, size.Height),
                     GraphicsUnit.Pixel);
+                g.DrawEllipse(new Pen(Color.Blue), enemy.entity.x, enemy.entity.y, 1, 1);
             }
             //отрисовка игрока
             var playerSize = playerRender.sprite.GetSize();
             g.DrawImage(playerRender.sprite.GetSheet(), playerRender.entity.x,
-                playerRender.entity.y - playerSize.Height,
+                playerRender.entity.y,
                 new Rectangle(playerSize.Width * playerRender.sprite.currentFrame,
                     playerSize.Height * (int)playerRender.entity.currentDirection,
                     playerSize.Width, playerSize.Height),
                 GraphicsUnit.Pixel);
+            g.DrawEllipse(new Pen(Color.Red), playerRender.entity.x, playerRender.entity.y, 1, 1);
+            g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(playerRender.entity.x + playerRender.entity.collider.x,
+                playerRender.entity.y + playerRender.entity.collider.y), playerRender.entity.collider.field));
+            var colliderPoint = (playerRender.entity.currentDirection == 0) ?
+                new Point(PlayerRes.IdleSize.Width + playerRender.entity.collider.attackCollider.x + playerRender.entity.x,
+                playerRender.entity.y + playerRender.entity.collider.attackCollider.y) :
+                new Point(-playerRender.entity.collider.attackCollider.x + playerRender.entity.x - playerRender.entity.collider.attackCollider.field.Width,
+                playerRender.entity.y + playerRender.entity.collider.attackCollider.y);
+            g.DrawRectangle(new Pen(Color.IndianRed),
+                new Rectangle(colliderPoint, 
+                    playerRender.entity.collider.attackCollider.field));
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

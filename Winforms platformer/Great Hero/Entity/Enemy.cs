@@ -23,13 +23,13 @@ namespace Winforms_platformer
         {
             currentDirection = (x - player.x >= 0) ? Direction.Left : Direction.Right;
             var distance = GetDistanceTo(player.x, player.y);
-            if (distance > 150 && xSpeed < 25 || distance <= 100 && xSpeed < 10)
+            if (distance > 150 && xSpeed < 15 || distance <= 100 && xSpeed < 10)
                 xSpeed++;
             else if (distance <= 100 && xSpeed > 10)
                 xSpeed--;
             if (Math.Abs(x - player.x) < xSpeed)
                 xSpeed = Math.Abs(x - player.x);
-            if (player.y < y && distance < 150)
+            if (player.y + player.collider.field.Height < y + collider.field.Height && distance < 150)
                 Jump();
         }
     }
