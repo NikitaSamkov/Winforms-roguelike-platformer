@@ -14,7 +14,6 @@ namespace Winforms_platformer
     {
         EntityRender playerRender;
         RoomRender roomRender;
-        List<EntityRender> enemyList;
         Map map;
 
         public Form1()
@@ -30,25 +29,24 @@ namespace Winforms_platformer
             roomRender = new RoomRender(map.Current());
 
             //создание игрока
-            playerRender = new EntityRender(new Player(150, 150, new Collider(PlayerBitmaps.IdleSize),
-                roomRender.room.GetYSpeed, roomRender.room.OnTheSurface),
-                new Sprite(PlayerBitmaps.Idle, PlayerBitmaps.IdleSize,
-                PlayerBitmaps.Move, PlayerBitmaps.MoveSize,
-                PlayerBitmaps.Attack, PlayerBitmaps.AttackSize,
-                PlayerBitmaps.Attack, PlayerBitmaps.AttackSize,
+            playerRender = new EntityRender(new Player(150, 150, new Collider(PlayerRes.IdleSize, 0, 0, 
+                new Collider(PlayerRes.AttackRange, PlayerRes.Idle.Width, PlayerRes.Idle.Height / 2)),
+                roomRender.room),
+                new Sprite(PlayerRes.Idle, PlayerRes.IdleSize,
+                PlayerRes.Move, PlayerRes.MoveSize,
+                PlayerRes.Attack, PlayerRes.AttackSize,
+                PlayerRes.Attack, PlayerRes.AttackSize,
                 3));
-            //создание списка врагов
-            enemyList = new List<EntityRender>();
 
             var timer = new Timer();
             timer.Interval = 60;
             timer.Tick += (sender, args) =>
             {
                 //механика, не позволяющая игроку перейти в след./пред. комнату, если текущая комната конечная/начальная или есть враги
-                if (((map.IsCurrentRoomLast() || enemyList.Count != 0) &&
+                if (((map.IsCurrentRoomLast() || roomRender.room.enemyList.Count != 0) &&
                     playerRender.entity.x + playerRender.entity.collider.field.Width >= ClientSize.Width &&
                     playerRender.entity.currentDirection == Direction.Right) ||
-                    ((map.IsCurrentRoomFirst() || enemyList.Count != 0) &&
+                    ((map.IsCurrentRoomFirst() || roomRender.room.enemyList.Count != 0) &&
                     playerRender.entity.x <= 0 &&
                     playerRender.entity.currentDirection == Direction.Left))
                 {
@@ -63,10 +61,10 @@ namespace Winforms_platformer
                 playerRender.entity.x + playerRender.entity.collider.field.Width < 0))
                 {
                     ChangeRoom();
-                    (playerRender.entity as Player).UpdateRoom(roomRender.room.OnTheSurface, roomRender.room.GetYSpeed);
+                    playerRender.entity.room = roomRender.room;
                 }
                 //обновление противников
-                foreach (var enemyRender in enemyList)
+                foreach (var enemyRender in roomRender.room.enemyList)
                 {
                     if (enemyRender.entity.status == Status.Move && playerRender.entity.x == enemyRender.entity.x
                     && playerRender.entity.y == enemyRender.entity.y)
@@ -76,8 +74,8 @@ namespace Winforms_platformer
                         enemyRender.SetMoving();
                     else
                         (enemyRender.entity as Enemy).MoveToPlayer();
-                    if (enemyRender.entity.Intersects(playerRender.entity))
-                        playerRender.entity.Hurt(enemyRender.entity.damage);
+                    if (enemyRender.entity.IntersectsWithBody(playerRender.entity))
+                        playerRender.Hurt(enemyRender.entity.damage);
                     enemyRender.Update();
                 }
                 //обновление игрока
@@ -117,7 +115,7 @@ namespace Winforms_platformer
             foreach (var platform in roomRender.room.platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
             //отрисовка врагов
-            foreach (var enemy in enemyList)
+            foreach (var enemy in roomRender.room.enemyList)
             {
                 var size = enemy.sprite.GetSize();
                 g.DrawImage(enemy.sprite.GetSheet(), enemy.entity.x, enemy.entity.y - size.Height,
@@ -174,18 +172,18 @@ namespace Winforms_platformer
                     break;
                 //спавн простого врага
                 case Keys.D0:
-                    enemyList.Add(new EntityRender(new Enemy(playerRender.entity.x, playerRender.entity.y, 
-                        new Collider(DummyBitmaps.IdleSize), roomRender.room.GetYSpeed, roomRender.room.OnTheSurface, 
+                    roomRender.room.enemyList.Add(new EntityRender(new Enemy(playerRender.entity.x, playerRender.entity.y, 
+                        new Collider(DummyRes.IdleSize), roomRender.room, 
                         (Player)playerRender.entity), 
-                        new Sprite(DummyBitmaps.Idle, DummyBitmaps.IdleSize,
-                        DummyBitmaps.Move, DummyBitmaps.MoveSize, 
+                        new Sprite(DummyRes.Idle, DummyRes.IdleSize,
+                        DummyRes.Move, DummyRes.MoveSize, 
                         null, new Size(),
                         null, new Size(), 3)));
                     break;
                 //уничтожение последнего врага в списке
                 case Keys.D9:
-                    if (enemyList.Count > 0)
-                        enemyList.RemoveAt(0);
+                    if (roomRender.room.enemyList.Count > 0)
+                        roomRender.room.enemyList.RemoveAt(0);
                     break;
                 case Keys.E:
                     playerRender.SetAttacking();

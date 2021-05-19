@@ -10,6 +10,7 @@ namespace Winforms_platformer
     public class Collider
     {
         public Size field { get; set; }
+        public Collider attackCollider { get; set; }
         public int x { get; set; }
         public int y { get; set; }
         public int Left => x;
@@ -17,11 +18,12 @@ namespace Winforms_platformer
         public int Bottom => y + field.Height;
         public int Top => y;
 
-        public Collider(Size field, int x = 0, int y = 0)
+        public Collider(Size field, int x = 0, int y = 0, Collider attackCollider = null)
         {
             this.field = field;
             this.x = x;
             this.y = y;
+            this.attackCollider = attackCollider;
         }
     }
 }

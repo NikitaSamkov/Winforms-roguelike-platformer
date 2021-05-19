@@ -16,26 +16,26 @@ namespace Winforms_platformer
         public Collider collider { get; protected set; }
         public int hp { get; protected set; }
         public int damage { get; protected set; }
-        protected Func<int, int, int, int, int> getYSpeed;
+        public Room room { get; set; }
         protected int ySpeed;
         protected int xSpeed = 5;
 
-        public Entity(int x, int y, Collider collider, Func<int, int, int, int, int> moveY)
+        public Entity(int x, int y, Collider collider, Room room)
         {
             this.x = x;
             this.y = y;
             this.collider = collider;
-            getYSpeed = moveY;
+            this.room = room;
             this.status = status;
         }
 
         protected void MoveY()
         {
-            ySpeed = getYSpeed(x, y, collider.field.Width, ySpeed);
+            ySpeed = room.GetYSpeed(x, y, collider.field.Width, ySpeed);
             y += ySpeed;
         }
 
-        public virtual void Move()
+        public virtual void Update()
         {
             if (status == Status.Move)
                 switch (currentDirection)
@@ -55,7 +55,7 @@ namespace Winforms_platformer
             hp -= damage;
         }
 
-        public bool Intersects(Entity target)
+        public bool IntersectsWithBody(Entity target)
         {
             return new Rectangle(new Point(collider.Left + x, collider.Top + x - collider.field.Height), collider.field)
                 .IntersectsWith(new Rectangle(new Point(target.collider.Left + target.x, 

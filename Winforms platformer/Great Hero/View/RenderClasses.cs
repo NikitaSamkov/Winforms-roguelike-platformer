@@ -21,7 +21,7 @@ namespace Winforms_platformer
         public void Update()
         {
             entity.status = sprite.currentStatus;
-            entity.Move();
+            entity.Update();
             sprite.StepFrame();
         }
 
@@ -48,6 +48,11 @@ namespace Winforms_platformer
             if (sprite.currentStatus == Status.Idle)
                 sprite.SetAttacking();
         }
+
+        public void Hurt(int damage)
+        {
+            entity.Hurt(damage);
+        }
     }
 
     public class RoomRender
@@ -59,8 +64,8 @@ namespace Winforms_platformer
         public RoomRender(Room room)
         {
             this.room = room;
-            wallSprite = new Sprite(RoomBitmaps.Wall, new Size(800, 600));
-            groundSprite = new Sprite(RoomBitmaps.Ground, new Size(800, 600));
+            wallSprite = new Sprite(RoomRes.Wall, new Size(800, 600));
+            groundSprite = new Sprite(RoomRes.Ground, new Size(800, 600));
         }
 
         public void ChangeRoom(Room room)

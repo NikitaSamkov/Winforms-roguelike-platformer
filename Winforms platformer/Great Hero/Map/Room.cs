@@ -12,6 +12,7 @@ namespace Winforms_platformer
         public int gForce { get; private set; }
         public readonly int groundLevel;
         public readonly List<Platform> platforms;
+        public List<EntityRender> enemyList = new List<EntityRender>();
 
         public Room(List<Platform> platforms, int gravitationForce = 7, int groundLevel = 486)
         {
@@ -41,6 +42,18 @@ namespace Winforms_platformer
                     platform.leftBorder < x + width && platform.rightBorder > x)
                     return true;
             return false;
+        }
+
+        public List<EntityRender> GetIntersectedEntities(Collider collider, int colliderX, int colliderY)
+        {
+            var result = new List<EntityRender>();
+            foreach (var enemy in enemyList)
+                if (new Rectangle(new Point(colliderX, colliderY), collider.field)
+                    .IntersectsWith(
+                    new Rectangle(new Point(enemy.entity.collider.x + enemy.entity.x, enemy.entity.collider.y + enemy.entity.y),
+                    enemy.entity.collider.field)))
+                    result.Add(enemy);
+            return result;
         }
     }
 }

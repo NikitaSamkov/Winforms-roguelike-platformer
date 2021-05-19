@@ -13,9 +13,8 @@ namespace Winforms_platformer
     public class Player : Creature
     {
         public List<ITreasure> treasures { get; set; }
-        public Player(int x, int y, Collider collider, Func<int, int, int, int, int> moveY, 
-            Func<int, int, int, bool> canJump) 
-            : base(x, y, collider, moveY, canJump)
+        public Player(int x, int y, Collider collider, Room room) 
+            : base(x, y, collider, room)
         {
             currentDirection = Direction.Right;
             xSpeed = 20;

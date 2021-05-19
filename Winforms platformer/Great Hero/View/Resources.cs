@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Winforms_platformer
 {
-    public static class PlayerBitmaps
+    public static class PlayerRes
     {
         public static Bitmap Idle = new Bitmap(@"..\..\..\..\Sprites\Player\PlayerIdle.png");
         public static Bitmap Move = new Bitmap(@"..\..\..\..\Sprites\Player\PlayerMove.png");
@@ -17,9 +17,10 @@ namespace Winforms_platformer
         public static Size MoveSize = new Size(40, 112);
         public static Size AttackSize = new Size(88, 112);
         public static Size AttackMoveSize = new Size(88, 112);
+        public static Size AttackRange = new Size(48, 56);
     }
 
-    public static class DummyBitmaps
+    public static class DummyRes
     {
         public static Bitmap Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyIdle.png");
         public static Bitmap Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyWalk.png");
@@ -27,7 +28,7 @@ namespace Winforms_platformer
         public static Size MoveSize = new Size(40, 96);
     }
 
-    public static class RoomBitmaps
+    public static class RoomRes
     {
         public static Bitmap Wall = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
         public static Bitmap Ground = new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png");

@@ -10,9 +10,9 @@ namespace Winforms_platformer
     public class Enemy : Creature
     {
         private Player player;
-        public Enemy(int x, int y, Collider collider, Func<int, int,int,int,int> moveY, Func<int,int,int,bool> canJump,
+        public Enemy(int x, int y, Collider collider, Room room,
             Player player) 
-            : base(x, y, collider, moveY, canJump)
+            : base(x, y, collider, room)
         {
             this.player = player;
             hp = 20;
