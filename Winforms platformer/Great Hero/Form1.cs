@@ -89,6 +89,21 @@ namespace Winforms_platformer
                 //обновление снарядов
                 foreach (var projectile in roomRender.room.allyProjectilesList)
                 {
+                    if (projectile.entity.y + projectile.entity.collider.field.Height >= roomRender.room.groundLevel)
+                    {
+                        roomRender.room.allyProjectilesList.Remove(projectile);
+                        break;
+                    }
+                    var targets = roomRender.room.GetIntersectedEntities(projectile.entity);
+                    if (targets.Count != 0)
+                    {
+                        targets
+                        .OrderBy(target => target.entity.GetDistanceTo(projectile.entity.x, projectile.entity.y))
+                        .First()
+                        .entity.hp -= projectile.entity.damage;
+                        roomRender.room.allyProjectilesList.Remove(projectile);
+                        break;
+                    }
                     projectile.Update();
                 }
 

@@ -17,7 +17,7 @@ namespace Winforms_platformer
         public Direction currentDirection { get; protected set; }
         public Status status { get; set; }
         public Collider collider { get; protected set; }
-        public int hp { get; protected set; }
+        public int hp { get; set; }
         public int damage { get; protected set; }
         public int invincibility { get; protected set; }
         public Room room;

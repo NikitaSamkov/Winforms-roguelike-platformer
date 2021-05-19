@@ -57,5 +57,13 @@ namespace Winforms_platformer
                     result.Add(enemy);
             return result;
         }
+        public List<EntityRender> GetIntersectedEntities(Entity entity)
+        {
+            var result = new List<EntityRender>();
+            foreach (var enemy in enemyList)
+                if (entity.IntersectsWithBody(enemy.entity))
+                    result.Add(enemy);
+            return result;
+        }
     }
 }
