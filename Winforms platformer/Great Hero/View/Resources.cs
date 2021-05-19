@@ -33,4 +33,10 @@ namespace Winforms_platformer
         public static Bitmap Wall = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
         public static Bitmap Ground = new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png");
     }
+
+    public static class ProjectilesRes
+    {
+        public static Bitmap Arrow = new Bitmap(@"..\..\..\..\Sprites\Projectiles\Arrow.png");
+        public static Size ArrowSize = new Size(50, 10);
+    }
 }

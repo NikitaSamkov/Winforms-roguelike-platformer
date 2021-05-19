@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Projectiles.cs" />
     <Compile Include="View\Resources.cs" />
     <Compile Include="Entity\Collider.cs" />
     <Compile Include="Entity\Creature.cs" />

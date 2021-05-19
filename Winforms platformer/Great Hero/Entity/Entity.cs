@@ -31,7 +31,7 @@ namespace Winforms_platformer
             damageInvincibility = 12;
         }
 
-        protected void MoveY()
+        protected virtual void MoveY()
         {
             ySpeed = room.GetYSpeed(x, y + collider.field.Height, collider.field.Width, ySpeed);
             y += ySpeed;

@@ -13,6 +13,8 @@ namespace Winforms_platformer
         public readonly int groundLevel;
         public readonly List<Platform> platforms;
         public List<EntityRender> enemyList = new List<EntityRender>();
+        public List<EntityRender> allyProjectilesList = new List<EntityRender>();
+        public List<EntityRender> enemyProjectilesList = new List<EntityRender>();
 
         public Room(List<Platform> platforms, int gravitationForce = 7, int groundLevel = 486)
         {

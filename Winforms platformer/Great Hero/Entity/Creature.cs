@@ -10,12 +10,13 @@ namespace Winforms_platformer
     public class Creature : Entity
     {
         public bool flying { get; set; }
+        public int bowStrenght { get; set; }
         protected int jumpStrength = 50;
 
         public Creature(int x, int y, Collider collider, Room room) 
             : base(x, y, collider, room)
         {
-
+            bowStrenght = 75;
         }
 
         public override void Update()

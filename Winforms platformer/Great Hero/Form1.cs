@@ -86,6 +86,11 @@ namespace Winforms_platformer
                 }
                 //обновление игрока
                 playerRender.Update();
+                //обновление снарядов
+                foreach (var projectile in roomRender.room.allyProjectilesList)
+                {
+                    projectile.Update();
+                }
 
                 Invalidate();
             };
@@ -161,6 +166,16 @@ namespace Winforms_platformer
                     new Rectangle(colliderPoint,
                         playerRender.entity.collider.attackCollider.field));
             }
+            //отрисовка снарядов
+            foreach (var projectile in roomRender.room.allyProjectilesList)
+            {
+                var size = projectile.sprite.GetSize();
+                g.DrawImage(projectile.sprite.GetSheet(), projectile.entity.x, projectile.entity.y,
+                    new Rectangle(size.Width * projectile.sprite.currentFrame,
+                    size.Height * (int)projectile.entity.currentDirection,
+                    size.Width, size.Height),
+                    GraphicsUnit.Pixel);
+            }
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -214,8 +229,23 @@ namespace Winforms_platformer
                     if (roomRender.room.enemyList.Count > 0)
                         roomRender.room.enemyList.RemoveAt(0);
                     break;
+                //ближнебойная атака
                 case Keys.E:
                     playerRender.SetAttacking();
+                    break;
+                //дальнобойная атака
+                case Keys.Q:
+                    var arrow =
+                        new EntityRender(
+                        new Arrow(
+                        playerRender.entity.x,
+                        playerRender.entity.y + playerRender.entity.collider.field.Height / 2,
+                        new Collider(ProjectilesRes.ArrowSize), roomRender.room, 15, (playerRender.entity as Player).bowStrenght),
+                        new Sprite(ProjectilesRes.Arrow, ProjectilesRes.ArrowSize,
+                        ProjectilesRes.Arrow, ProjectilesRes.ArrowSize));
+                    arrow.entity.MoveTo(playerRender.entity.currentDirection);
+                    arrow.SetMoving();
+                    roomRender.room.allyProjectilesList.Add(arrow);
                     break;
             }
         }
