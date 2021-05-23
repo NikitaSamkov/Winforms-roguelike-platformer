@@ -9,18 +9,22 @@ namespace Winforms_platformer
 {
     public class Room
     {
+        private Player player;
         public int gForce { get; private set; }
+        public RoomType type { get; }
         public readonly int groundLevel;
         public readonly List<Platform> platforms;
-        public List<EntityRender> enemyList = new List<EntityRender>();
-        public List<EntityRender> allyProjectilesList = new List<EntityRender>();
-        public List<EntityRender> enemyProjectilesList = new List<EntityRender>();
+        public List<Enemy> enemyList = new List<Enemy>();
+        public List<Projectile> ProjectilesList = new List<Projectile>();
+        //public List<TreasureRender> treasures = new List<TreasureRender>();
 
-        public Room(List<Platform> platforms, int gravitationForce = 7, int groundLevel = 486)
+        public Room(RoomType type, List<Platform> platforms, Player player, int gravitationForce = 7, int groundLevel = 486)
         {
             this.platforms = platforms;
             gForce = gravitationForce;
             this.groundLevel = groundLevel;
+            this.type = type;
+            this.player = player;
         }
 
         public int GetYSpeed(int x, int y, int width, int speed)
@@ -46,23 +50,25 @@ namespace Winforms_platformer
             return false;
         }
 
-        public List<EntityRender> GetIntersectedEntities(Collider collider, int colliderX, int colliderY)
+        public List<Enemy> GetIntersectedEnemies(Collider collider, int colliderX, int colliderY)
         {
-            var result = new List<EntityRender>();
+            var result = new List<Enemy>();
             foreach (var enemy in enemyList)
                 if (new Rectangle(new Point(colliderX, colliderY), collider.field)
                     .IntersectsWith(
-                    new Rectangle(new Point(enemy.entity.collider.x + enemy.entity.x, enemy.entity.collider.y + enemy.entity.y),
-                    enemy.entity.collider.field)))
+                    new Rectangle(new Point(enemy.collider.x + enemy.x, enemy.collider.y + enemy.y),
+                    enemy.collider.field)))
                     result.Add(enemy);
             return result;
         }
-        public List<EntityRender> GetIntersectedEntities(Entity entity)
+        public List<Entity> GetIntersectedEntities(Entity entity)
         {
-            var result = new List<EntityRender>();
+            var result = new List<Entity>();
             foreach (var enemy in enemyList)
-                if (entity.IntersectsWithBody(enemy.entity))
+                if (entity.IntersectsWithBody(enemy))
                     result.Add(enemy);
+            if (entity.IntersectsWithBody(player))
+                result.Add(player);
             return result;
         }
     }

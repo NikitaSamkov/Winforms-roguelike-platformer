@@ -5,72 +5,147 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Winforms_platformer
+namespace Winforms_platformer.View
 {
-    public class EntityRender
+    public class EntityRender : IRenderable
     {
-        public Entity entity;
-        public Sprite sprite;
+        private Entity entity;
+        private EntityResource Resource;
+        private Bitmap CurrentSheet;
+        private int frame => (currentFrame / framePause) % maxFrames;
+        private int maxFrames;
+        private int currentFrame;
+        private Size currentFrameSize;
+        private int framePause;
 
-        public EntityRender(Entity entity, Sprite entitySprite)
+        public EntityRender(Entity entity, EntityResource resource, int framePause = 1)
         {
             this.entity = entity;
-            sprite = entitySprite;
+            Resource = resource;
+            this.framePause = framePause;
         }
 
-        public void Update()
+        protected void GetCurrentSheet()
         {
-            entity.status = sprite.currentStatus;
-            entity.Update();
-            sprite.StepFrame();
+            switch (entity.status)
+            {
+                case Status.Idle:
+                    if (CurrentSheet != Resource.Idle)
+                    {
+                        CurrentSheet = Resource.Idle;
+                        maxFrames = Resource.Idle.Width / Resource.IdleSize.Width;
+                        currentFrameSize = Resource.IdleSize;
+                        currentFrame = 0;
+                    }
+                    break;
+                case Status.Move:
+                    if (CurrentSheet != Resource.Move)
+                    {
+                        CurrentSheet = Resource.Move;
+                        maxFrames = Resource.Move.Width / Resource.MoveSize.Width;
+                        currentFrameSize = Resource.MoveSize;
+                        currentFrame = 0;
+                    }
+                    break;
+                case Status.Attack:
+                    if (Resource is AttackingEntityResource attackingResource && CurrentSheet != attackingResource.Attack)
+                    {
+                        if (CurrentSheet != attackingResource.AttackMove)
+                            currentFrame = 0;
+                        CurrentSheet = attackingResource.Attack;
+                        currentFrameSize = attackingResource.AttackSize;
+                        maxFrames = attackingResource.Attack.Width / attackingResource.AttackSize.Width;
+                    }
+                    break;
+                case Status.AttackMove:
+                    if (Resource is AttackingEntityResource attackingMoveResource && CurrentSheet != attackingMoveResource.AttackMove)
+                    {
+                        if (CurrentSheet != attackingMoveResource.Attack)
+                            currentFrame = 0;
+                        CurrentSheet = attackingMoveResource.AttackMove;
+                        currentFrameSize = attackingMoveResource.AttackMoveSize;
+                        maxFrames = attackingMoveResource.AttackMove.Width / attackingMoveResource.AttackMoveSize.Width;
+                    }
+                    break;
+            }
         }
 
-        public void SetIdle()
+        public void Paint(Graphics g)
         {
-            if (sprite.currentStatus == Status.AttackMove)
-                sprite.SetAttacking();
-            if (sprite.currentStatus != Status.Attack)
-                sprite.SetIdle();
-        }
-
-        public void SetMoving()
-        {
-            if (sprite.currentStatus == Status.Attack)
-                sprite.SetAttackingMove();
-            if (sprite.currentStatus != Status.AttackMove)
-                sprite.SetMoving();
-        }
-
-        public void SetAttacking()
-        {
-            if (sprite.currentStatus == Status.Move)
-                sprite.SetAttackingMove();
-            if (sprite.currentStatus == Status.Idle)
-                sprite.SetAttacking();
-        }
-
-        public void Hurt(int damage)
-        {
-            entity.Hurt(damage);
+            GetCurrentSheet();
+            currentFrame++;
+            g.DrawImage(CurrentSheet, ((int)entity.direction == 0) ? entity.x :
+                    entity.x + entity.collider.field.Width - currentFrameSize.Width,
+                entity.y, new Rectangle(currentFrameSize.Width * frame,
+                    currentFrameSize.Height * (int)entity.direction,
+                    currentFrameSize.Width,
+                    currentFrameSize.Height),
+                    GraphicsUnit.Pixel);
         }
     }
 
-    public class RoomRender
+    public class EnemysRender : IRenderable
     {
-        public Room room;
-        public Sprite wallSprite;
-        public Sprite groundSprite;
+        private List<Enemy> enemies;
+
+        public EnemysRender(List<Enemy> enemies)
+        {
+            this.enemies = enemies;
+        }
+
+        public void Paint(Graphics g)
+        {
+            foreach (var enemy in enemies)
+            {
+                var resources = Resources.Dummy;
+                //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
+                var render = new EntityRender(enemy, resources);
+                render.Paint(g);
+            }
+        }
+    }
+
+    public class ProjectilesRender : IRenderable
+    {
+        private List<Projectile> projectiles;
+        public ProjectilesRender(List<Projectile> projectiles)
+        {
+            this.projectiles = projectiles;
+        }
+
+        public void Paint(Graphics g)
+        {
+            foreach (var projectile in projectiles)
+            {
+                var resources = Resources.Arrow;
+                //вставить сюда if (projectile is CustomClass) resources = Resources.CustomClass
+                var render = new EntityRender(projectile, resources);
+                render.Paint(g);
+            }
+        }
+    }
+
+    public class RoomRender : IRenderable
+    {
+        private Room room;
+        private RoomRes Resource;
 
         public RoomRender(Room room)
         {
             this.room = room;
-            wallSprite = new Sprite(RoomRes.Wall, new Size(800, 600));
-            groundSprite = new Sprite(RoomRes.Ground, new Size(800, 600));
+            Resource = Resources.Room;
         }
+        public void ChangeRoom(Room newRoom) => room = newRoom;
 
-        public void ChangeRoom(Room room)
+        public void Paint(Graphics g)
         {
-            this.room = room;
+            g.DrawImage(Resource.Wall, 0, 0, Resource.Wall.Width, Resource.Wall.Height);
+            g.DrawImage(Resource.Ground,
+                Resource.Wall.Width - Resource.Ground.Width,
+                room.groundLevel,
+                Resource.Ground.Width, Resource.Ground.Height);
+            foreach (var platform in room.platforms)
+                g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
         }
     }
 }

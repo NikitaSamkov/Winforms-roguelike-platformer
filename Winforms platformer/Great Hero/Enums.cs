@@ -19,4 +19,19 @@ namespace Winforms_platformer
         Attack = 2,
         AttackMove = 3
     }
+
+    public enum RoomType
+    {
+        StartingRoom,
+        EnemyRoom,
+        TreasureRoom,
+        Shop,
+        BossRoom
+    }
+
+    public enum ProjectileType
+    {
+        Ally,
+        Enemy
+    }
 }

@@ -8,7 +8,8 @@ namespace Winforms_platformer
 {
     public interface ITreasure
     {
-        void Apply(EntityRender target);
-        int GetID();
+        void Enable(Player player);
+        void Disable(Player player);
+        int ID { get; }
     }
 }

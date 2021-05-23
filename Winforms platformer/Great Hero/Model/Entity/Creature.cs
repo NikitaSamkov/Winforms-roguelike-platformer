@@ -22,7 +22,7 @@ namespace Winforms_platformer
         public override void Update()
         {
             if (status != Status.Idle && status != Status.Attack)
-                switch (currentDirection)
+                switch (direction)
                 {
                     case Direction.Left:
                         x -= xSpeed;
@@ -37,11 +37,11 @@ namespace Winforms_platformer
                 invincibility--;
             if (status == Status.Attack || status == Status.AttackMove)
             {
-                var colliderX = ((int)currentDirection == 0) ?
+                var colliderX = ((int)direction == 0) ?
                     collider.field.Width + collider.attackCollider.x + x :
                     x - collider.attackCollider.x - collider.attackCollider.field.Width;
                 var colliderY = y + collider.attackCollider.y;
-                foreach (var target in room.GetIntersectedEntities(collider, colliderX, colliderY))
+                foreach (var target in room.GetIntersectedEnemies(collider, colliderX, colliderY))
                     target.Hurt(damage);
             }
         }

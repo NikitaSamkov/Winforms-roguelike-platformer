@@ -16,11 +16,13 @@ namespace Winforms_platformer
         public Player(int x, int y, Collider collider, Room room) 
             : base(x, y, collider, room)
         {
-            currentDirection = Direction.Right;
+            direction = Direction.Right;
             xSpeed = 20;
             treasures = new List<ITreasure>();
             hp = 100;
             damage = 10;
         }
+
+        public void ChangeRoom(Room newRoom) => room = newRoom;
     }
 }

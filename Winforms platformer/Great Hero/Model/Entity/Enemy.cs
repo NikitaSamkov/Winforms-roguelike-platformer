@@ -18,10 +18,17 @@ namespace Winforms_platformer
             hp = 20;
             damage = 10;
         }
-        
+
+        public override void Update()
+        {
+            MoveToPlayer();
+            base.Update();
+        }
+
         public void MoveToPlayer()
         {
-            currentDirection = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+            status = Status.Move;
+            direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
             var distance = GetDistanceTo(player.x, player.y);
             if (distance > 150 && xSpeed < 15 || distance <= 100 && xSpeed < 10)
                 xSpeed++;

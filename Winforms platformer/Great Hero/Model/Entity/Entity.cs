@@ -14,7 +14,7 @@ namespace Winforms_platformer
         protected int damageInvincibility;
         public int x { get; protected set; }
         public int y { get; protected set; }
-        public Direction currentDirection { get; protected set; }
+        public Direction direction { get; protected set; }
         public Status status { get; set; }
         public Collider collider { get; protected set; }
         public int hp { get; set; }
@@ -40,7 +40,7 @@ namespace Winforms_platformer
         public virtual void Update()
         {
             if (status == Status.Move)
-                switch (currentDirection)
+                switch (direction)
                 {
                     case Direction.Left:
                         x -= xSpeed;
@@ -70,7 +70,7 @@ namespace Winforms_platformer
                 target.collider.Top + x - collider.field.Height), target.collider.field));
         }
 
-        public void MoveTo(Direction direction) => currentDirection = direction;
+        public void MoveTo(Direction direction) => this.direction = direction;
         public void MoveDown(int distance) => y += distance;
         public void MoveDown() => y += xSpeed;
         public void MoveUp() => y -= xSpeed;
