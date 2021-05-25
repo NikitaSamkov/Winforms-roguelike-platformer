@@ -28,6 +28,8 @@ namespace Winforms_platformer
             mainTimer.Interval = 60;
             mainTimer.Tick += (sender, args) =>
             {
+                Game.WindowWidth = ClientSize.Width;
+                Game.WindowHeight = ClientSize.Height;
                 Game.Update();
                 Invalidate();
             };

@@ -82,16 +82,20 @@ namespace Winforms_platformer.Model
             keyBindings[Keys.S] = keyBindings[Keys.Down];
 
             keyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
+
             keyBindings[Keys.D0] = () => Map.CurrentRoom().enemyList.Add(
                 new Enemy(Player.x, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
+
             keyBindings[Keys.E] = () =>
             {
-                if (Player.status == Status.Idle)
-                    Player.status = Status.Attack;
-                else
-                    Player.status = Status.AttackMove;
+                if (Player.status != Status.Attack && Player.status != Status.AttackMove)
+                    if (Player.status == Status.Idle)
+                        Player.status = Status.Attack;
+                    else
+                        Player.status = Status.AttackMove;
             };
-            keyBindings[Keys.Q] = () => 
+
+            keyBindings[Keys.Q] = () =>
             {
                 var arrow = new Arrow(Player.x, Player.y + Player.collider.field.Height / 2,
                     new Collider(Resources.Arrow.IdleSize), Map.CurrentRoom, 15, Player.bowStrenght, ProjectileType.Ally);
@@ -99,6 +103,11 @@ namespace Winforms_platformer.Model
                 arrow.status = Status.Move;
                 Map.CurrentRoom().ProjectilesList.Add(arrow);
             };
+
+            keyBindings[Keys.D1] = () => TreasurePool.GiveToPlayer(Player, 0);
+
+            keyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(Player, 0);
+
             keyBindings[Keys.P] = () =>
             {
                 Console.WriteLine("ABOBA");

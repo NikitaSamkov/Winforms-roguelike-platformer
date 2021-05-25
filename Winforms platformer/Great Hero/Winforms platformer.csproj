@@ -57,7 +57,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Model\Entity\Entity.cs" />
     <Compile Include="Model\Map\Treasure\TreasurePool.cs" />
-    <Compile Include="Model\Map\Treasure\ITreasure.cs" />
+    <Compile Include="Model\Map\Treasure\Treasure.cs" />
     <Compile Include="Model\Map\Map.cs" />
     <Compile Include="Model\Map\Platform.cs" />
     <Compile Include="Model\Entity\Player.cs" />

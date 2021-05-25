@@ -12,4 +12,13 @@ namespace Winforms_platformer
         void Disable(Player player);
         int ID { get; }
     }
+
+    public class TreasureItem : Entity
+    {
+        ITreasure Treasure { get; }
+
+        public TreasureItem(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
+        {
+        }
+    }
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winforms_platformer.Model;
 
 namespace Winforms_platformer.View
 {
@@ -70,9 +71,34 @@ namespace Winforms_platformer.View
             }
         }
 
+        public void StopAttackingIfNeeded()
+        {
+            if (Resource is AttackingEntityResource attackingResource && ((currentFrame + 1) / framePause) == maxFrames)
+            {
+                if (CurrentSheet == attackingResource.Attack)
+                {
+                    Game.Player.status = Status.Idle;
+                    CurrentSheet = Resource.Idle;
+                    maxFrames = Resource.Idle.Width / Resource.IdleSize.Width;
+                    currentFrameSize = Resource.IdleSize;
+                    currentFrame = 0;
+                }
+                else if (CurrentSheet == attackingResource.AttackMove)
+                {
+                    Game.Player.status = Status.Move;
+                    CurrentSheet = Resource.Move;
+                    maxFrames = Resource.Move.Width / Resource.MoveSize.Width;
+                    currentFrameSize = Resource.MoveSize;
+                    currentFrame = 0;
+                }
+            }
+        }
+
         public void Paint(Graphics g)
         {
+            
             GetCurrentSheet();
+            StopAttackingIfNeeded();
             currentFrame++;
             g.DrawImage(CurrentSheet, ((int)entity.direction == 0) ? entity.x :
                     entity.x + entity.collider.field.Width - currentFrameSize.Width,
@@ -139,11 +165,11 @@ namespace Winforms_platformer.View
 
         public void Paint(Graphics g)
         {
-            g.DrawImage(Resource.Wall, 0, 0, Resource.Wall.Width, Resource.Wall.Height);
+            g.DrawImage(Resource.Wall, 0, 0, Game.WindowWidth, Game.WindowHeight);
             g.DrawImage(Resource.Ground,
                 Resource.Wall.Width - Resource.Ground.Width,
                 CurrentRoom().groundLevel,
-                Resource.Ground.Width, Resource.Ground.Height);
+                Game.WindowWidth, Resource.Ground.Height);
             foreach (var platform in CurrentRoom().platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
         }
