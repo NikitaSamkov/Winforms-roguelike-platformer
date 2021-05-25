@@ -97,6 +97,7 @@ namespace Winforms_platformer.Model
                     new Collider(Resources.Arrow.IdleSize), Map.CurrentRoom, 15, Player.bowStrenght, ProjectileType.Ally);
                 arrow.MoveTo(Player.direction);
                 arrow.status = Status.Move;
+                Map.CurrentRoom.ProjectilesList.Add(arrow);
             };
             keyBindings[Keys.P] = () =>
             {
