@@ -11,6 +11,7 @@ namespace Winforms_platformer
         void Enable(Player player);
         void Disable(Player player);
         int ID { get; }
+        int Price { get; }
     }
 
     public class TreasureItem : Entity

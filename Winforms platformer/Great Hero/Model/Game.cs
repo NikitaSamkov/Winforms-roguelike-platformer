@@ -123,6 +123,8 @@ namespace Winforms_platformer.Model
                     DeveloperToolsON = true;
             };
 
+            KeyBindings[Keys.R] = () => TreasurePool.GetPrice();
+
             KeyBindings[Keys.P] = () =>
             {
                 Console.WriteLine("ABOBA");

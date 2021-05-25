@@ -42,11 +42,32 @@ namespace Winforms_platformer
         }
 
         public static void SortPool() => treasures.OrderBy(treasure => treasure.ID);
+
+        public static void GetPrice()
+        {
+            var treasuresPrices = treasures.Select(e => e.Price).ToList();
+            var sum = 0.00;
+            var chances = new List<double>();
+            var rand = new Random();
+            for (var i = 0; i < treasuresPrices.Count; i++)
+            {
+                chances.Add(1 * (treasuresPrices.Max() - treasuresPrices[i] + 1) * 100 / treasuresPrices.Count);
+                sum += chances[i];
+            }
+            for (var i = 0; i < treasuresPrices.Count; i++)
+                if (rand.Next(1, 100) <= chances[i] * 100 / sum || i == treasuresPrices.Count - 1)
+                {
+                    Console.WriteLine(treasuresPrices[i]);
+                    break;
+                }
+        }
     }
 
     public class AmuletOfFlying : ITreasure
     {
         int ITreasure.ID { get => 0; }
+
+        int ITreasure.Price { get => 5; }
 
         public void Enable(Player player)
         {
