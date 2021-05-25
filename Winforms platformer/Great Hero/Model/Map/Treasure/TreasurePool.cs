@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winforms_platformer.Model;
 
 namespace Winforms_platformer
 {
@@ -13,12 +14,12 @@ namespace Winforms_platformer
             new AmuletOfFlying()
         };
 
-        public static void GiveToPlayer(Player player, int treasureID)
+        public static void GiveToPlayer(int treasureID)
         {
             if (treasureID < treasures.Count)
             {
-                player.treasures.Add(treasures[treasureID]);
-                treasures[treasureID].Enable(player);
+                Game.Player.treasures.Add(treasures[treasureID]);
+                treasures[treasureID].Enable(Game.Player);
             }
         }
 

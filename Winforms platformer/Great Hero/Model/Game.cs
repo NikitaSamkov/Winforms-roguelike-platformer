@@ -13,7 +13,9 @@ namespace Winforms_platformer.Model
         public static Map Map;
         public static int WindowWidth;
         public static int WindowHeight;
-        public static Dictionary<Keys, Action> keyBindings;
+        public static Dictionary<Keys, Action> KeyBindings = new Dictionary<Keys, Action>();
+        public static bool GameOver = false;
+        public static bool DeveloperToolsON = false;
 
         static Game()
         {
@@ -24,15 +26,19 @@ namespace Winforms_platformer.Model
             Map.GenerateRooms();
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
-            keyBindings = new Dictionary<Keys, Action>();
             SetKeyBindings();
         }
 
         public static void Update()
         {
-            Map.Update();
+            if (!GameOver)
+            {
+                Map.Update();
 
-            Player.Update();
+                if (Player.hp <= 0)
+                    GameOver = true;
+                Player.Update();
+            }
         }
 
         public static void SetWindowSize(int width, int height)
@@ -43,7 +49,7 @@ namespace Winforms_platformer.Model
 
         static void SetKeyBindings()
         {
-            keyBindings[Keys.Left] = () =>
+            KeyBindings[Keys.Left] = () =>
             {
                 Player.MoveTo(Direction.Left);
                 if (Player.status == Status.Attack)
@@ -51,9 +57,9 @@ namespace Winforms_platformer.Model
                 if (Player.status != Status.AttackMove)
                     Player.status = Status.Move;
             };
-            keyBindings[Keys.A] = keyBindings[Keys.Left];
+            KeyBindings[Keys.A] = KeyBindings[Keys.Left];
 
-            keyBindings[Keys.Right] = () =>
+            KeyBindings[Keys.Right] = () =>
             {
                 Player.MoveTo(Direction.Right);
                 if (Player.status == Status.Attack)
@@ -61,32 +67,32 @@ namespace Winforms_platformer.Model
                 if (Player.status != Status.AttackMove)
                     Player.status = Status.Move;
             };
-            keyBindings[Keys.D] = keyBindings[Keys.Right];
+            KeyBindings[Keys.D] = KeyBindings[Keys.Right];
 
-            keyBindings[Keys.Up] = keyBindings[Keys.Space] = () =>
+            KeyBindings[Keys.Up] = KeyBindings[Keys.Space] = () =>
             {
                 if (Player.flying)
                     Player.MoveUp();
                 else
                     Player.Jump();
             };
-            keyBindings[Keys.W] = keyBindings[Keys.Up];
+            KeyBindings[Keys.W] = KeyBindings[Keys.Up];
 
-            keyBindings[Keys.Down] = () =>
+            KeyBindings[Keys.Down] = () =>
             {
                 if (Player.flying)
                     Player.MoveDown();
                 else
                     Player.MoveDown(1);
             };
-            keyBindings[Keys.S] = keyBindings[Keys.Down];
+            KeyBindings[Keys.S] = KeyBindings[Keys.Down];
 
-            keyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
+            KeyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
 
-            keyBindings[Keys.D0] = () => Map.CurrentRoom().enemyList.Add(
+            KeyBindings[Keys.D0] = () => Map.CurrentRoom().enemyList.Add(
                 new Enemy(Player.x, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
 
-            keyBindings[Keys.E] = () =>
+            KeyBindings[Keys.E] = () =>
             {
                 if (Player.status != Status.Attack && Player.status != Status.AttackMove)
                     if (Player.status == Status.Idle)
@@ -95,7 +101,7 @@ namespace Winforms_platformer.Model
                         Player.status = Status.AttackMove;
             };
 
-            keyBindings[Keys.Q] = () =>
+            KeyBindings[Keys.Q] = () =>
             {
                 var arrow = new Arrow(Player.x, Player.y + Player.collider.field.Height / 2,
                     new Collider(Resources.Arrow.IdleSize), Map.CurrentRoom, 15, Player.bowStrenght, ProjectileType.Ally);
@@ -104,11 +110,20 @@ namespace Winforms_platformer.Model
                 Map.CurrentRoom().ProjectilesList.Add(arrow);
             };
 
-            keyBindings[Keys.D1] = () => TreasurePool.GiveToPlayer(Player, 0);
+            KeyBindings[Keys.D1] = () => Map.CurrentRoom().TreasuresList.Add(
+                new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 0));
 
-            keyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(Player, 0);
+            KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(Player, 0);
 
-            keyBindings[Keys.P] = () =>
+            KeyBindings[Keys.Z] = () =>
+            {
+                if (DeveloperToolsON)
+                    DeveloperToolsON = false;
+                else
+                    DeveloperToolsON = true;
+            };
+
+            KeyBindings[Keys.P] = () =>
             {
                 Console.WriteLine("ABOBA");
             };

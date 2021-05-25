@@ -96,7 +96,7 @@ namespace Winforms_platformer.View
 
         public void Paint(Graphics g)
         {
-            
+
             GetCurrentSheet();
             StopAttackingIfNeeded();
             currentFrame++;
@@ -107,6 +107,9 @@ namespace Winforms_platformer.View
                     currentFrameSize.Width,
                     currentFrameSize.Height),
                     GraphicsUnit.Pixel);
+            if (Game.DeveloperToolsON)
+                g.DrawRectangle(new Pen(Color.Green), entity.x, entity.y, entity.collider.field.Width,
+                        entity.collider.field.Height);
         }
     }
 
@@ -172,6 +175,35 @@ namespace Winforms_platformer.View
                 Game.WindowWidth, Resource.Ground.Height);
             foreach (var platform in CurrentRoom().platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
+        }
+    }
+
+    public class TreasuresRender : IRenderable
+    {
+        private Func<Room> CurrentRoom;
+
+        public TreasuresRender(Func<Room> CurrentRoom)
+        {
+            this.CurrentRoom = CurrentRoom;
+        }
+
+        public void Paint(Graphics g)
+        {
+            foreach (var treasure in CurrentRoom().TreasuresList)
+            {
+                g.DrawImage(GetSprite(treasure.ID), treasure.x, treasure.y);
+                if (Game.DeveloperToolsON)
+                    g.DrawRectangle(new Pen(Color.Green), treasure.x, treasure.y, treasure.collider.field.Width,
+                        treasure.collider.field.Height);
+            }
+        }
+
+        public Bitmap GetSprite(int treasureID)
+        {
+            foreach (var field in Resources.Treasures.GetType().GetFields())
+                if (field.Name == "id" + treasureID)
+                    return (Bitmap)field.GetValue(Resources.Treasures);
+            return Resources.Treasures.idNOtFound;
         }
     }
 }

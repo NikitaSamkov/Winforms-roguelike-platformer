@@ -15,10 +15,18 @@ namespace Winforms_platformer
 
     public class TreasureItem : Entity
     {
-        ITreasure Treasure { get; }
+        public ITreasure Treasure { get; }
+        public int ID => Treasure.ID;
 
-        public TreasureItem(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
+        public TreasureItem(int x, int y, Collider collider, Func<Room> CurrentRoom, int treasureID) 
+            : base(x, y, collider, CurrentRoom)
         {
+            Treasure = TreasurePool.GetTreasureByID(0);
+        }
+
+        public void GiveToPlayer()
+        {
+            TreasurePool.GiveToPlayer(Treasure.ID);
         }
     }
 }

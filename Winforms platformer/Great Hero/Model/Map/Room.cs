@@ -16,7 +16,7 @@ namespace Winforms_platformer
         public readonly List<Platform> platforms;
         public List<Enemy> enemyList = new List<Enemy>();
         public List<Projectile> ProjectilesList = new List<Projectile>();
-        //public List<TreasureRender> treasures = new List<TreasureRender>();
+        public List<TreasureItem> TreasuresList = new List<TreasureItem>();
 
         public Room(RoomType type, List<Platform> platforms, Player player, int gravitationForce = 7, int groundLevel = 486)
         {

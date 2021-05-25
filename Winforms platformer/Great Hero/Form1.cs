@@ -14,9 +14,6 @@ namespace Winforms_platformer
 {
     public partial class Form1 : Form
     {
-        bool developerToolsON = true;
-        bool gameOver;
-
         public Form1()
         {
             InitializeComponent();
@@ -44,14 +41,17 @@ namespace Winforms_platformer
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (Game.keyBindings.ContainsKey(e.KeyCode))
-                Game.keyBindings[e.KeyCode]();
+            if (Game.KeyBindings.ContainsKey(e.KeyCode))
+                Game.KeyBindings[e.KeyCode]();
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left || e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
-                Game.Player.status = Status.Idle;
+                if (Game.Player.status == Status.AttackMove)
+                    Game.Player.status = Status.Attack;
+                else
+                    Game.Player.status = Status.Idle;
         }
     }
 }

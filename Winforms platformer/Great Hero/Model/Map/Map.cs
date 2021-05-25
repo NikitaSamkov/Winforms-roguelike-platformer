@@ -62,6 +62,8 @@ namespace Winforms_platformer.Model
                     CurrentRoom().enemyList.Remove(enemy);
                     break;
                 }
+                if (enemy.IntersectsWithBody(player))
+                    player.Hurt(enemy.damage);
                 enemy.Update();
             }
 
@@ -86,6 +88,17 @@ namespace Winforms_platformer.Model
                     break;
                 }
                 projectile.Update();
+            }
+
+            foreach (var treasure in CurrentRoom().TreasuresList)
+            {
+                if (treasure.IntersectsWithBody(player))
+                {
+                    treasure.GiveToPlayer();
+                    CurrentRoom().TreasuresList.Remove(treasure);
+                    break;
+                }
+                treasure.Update();
             }
         }
 
@@ -123,7 +136,7 @@ namespace Winforms_platformer.Model
                     GoToNext();
                 else
                 {
-                    player.TeleportTo(Game.WindowHeight - player.collider.field.Width);
+                    player.TeleportTo(Game.WindowWidth - player.collider.field.Width);
                     player.status = Status.Idle;
                 }
             }
@@ -133,7 +146,6 @@ namespace Winforms_platformer.Model
         {
             player.TeleportTo(0, rooms[currentRoom + 1].groundLevel - (CurrentRoom().groundLevel - player.y));
             currentRoom++;
-
         }
 
         public void GoToPrevious()

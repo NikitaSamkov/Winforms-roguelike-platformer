@@ -13,12 +13,14 @@ namespace Winforms_platformer
         public static readonly DummyRes Dummy;
         public static readonly RoomRes Room;
         public static readonly ArrowRes Arrow;
+        public static readonly TreasuresRes Treasures;
         static Resources()
         {
             Player = new PlayerRes();
             Dummy = new DummyRes();
             Room = new RoomRes();
             Arrow = new ArrowRes();
+            Treasures = new TreasuresRes();
         }
     }
 
@@ -82,5 +84,14 @@ namespace Winforms_platformer
             IdleSize = new Size(50, 10);
             MoveSize = new Size(50, 10);
         }
+    }
+
+    public class TreasuresRes
+    {
+        public readonly Bitmap idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Treasures\id-1.png");
+        public readonly Size Size = new Size(75, 70);
+
+        //СТРОГО НАЗЫВАТЬ *ID*id !!!!
+        public readonly Bitmap id0 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id0.png");
     }
 }
