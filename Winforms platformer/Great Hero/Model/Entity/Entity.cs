@@ -20,20 +20,20 @@ namespace Winforms_platformer
         public int hp { get; set; }
         public int damage { get; protected set; }
         public int invincibility { get; protected set; }
-        public Room room;
+        public Func<Room> CurrentRoom;
 
-        public Entity(int x, int y, Collider collider, Room room)
+        public Entity(int x, int y, Collider collider, Func<Room> CurrentRoom)
         {
             this.x = x;
             this.y = y;
             this.collider = collider;
-            this.room = room;
+            this.CurrentRoom = CurrentRoom;
             damageInvincibility = 12;
         }
 
         protected virtual void MoveY()
         {
-            ySpeed = room.GetYSpeed(x, y + collider.field.Height, collider.field.Width, ySpeed);
+            ySpeed = CurrentRoom().GetYSpeed(x, y + collider.field.Height, collider.field.Width, ySpeed);
             y += ySpeed;
         }
 

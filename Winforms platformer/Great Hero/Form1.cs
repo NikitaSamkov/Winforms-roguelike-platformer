@@ -42,7 +42,8 @@ namespace Winforms_platformer
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            Game.keyBindings[e.KeyCode]();
+            if (Game.keyBindings.ContainsKey(e.KeyCode))
+                Game.keyBindings[e.KeyCode]();
         }
 
         protected override void OnKeyUp(KeyEventArgs e)

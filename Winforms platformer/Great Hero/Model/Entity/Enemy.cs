@@ -10,7 +10,7 @@ namespace Winforms_platformer
     public class Enemy : Creature
     {
         private Player player;
-        public Enemy(int x, int y, Collider collider, Room room,
+        public Enemy(int x, int y, Collider collider, Func<Room> room,
             Player player) 
             : base(x, y, collider, room)
         {

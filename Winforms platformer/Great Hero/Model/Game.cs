@@ -22,7 +22,7 @@ namespace Winforms_platformer.Model
                 null);
             Map = new Map(Player);
             Map.GenerateRooms();
-            Player.room = Map.CurrentRoom;
+            Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             keyBindings = new Dictionary<Keys, Action>();
             SetKeyBindings();
@@ -82,7 +82,7 @@ namespace Winforms_platformer.Model
             keyBindings[Keys.S] = keyBindings[Keys.Down];
 
             keyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
-            keyBindings[Keys.D0] = () => Map.CurrentRoom.enemyList.Add(
+            keyBindings[Keys.D0] = () => Map.CurrentRoom().enemyList.Add(
                 new Enemy(Player.x, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
             keyBindings[Keys.E] = () =>
             {
@@ -97,7 +97,7 @@ namespace Winforms_platformer.Model
                     new Collider(Resources.Arrow.IdleSize), Map.CurrentRoom, 15, Player.bowStrenght, ProjectileType.Ally);
                 arrow.MoveTo(Player.direction);
                 arrow.status = Status.Move;
-                Map.CurrentRoom.ProjectilesList.Add(arrow);
+                Map.CurrentRoom().ProjectilesList.Add(arrow);
             };
             keyBindings[Keys.P] = () =>
             {

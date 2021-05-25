@@ -13,7 +13,7 @@ namespace Winforms_platformer
         public int bowStrenght { get; set; }
         protected int jumpStrength = 50;
 
-        public Creature(int x, int y, Collider collider, Room room) 
+        public Creature(int x, int y, Collider collider, Func<Room> room) 
             : base(x, y, collider, room)
         {
             bowStrenght = 75;
@@ -41,14 +41,14 @@ namespace Winforms_platformer
                     collider.field.Width + collider.attackCollider.x + x :
                     x - collider.attackCollider.x - collider.attackCollider.field.Width;
                 var colliderY = y + collider.attackCollider.y;
-                foreach (var target in room.GetIntersectedEnemies(collider, colliderX, colliderY))
+                foreach (var target in CurrentRoom().GetIntersectedEnemies(collider, colliderX, colliderY))
                     target.Hurt(damage);
             }
         }
 
         public void Jump()
         {
-            if (room.OnTheSurface(x, y + collider.field.Height, collider.field.Width) && ySpeed == 0)
+            if (CurrentRoom().OnTheSurface(x, y + collider.field.Height, collider.field.Width) && ySpeed == 0)
             {
                 ySpeed -= jumpStrength;
             }

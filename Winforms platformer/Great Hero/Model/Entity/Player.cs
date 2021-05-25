@@ -13,7 +13,7 @@ namespace Winforms_platformer
     public class Player : Creature
     {
         public List<ITreasure> treasures { get; set; }
-        public Player(int x, int y, Collider collider, Room room) 
+        public Player(int x, int y, Collider collider, Func<Room> room) 
             : base(x, y, collider, room)
         {
             direction = Direction.Right;
@@ -22,7 +22,5 @@ namespace Winforms_platformer
             hp = 100;
             damage = 10;
         }
-
-        public void ChangeRoom(Room newRoom) => room = newRoom;
     }
 }

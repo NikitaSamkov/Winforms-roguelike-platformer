@@ -15,7 +15,7 @@ namespace Winforms_platformer.Model
         private List<Room> rooms;
         private int currentRoom;
         public readonly int seed;
-        public Room CurrentRoom => rooms[currentRoom];
+        public Room CurrentRoom() => rooms[currentRoom];
 
 
 
@@ -55,24 +55,24 @@ namespace Winforms_platformer.Model
         {
             ChangeRoom();
 
-            foreach (var enemy in CurrentRoom.enemyList)
+            foreach (var enemy in CurrentRoom().enemyList)
             {
                 if (enemy.hp <= 0)
                 {
-                    CurrentRoom.enemyList.Remove(enemy);
+                    CurrentRoom().enemyList.Remove(enemy);
                     break;
                 }
                 enemy.Update();
             }
 
-            foreach (var projectile in CurrentRoom.ProjectilesList)
+            foreach (var projectile in CurrentRoom().ProjectilesList)
             {
-                if (projectile.y + projectile.collider.field.Height >= CurrentRoom.groundLevel)
+                if (projectile.y + projectile.collider.field.Height >= CurrentRoom().groundLevel)
                 {
-                    CurrentRoom.ProjectilesList.Remove(projectile);
+                    CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
                 }
-                var targets = CurrentRoom.GetIntersectedEntities(projectile);
+                var targets = CurrentRoom().GetIntersectedEntities(projectile);
                 if (projectile.type == ProjectileType.Ally)
                     targets = targets.Where(target => target != player).ToList();
                 if (targets.Count > 0)
@@ -82,7 +82,7 @@ namespace Winforms_platformer.Model
                     .OrderBy(target => target.GetDistanceTo(projectile.x, projectile.y))
                     .First()
                     .hp -= projectile.damage;
-                    CurrentRoom.ProjectilesList.Remove(projectile);
+                    CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
                 }
                 projectile.Update();
@@ -131,27 +131,24 @@ namespace Winforms_platformer.Model
 
         public void GoToNext()
         {
-            player.TeleportTo(0, rooms[currentRoom + 1].groundLevel - (CurrentRoom.groundLevel - player.y));
+            player.TeleportTo(0, rooms[currentRoom + 1].groundLevel - (CurrentRoom().groundLevel - player.y));
             currentRoom++;
-            player.ChangeRoom(CurrentRoom);
-            (GameRender.Renders[0] as RoomRender).ChangeRoom(CurrentRoom);
 
         }
 
         public void GoToPrevious()
         {
             player.TeleportTo(Game.WindowWidth - player.collider.field.Width, 
-                rooms[currentRoom + 1].groundLevel - (CurrentRoom.groundLevel - player.y));
+                rooms[currentRoom - 1].groundLevel - (CurrentRoom().groundLevel - player.y));
             currentRoom--;
-            player.ChangeRoom(CurrentRoom);
-            (GameRender.Renders[0] as RoomRender).ChangeRoom(CurrentRoom);
         }
 
         public bool IsCurrentRoomLast() => currentRoom == rooms.Count - 1;
 
         public bool IsCurrentRoomFirst() => currentRoom <= 0;
 
-        public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom.enemyList.Count == 0;
-        public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom.enemyList.Count == 0;
+        public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom().enemyList.Count == 0;
+        public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom().enemyList.Count == 0;
     }
+
 }

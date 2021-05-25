@@ -86,16 +86,16 @@ namespace Winforms_platformer.View
 
     public class EnemysRender : IRenderable
     {
-        private List<Enemy> enemies;
+        private Func<Room> CurrentRoom;
 
-        public EnemysRender(List<Enemy> enemies)
+        public EnemysRender(Func<Room> CurrentRoom)
         {
-            this.enemies = enemies;
+            this.CurrentRoom = CurrentRoom;
         }
 
         public void Paint(Graphics g)
         {
-            foreach (var enemy in enemies)
+            foreach (var enemy in CurrentRoom().enemyList)
             {
                 var resources = Resources.Dummy;
                 //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
@@ -107,15 +107,16 @@ namespace Winforms_platformer.View
 
     public class ProjectilesRender : IRenderable
     {
-        private List<Projectile> projectiles;
-        public ProjectilesRender(List<Projectile> projectiles)
+        private Func<Room> CurrentRoom;
+
+        public ProjectilesRender(Func<Room> CurrentRoom)
         {
-            this.projectiles = projectiles;
+            this.CurrentRoom = CurrentRoom;
         }
 
         public void Paint(Graphics g)
         {
-            foreach (var projectile in projectiles)
+            foreach (var projectile in CurrentRoom().ProjectilesList)
             {
                 var resources = Resources.Arrow;
                 //вставить сюда if (projectile is CustomClass) resources = Resources.CustomClass
@@ -127,24 +128,23 @@ namespace Winforms_platformer.View
 
     public class RoomRender : IRenderable
     {
-        private Room room;
+        private Func<Room> CurrentRoom;
         private RoomRes Resource;
 
-        public RoomRender(Room room)
+        public RoomRender(Func<Room> CurrentRoom)
         {
-            this.room = room;
+            this.CurrentRoom = CurrentRoom;
             Resource = Resources.Room;
         }
-        public void ChangeRoom(Room newRoom) => room = newRoom;
 
         public void Paint(Graphics g)
         {
             g.DrawImage(Resource.Wall, 0, 0, Resource.Wall.Width, Resource.Wall.Height);
             g.DrawImage(Resource.Ground,
                 Resource.Wall.Width - Resource.Ground.Width,
-                room.groundLevel,
+                CurrentRoom().groundLevel,
                 Resource.Ground.Width, Resource.Ground.Height);
-            foreach (var platform in room.platforms)
+            foreach (var platform in CurrentRoom().platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
         }
     }
