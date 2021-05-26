@@ -77,10 +77,11 @@ namespace Winforms_platformer.Model
                 var targets = CurrentRoom().GetIntersectedEntities(projectile);
                 if (projectile.type == ProjectileType.Ally)
                     targets = targets.Where(target => target != player).ToList();
+                if (projectile.type == ProjectileType.Enemy)
+                    targets = targets.Where(target => target == player).ToList();
                 if (targets.Count > 0)
                 {
                     targets
-                    .Where(target => target != player)
                     .OrderBy(target => target.GetDistanceTo(projectile.x, projectile.y))
                     .First()
                     .hp -= projectile.damage;

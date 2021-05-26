@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winforms_platformer.Model;
 
 namespace Winforms_platformer
 {
@@ -12,6 +13,7 @@ namespace Winforms_platformer
         public bool flying { get; set; }
         public int bowStrenght { get; set; }
         protected int jumpStrength = 50;
+        protected int ammo = 3;
 
         public Creature(int x, int y, Collider collider, Func<Room> room) 
             : base(x, y, collider, room)
@@ -44,6 +46,15 @@ namespace Winforms_platformer
                 foreach (var target in CurrentRoom().GetIntersectedEnemies(collider, colliderX, colliderY))
                     target.Hurt(damage);
             }
+        }
+
+        public virtual void Shoot()
+        {
+            var arrow = new Arrow(x, y + collider.field.Height / 2,
+                    new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Enemy);
+            arrow.MoveTo(direction);
+            arrow.status = Status.Move;
+            CurrentRoom().ProjectilesList.Add(arrow);
         }
 
         public void Jump()

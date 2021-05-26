@@ -22,5 +22,14 @@ namespace Winforms_platformer
             hp = 100;
             damage = 10;
         }
+
+        public override void Shoot()
+        {
+            var arrow = new Arrow(x, y + collider.field.Height / 2,
+                    new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Ally);
+            arrow.MoveTo(direction);
+            arrow.status = Status.Move;
+            CurrentRoom().ProjectilesList.Add(arrow);
+        }
     }
 }

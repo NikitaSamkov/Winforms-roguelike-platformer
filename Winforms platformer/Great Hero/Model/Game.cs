@@ -103,11 +103,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Q] = () =>
             {
-                var arrow = new Arrow(Player.x, Player.y + Player.collider.field.Height / 2,
-                    new Collider(Resources.Arrow.IdleSize), Map.CurrentRoom, 15, Player.bowStrenght, ProjectileType.Ally);
-                arrow.MoveTo(Player.direction);
-                arrow.status = Status.Move;
-                Map.CurrentRoom().ProjectilesList.Add(arrow);
+                Player.Shoot();
             };
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().TreasuresList.Add(
