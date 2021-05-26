@@ -17,8 +17,8 @@ namespace Winforms_platformer.View
             Renders = new List<IRenderable>();
             Renders.Add(new RoomRender(Game.Map.CurrentRoom));
             Renders.Add(new TreasuresRender(Game.Map.CurrentRoom));
-            Renders.Add(new EntityRender(Game.Player, Resources.Player, 3));
             Renders.Add(new EnemysRender(Game.Map.CurrentRoom));
+            Renders.Add(new EntityRender(Game.Player, Resources.Player, 3));
             Renders.Add(new ProjectilesRender(Game.Map.CurrentRoom));
         }
 
