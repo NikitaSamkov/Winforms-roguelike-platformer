@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,7 @@ namespace Winforms_platformer.Model
     {
         public static Player Player;
         public static Map Map;
-        public static int WindowWidth;
-        public static int WindowHeight;
+        public static Size WindowSize = new Size();
         public static Dictionary<Keys, Action> KeyBindings = new Dictionary<Keys, Action>();
         public static bool GameOver = false;
         public static bool DeveloperToolsON = false;
@@ -43,8 +43,8 @@ namespace Winforms_platformer.Model
 
         public static void SetWindowSize(int width, int height)
         {
-            WindowWidth = width;
-            WindowHeight = height;
+            WindowSize.Width = width;
+            WindowSize.Height = height;
         }
 
         static void SetKeyBindings()
@@ -122,8 +122,6 @@ namespace Winforms_platformer.Model
                 else
                     DeveloperToolsON = true;
             };
-
-            KeyBindings[Keys.R] = () => TreasurePool.GetPrice();
 
             KeyBindings[Keys.P] = () =>
             {

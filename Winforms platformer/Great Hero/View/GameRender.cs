@@ -25,7 +25,7 @@ namespace Winforms_platformer.View
         public static void RenderAll(Graphics g)
         {
             if (Game.GameOver)
-                g.DrawImage(Resources.Room.Death, 0, 0);
+                g.DrawImage(Resources.System.Death, 0, 0);
             else
                 foreach (var render in Renders)
                     render.Paint(g);

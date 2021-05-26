@@ -23,7 +23,7 @@ namespace Winforms_platformer
     public enum RoomType
     {
         StartingRoom,
-        EnemyRoom,
+        RegularRoom,
         TreasureRoom,
         Shop,
         BossRoom

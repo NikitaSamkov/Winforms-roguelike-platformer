@@ -11,9 +11,9 @@ namespace Winforms_platformer.Model
     {
         private Player player;
         private List<Room> roomSamples;
-        private Random roomSequenceRandom;
         private List<Room> rooms;
         private int currentRoom;
+        public Random Random;
         public readonly int seed;
         public Room CurrentRoom() => rooms[currentRoom];
 
@@ -25,29 +25,29 @@ namespace Winforms_platformer.Model
                 this.seed = (int)seed;
             else
                 this.seed = GenerateSeed();
-            roomSequenceRandom = new Random(this.seed);
+            Random = new Random(this.seed);
             this.player = player;
 
             roomSamples = new List<Room>
             {
-                new Room(RoomType.EnemyRoom, new List<Platform>
+                new Room(RoomType.RegularRoom, player, new List<Platform>
                 {
                     new Platform(200, 600, 350)
-                }, player),
-                new Room(RoomType.EnemyRoom, new List<Platform>
+                }),
+                new Room(RoomType.RegularRoom, player, new List<Platform>
                 {
                     new Platform(100, 300, 350),
                     new Platform(500, 700, 350)
-                }, player),
-                new Room(RoomType.EnemyRoom, new List<Platform>
+                }),
+                new Room(RoomType.RegularRoom, player, new List<Platform>
                 {
                     new Platform(100, 300, 400),
                     new Platform(500, 700, 400),
                     new Platform(300, 500, 300)
-                }, player, 10),
-                new Room(RoomType.EnemyRoom, new List<Platform>(), player, 7, 250),
-                new Room(RoomType.EnemyRoom, new List<Platform>(), player, 1),
-                new Room(RoomType.EnemyRoom, new List<Platform> {new Platform(0, 800, 10) }, player, 0)
+                }, null, 10),
+                new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
+                new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 1),
+                new Room(RoomType.RegularRoom, player, new List<Platform> {new Platform(0, 800, 10) }, null, 0)
             };
         }
 
@@ -69,7 +69,7 @@ namespace Winforms_platformer.Model
 
             foreach (var projectile in CurrentRoom().ProjectilesList)
             {
-                if (projectile.y + projectile.collider.field.Height >= CurrentRoom().groundLevel)
+                if (projectile.y + projectile.collider.field.Height >= CurrentRoom().GroundLevel)
                 {
                     CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
@@ -108,14 +108,23 @@ namespace Winforms_platformer.Model
             return r.Next(10000);
         }
 
-        public void GenerateRooms(int roomsCount = 9)
+        public void GenerateRooms(int roomsCount = 10)
         {
+            var treasures = TreasurePool.GenerateItems(roomsCount / 3 + 2);
             currentRoom = 0;
             rooms = new List<Room>();
-            rooms.Add(new Room(RoomType.StartingRoom, new List<Platform>(), player));
+            rooms.Add(new Room(RoomType.StartingRoom, player));
             if (roomSamples.Count != 0)
                 for (var i = 0; i < roomsCount - 1; i++)
-                    rooms.Add(roomSamples[roomSequenceRandom.Next(roomSamples.Count)]);
+                {
+                    if ((i - 1) % 3 == 0)
+                        rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>() 
+                        { new Platform(350, 450, 350) }, new List<TreasureItem> 
+                        { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,  
+                        treasures[(i - 1) / 3].ID)}));
+                    else
+                        rooms.Add(roomSamples[Random.Next(roomSamples.Count)]);
+                }
         }
 
         public void ChangeRoom()
@@ -130,13 +139,13 @@ namespace Winforms_platformer.Model
                     player.status = Status.Idle;
                 }
             }
-            if (player.x + player.collider.field.Width > Game.WindowWidth)
+            if (player.x + player.collider.field.Width > Game.WindowSize.Width)
             {
                 if (CanPlayerGoToNextRoom())
                     GoToNext();
                 else
                 {
-                    player.TeleportTo(Game.WindowWidth - player.collider.field.Width);
+                    player.TeleportTo(Game.WindowSize.Width - player.collider.field.Width);
                     player.status = Status.Idle;
                 }
             }
@@ -144,14 +153,14 @@ namespace Winforms_platformer.Model
 
         public void GoToNext()
         {
-            player.TeleportTo(0, rooms[currentRoom + 1].groundLevel - (CurrentRoom().groundLevel - player.y));
+            player.TeleportTo(0, rooms[currentRoom + 1].GroundLevel - (CurrentRoom().GroundLevel - player.y));
             currentRoom++;
         }
 
         public void GoToPrevious()
         {
-            player.TeleportTo(Game.WindowWidth - player.collider.field.Width, 
-                rooms[currentRoom - 1].groundLevel - (CurrentRoom().groundLevel - player.y));
+            player.TeleportTo(Game.WindowSize.Width - player.collider.field.Width,
+                rooms[currentRoom - 1].GroundLevel - (CurrentRoom().GroundLevel - player.y));
             currentRoom--;
         }
 

@@ -163,17 +163,30 @@ namespace Winforms_platformer.View
         public RoomRender(Func<Room> CurrentRoom)
         {
             this.CurrentRoom = CurrentRoom;
-            Resource = Resources.Room;
+        }
+
+        public void GetResource()
+        {
+            switch (CurrentRoom().Type)
+            {
+                case RoomType.TreasureRoom:
+                    Resource = Resources.TreasureRoom;
+                    break;
+                default:
+                    Resource = Resources.Room;
+                    break;
+            }
         }
 
         public void Paint(Graphics g)
         {
-            g.DrawImage(Resource.Wall, 0, 0, Game.WindowWidth, Game.WindowHeight);
+            GetResource();
+            g.DrawImage(Resource.Wall, 0, 0, Game.WindowSize.Width, Game.WindowSize.Height);
             g.DrawImage(Resource.Ground,
                 Resource.Wall.Width - Resource.Ground.Width,
-                CurrentRoom().groundLevel,
-                Game.WindowWidth, Resource.Ground.Height);
-            foreach (var platform in CurrentRoom().platforms)
+                CurrentRoom().GroundLevel,
+                Game.WindowSize.Width, Resource.Ground.Height);
+            foreach (var platform in CurrentRoom().Platforms)
                 g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
         }
     }

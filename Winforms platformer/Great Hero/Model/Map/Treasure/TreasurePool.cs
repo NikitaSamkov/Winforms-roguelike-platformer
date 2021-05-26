@@ -9,6 +9,8 @@ namespace Winforms_platformer
 {
     public static class TreasurePool
     {
+        private static Random Random = Game.Map.Random;
+
         private static List<ITreasure> treasures = new List<ITreasure>
         {
             new AmuletOfFlying()
@@ -43,23 +45,56 @@ namespace Winforms_platformer
 
         public static void SortPool() => treasures.OrderBy(treasure => treasure.ID);
 
-        public static void GetPrice()
+        private static int GetPrice()
         {
             var treasuresPrices = treasures.Select(e => e.Price).ToList();
             var sum = 0.00;
             var chances = new List<double>();
-            var rand = new Random();
             for (var i = 0; i < treasuresPrices.Count; i++)
             {
                 chances.Add(1 * (treasuresPrices.Max() - treasuresPrices[i] + 1) * 100 / treasuresPrices.Count);
                 sum += chances[i];
             }
             for (var i = 0; i < treasuresPrices.Count; i++)
-                if (rand.Next(1, 100) <= chances[i] * 100 / sum || i == treasuresPrices.Count - 1)
+                if (Random.Next(100) + 1 <= chances[i] * 100 / sum || i == treasuresPrices.Count - 1)
                 {
-                    Console.WriteLine(treasuresPrices[i]);
+                    return treasuresPrices[i];
                     break;
                 }
+            return 0;
+        }
+
+        private static ITreasure GetRandomItem(int price)
+        {
+            var items = treasures.Where(e => e.Price == price).ToList();
+            if (items.Count == 0)
+                return new NotFound();
+            return items[Random.Next(items.Count)];
+        }
+
+        public static List<ITreasure> GenerateItems(int count)
+        {
+            var items = new List<ITreasure>();
+            for (var i = 0; i < count; i++)
+                items.Add(GetRandomItem(GetPrice()));
+            return items;
+        }
+    }
+
+    public class NotFound : ITreasure
+    {
+        int ITreasure.ID { get => -1; }
+
+        int ITreasure.Price { get => -1; }
+
+        public void Enable(Player player)
+        {
+            
+        }
+
+        public void Disable(Player player)
+        {
+            
         }
     }
 

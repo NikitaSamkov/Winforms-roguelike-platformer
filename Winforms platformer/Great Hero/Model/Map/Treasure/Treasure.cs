@@ -22,7 +22,7 @@ namespace Winforms_platformer
         public TreasureItem(int x, int y, Collider collider, Func<Room> CurrentRoom, int treasureID) 
             : base(x, y, collider, CurrentRoom)
         {
-            Treasure = TreasurePool.GetTreasureByID(0);
+            Treasure = TreasurePool.GetTreasureByID(treasureID);
         }
 
         public void GiveToPlayer()

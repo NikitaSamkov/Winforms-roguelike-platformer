@@ -11,39 +11,44 @@ namespace Winforms_platformer
     {
         private Player player;
         public int gForce { get; private set; }
-        public RoomType type { get; }
-        public readonly int groundLevel;
-        public readonly List<Platform> platforms;
+        public RoomType Type { get; }
+        public readonly int GroundLevel;
+        public readonly List<Platform> Platforms;
         public List<Enemy> enemyList = new List<Enemy>();
         public List<Projectile> ProjectilesList = new List<Projectile>();
         public List<TreasureItem> TreasuresList = new List<TreasureItem>();
 
-        public Room(RoomType type, List<Platform> platforms, Player player, int gravitationForce = 7, int groundLevel = 486)
+        public Room(RoomType type, Player player, List<Platform> platforms = null, List<TreasureItem> treasureList = null,  int gravitationForce = 7, int groundLevel = 486)
         {
-            this.platforms = platforms;
+            Platforms = platforms;
+            if (Platforms == null)
+                Platforms = new List<Platform>();
+            TreasuresList = treasureList;
+            if (TreasuresList == null)
+                TreasuresList = new List<TreasureItem>();
             gForce = gravitationForce;
-            this.groundLevel = groundLevel;
-            this.type = type;
+            GroundLevel = groundLevel;
+            Type = type;
             this.player = player;
         }
 
         public int GetYSpeed(int x, int y, int width, int speed)
         {
             var newY = y + speed + gForce;
-            foreach (var platform in platforms)
+            foreach (var platform in Platforms)
                 if (platform.level >= y && platform.level < newY &&
                     platform.leftBorder < x + width && platform.rightBorder > x)
                     newY = platform.level;
-            if (newY > groundLevel)
-                newY = groundLevel;
+            if (newY > GroundLevel)
+                newY = GroundLevel;
             return newY - y;
         }
 
         public bool OnTheSurface(int x, int y, int width)
         {
-            if (y == groundLevel)
+            if (y == GroundLevel)
                 return true;
-            foreach (var platform in platforms)
+            foreach (var platform in Platforms)
                 if (platform.level == y &&
                     platform.leftBorder < x + width && platform.rightBorder > x)
                     return true;

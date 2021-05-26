@@ -19,14 +19,11 @@ namespace Winforms_platformer
             InitializeComponent();
             DoubleBuffered = true;
 
-            Game.SetWindowSize(ClientSize.Width, ClientSize.Height);
-
             var mainTimer = new Timer();
             mainTimer.Interval = 60;
             mainTimer.Tick += (sender, args) =>
             {
-                Game.WindowWidth = ClientSize.Width;
-                Game.WindowHeight = ClientSize.Height;
+                Game.SetWindowSize(ClientSize.Width, ClientSize.Height);
                 Game.Update();
                 Invalidate();
             };

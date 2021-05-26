@@ -9,19 +9,13 @@ namespace Winforms_platformer
 {
     public static class Resources
     {
-        public static readonly PlayerRes Player;
-        public static readonly DummyRes Dummy;
-        public static readonly RoomRes Room;
-        public static readonly ArrowRes Arrow;
-        public static readonly TreasuresRes Treasures;
-        static Resources()
-        {
-            Player = new PlayerRes();
-            Dummy = new DummyRes();
-            Room = new RoomRes();
-            Arrow = new ArrowRes();
-            Treasures = new TreasuresRes();
-        }
+        public static readonly SystemRes System = new SystemRes();
+        public static readonly PlayerRes Player = new PlayerRes();
+        public static readonly DummyRes Dummy = new DummyRes();
+        public static readonly RoomRes Room = new RoomRes();
+        public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
+        public static readonly ArrowRes Arrow = new ArrowRes();
+        public static readonly TreasuresRes Treasures = new TreasuresRes();
     }
 
     public class EntityResource
@@ -39,6 +33,11 @@ namespace Winforms_platformer
         public Size AttackSize { get; protected set; }
         public Size AttackMoveSize { get; protected set; }
         public Size AttackRange { get; protected set; }
+    }
+
+    public class SystemRes
+    {
+        public readonly Bitmap Death = new Bitmap(@"..\..\..\..\Sprites\Room\Death.png");
     }
 
     public class PlayerRes : AttackingEntityResource
@@ -68,12 +67,27 @@ namespace Winforms_platformer
         }
     }
 
+
     public class RoomRes
     {
-        public readonly Bitmap Wall = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
-        public readonly Bitmap Ground = new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png");
-        public readonly Bitmap Death = new Bitmap(@"..\..\..\..\Sprites\Room\Death.png");
+        public Bitmap Wall { get; protected set; }
+        public Bitmap Ground { get; protected set; }
+        public RoomRes()
+        {
+            Wall = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
+            Ground = new Bitmap(@"..\..\..\..\Sprites\Room\Ground.png");
+        }
     }
+
+    public class TreasureRoomRes : RoomRes
+    {
+        public TreasureRoomRes()
+        {
+            Wall = new Bitmap(@"..\..\..\..\Sprites\Room\TreasureWall.png");
+            Ground = new Bitmap(@"..\..\..\..\Sprites\Room\TreasureGround.png");
+        }
+    }
+
 
     public class ArrowRes : EntityResource
     {
