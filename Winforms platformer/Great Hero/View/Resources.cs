@@ -16,6 +16,7 @@ namespace Winforms_platformer
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
         public static readonly ArrowRes Arrow = new ArrowRes();
         public static readonly TreasuresRes Treasures = new TreasuresRes();
+        public static readonly UIRes UI = new UIRes();
     }
 
     public class EntityResource
@@ -98,6 +99,13 @@ namespace Winforms_platformer
             IdleSize = new Size(50, 10);
             MoveSize = new Size(50, 10);
         }
+    }
+
+    public class UIRes
+    {
+        public readonly Bitmap HPBar = new Bitmap(@"..\..\..\..\Sprites\UI\hp.png");
+        public readonly Bitmap HPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\frame.png");
+        public readonly Size HPSize = new Size(275, 38);
     }
 
     public class TreasuresRes

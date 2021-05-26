@@ -20,6 +20,7 @@ namespace Winforms_platformer.View
             Renders.Add(new EnemysRender(Game.Map.CurrentRoom));
             Renders.Add(new EntityRender(Game.Player, Resources.Player, 3));
             Renders.Add(new ProjectilesRender(Game.Map.CurrentRoom));
+            Renders.Add(new UIRender());
         }
 
         public static void RenderAll(Graphics g)
