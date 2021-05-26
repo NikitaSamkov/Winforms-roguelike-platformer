@@ -228,6 +228,10 @@ namespace Winforms_platformer.View
                 new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.hp / 100, Resources.UI.HPSize.Width), 
                 GraphicsUnit.Pixel);
             g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
+            for (var i = 0; i < Game.Player.ammo; i++)
+            {
+                g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
+            }
         }
     }
 }

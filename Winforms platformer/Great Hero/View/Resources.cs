@@ -106,6 +106,8 @@ namespace Winforms_platformer
         public readonly Bitmap HPBar = new Bitmap(@"..\..\..\..\Sprites\UI\hp.png");
         public readonly Bitmap HPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\frame.png");
         public readonly Size HPSize = new Size(275, 38);
+        public readonly Bitmap Ammo = new Bitmap(@"..\..\..\..\Sprites\UI\ammo.png");
+        public readonly Size AmmoSize = new Size(12, 52);
     }
 
     public class TreasuresRes
