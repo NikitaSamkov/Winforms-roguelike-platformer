@@ -101,10 +101,7 @@ namespace Winforms_platformer.Model
                         Player.status = Status.AttackMove;
             };
 
-            KeyBindings[Keys.Q] = () =>
-            {
-                Player.Shoot();
-            };
+            KeyBindings[Keys.Q] = () => Player.Shoot();
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().TreasuresList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 0));

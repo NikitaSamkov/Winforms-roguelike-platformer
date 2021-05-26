@@ -10,7 +10,7 @@ namespace Winforms_platformer.View
 {
     public class EntityRender : IRenderable
     {
-        private Entity entity;
+        public Entity Entity;
         private EntityResource Resource;
         private Bitmap CurrentSheet;
         private int frame => (currentFrame / framePause) % maxFrames;
@@ -21,14 +21,14 @@ namespace Winforms_platformer.View
 
         public EntityRender(Entity entity, EntityResource resource, int framePause = 1)
         {
-            this.entity = entity;
+            this.Entity = entity;
             Resource = resource;
             this.framePause = framePause;
         }
 
         protected void GetCurrentSheet()
         {
-            switch (entity.status)
+            switch (Entity.status)
             {
                 case Status.Idle:
                     if (CurrentSheet != Resource.Idle)
@@ -100,22 +100,23 @@ namespace Winforms_platformer.View
             GetCurrentSheet();
             StopAttackingIfNeeded();
             currentFrame++;
-            g.DrawImage(CurrentSheet, ((int)entity.direction == 0) ? entity.x :
-                    entity.x + entity.collider.field.Width - currentFrameSize.Width,
-                entity.y, new Rectangle(currentFrameSize.Width * frame,
-                    currentFrameSize.Height * (int)entity.direction,
+            g.DrawImage(CurrentSheet, ((int)Entity.direction == 0) ? Entity.x :
+                    Entity.x + Entity.collider.field.Width - currentFrameSize.Width,
+                Entity.y, new Rectangle(currentFrameSize.Width * frame,
+                    currentFrameSize.Height * (int)Entity.direction,
                     currentFrameSize.Width,
                     currentFrameSize.Height),
                     GraphicsUnit.Pixel);
             if (Game.DeveloperToolsON)
-                g.DrawRectangle(new Pen(Color.Green), entity.x, entity.y, entity.collider.field.Width,
-                        entity.collider.field.Height);
+                g.DrawRectangle(new Pen(Color.Green), Entity.x, Entity.y, Entity.collider.field.Width,
+                        Entity.collider.field.Height);
         }
     }
 
     public class EnemysRender : IRenderable
     {
         private Func<Room> CurrentRoom;
+        private List<EntityRender> enemies = new List<EntityRender>();
 
         public EnemysRender(Func<Room> CurrentRoom)
         {
@@ -126,9 +127,14 @@ namespace Winforms_platformer.View
         {
             foreach (var enemy in CurrentRoom().enemyList)
             {
-                var resources = Resources.Dummy;
-                //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
-                var render = new EntityRender(enemy, resources);
+                var render = enemies.Where(e => e.Entity == (Entity)enemy).FirstOrDefault();
+                if (render == null)
+                {
+                    var resources = Resources.Dummy;
+                    //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
+                    render = new EntityRender(enemy, resources, 3);
+                    enemies.Add(render);
+                }
                 render.Paint(g);
             }
         }
