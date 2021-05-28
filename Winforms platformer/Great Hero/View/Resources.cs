@@ -113,7 +113,7 @@ namespace Winforms_platformer
 
     public class LootResource
     {
-
+        public readonly Bitmap idNOtFound;
     }
 
     public class TreasuresRes : LootResource

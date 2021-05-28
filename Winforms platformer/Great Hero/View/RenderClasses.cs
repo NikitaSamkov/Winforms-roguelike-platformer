@@ -223,8 +223,8 @@ namespace Winforms_platformer.View
         {
             foreach (var field in resource.GetType().GetFields())
                 if (field.Name == "id" + ID)
-                    return (Bitmap)field.GetValue(Resources.Treasures);
-            return Resources.Treasures.idNOtFound;
+                    return (Bitmap)field.GetValue(resource);
+            return resource.idNOtFound;
         }
     }
 

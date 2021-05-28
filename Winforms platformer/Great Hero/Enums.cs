@@ -34,4 +34,11 @@ namespace Winforms_platformer
         Ally,
         Enemy
     }
+
+    public enum LootType
+    {
+        Heart,
+        Ammo,
+        Treasure
+    }
 }

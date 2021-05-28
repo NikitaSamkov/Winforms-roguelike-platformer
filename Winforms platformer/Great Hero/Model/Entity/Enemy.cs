@@ -4,20 +4,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winforms_platformer.Model;
 
 namespace Winforms_platformer
 {
     public class Enemy : Creature
     {
-        private Player player;
+        protected Player player;
+        protected Dictionary<LootType, int> DropChances = new Dictionary<LootType, int>();
+
         public Enemy(int x, int y, Collider collider, Func<Room> room,
-            Player player) 
+            Player player)
             : base(x, y, collider, room)
         {
             this.player = player;
             hp = 20;
-            damage = 1;
+            damage = 10;
             xSpeed = 10;
+            SetDropChances();
         }
 
         public override void Update()
@@ -26,14 +30,14 @@ namespace Winforms_platformer
             base.Update();
         }
 
-        public void MoveToPlayer()
+        protected virtual void MoveToPlayer()
         {
             status = Status.Move;
             direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
-            var neededX = (direction == Direction.Left) ? 
-                player.x + player.collider.field.Width / 2 : 
+            var neededX = (direction == Direction.Left) ?
+                player.x + player.collider.field.Width / 2 :
                 player.x - player.collider.field.Width / 2;
-            var distance = Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Top), 
+            var distance = Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Top),
                            Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Bottom),
                            Math.Min(GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Top),
                                     GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Bottom))));
@@ -47,6 +51,39 @@ namespace Winforms_platformer
                 Jump();
             if (player.y + player.collider.field.Height > y + collider.field.Height && distance < 200)
                 MoveDown(1);
+        }
+
+        protected virtual void SetDropChances()
+        {
+            DropChances[LootType.Heart] = 100;
+        }
+
+        protected void SetDropChanses(int heart, int ammo, int treasure)
+        {
+            DropChances[LootType.Heart] = heart;
+            DropChances[LootType.Ammo] = ammo;
+            DropChances[LootType.Treasure] = treasure;
+        }
+
+        public Loot GetDrop()
+        {
+            var random = new Random();
+            var chance = 101;
+            foreach (var lootType in DropChances.Keys)
+            {
+                if (random.Next(1, chance) <= DropChances[lootType])
+                    switch (lootType)
+                    {
+                        case LootType.Heart:
+                            return new HeartLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                        case LootType.Ammo:
+                            return new AmmoLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                        default:
+                            return new NotFoundedLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                    }
+                chance -= DropChances[lootType];
+            }
+            return new NotFoundedLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
         }
     }
 }

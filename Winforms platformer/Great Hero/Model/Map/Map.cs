@@ -59,6 +59,9 @@ namespace Winforms_platformer.Model
             {
                 if (enemy.hp <= 0)
                 {
+                    var drop = enemy.GetDrop();
+                    if (drop != null)
+                        CurrentRoom().LootList.Add(drop);
                     CurrentRoom().EnemyList.Remove(enemy);
                     break;
                 }
@@ -95,7 +98,7 @@ namespace Winforms_platformer.Model
             {
                 if (loot.IntersectsWithBody(player))
                 {
-                    loot.Pickup();
+                    loot.Pickup(player);
                     CurrentRoom().LootList.Remove(loot);
                     break;
                 }
@@ -119,9 +122,9 @@ namespace Winforms_platformer.Model
                 for (var i = 0; i < roomsCount - 1; i++)
                 {
                     if ((i - 1) % 3 == 0)
-                        rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>() 
-                        { new Platform(350, 450, 350) }, new List<Loot> 
-                        { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,  
+                        rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>()
+                        { new Platform(350, 450, 350) }, new List<Loot>
+                        { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,
                         treasures[(i - 1) / 3].ID)}));
                     else
                         rooms.Add(roomSamples[Random.Next(roomSamples.Count)]);

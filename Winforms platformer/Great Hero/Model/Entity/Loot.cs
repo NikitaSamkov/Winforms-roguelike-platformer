@@ -8,7 +8,7 @@ namespace Winforms_platformer.Model
 {
     public class Loot : Entity
     {
-        public int ID { get; }
+        public int ID { get; protected set; }
         public Loot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
         {
         }
@@ -19,14 +19,24 @@ namespace Winforms_platformer.Model
         }
     }
 
+    public class NotFoundedLoot : Loot
+    {
+
+        public NotFoundedLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
+        {
+            ID = -1;
+        }
+
+    }
+
     public class HeartLoot : Loot
     {
-        public int ID => 0;
         public int HealPower;
 
         public HeartLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
         {
             HealPower = 20;
+            ID = 0;
         }
 
         public override void Pickup(Entity target)
@@ -37,12 +47,12 @@ namespace Winforms_platformer.Model
 
     public class AmmoLoot : Loot
     {
-        public int ID => 0;
         public int AmmoCount;
 
         public AmmoLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
         {
             AmmoCount = 1;
+            ID = 1;
         }
 
         public override void Pickup(Entity target)
