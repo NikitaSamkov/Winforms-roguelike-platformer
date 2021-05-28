@@ -230,14 +230,41 @@ namespace Winforms_platformer.View
     {
         public void Paint(Graphics g)
         {
+            #region HP
             g.DrawImage(Resources.UI.HPBar, 50, 50, 
                 new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.hp / 100, Resources.UI.HPSize.Width), 
                 GraphicsUnit.Pixel);
             g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
+            #endregion
+            #region Ammo
             for (var i = 0; i < Game.Player.Ammo; i++)
             {
                 g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
             }
+            #endregion
+            #region Treasures
+            var column = 0;
+            var row = 0;
+            foreach (var treasure in Game.Player.treasures)
+            {
+                g.DrawImage(GetTreasureSprite(treasure.ID), Game.WindowSize.Width - 150 + 50 * column, 50 + 50 * row,
+                    50, (float)(Resources.Treasures.Size.Height / ((double)Resources.Treasures.Size.Width / 50)));
+                column++;
+                if (column > 2)
+                {
+                    column = 0;
+                    row++;
+                }
+            }
+            #endregion
+        }
+
+        public Bitmap GetTreasureSprite(int treasureID)
+        {
+            foreach (var field in Resources.Treasures.GetType().GetFields())
+                if (field.Name == "id" + treasureID)
+                    return (Bitmap)field.GetValue(Resources.Treasures);
+            return Resources.Treasures.idNOtFound;
         }
     }
 }
