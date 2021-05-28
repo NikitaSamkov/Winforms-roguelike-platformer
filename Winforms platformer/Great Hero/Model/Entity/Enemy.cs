@@ -83,7 +83,7 @@ namespace Winforms_platformer
                     }
                 chance -= DropChances[lootType];
             }
-            return new NotFoundedLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+            return null;
         }
     }
 }

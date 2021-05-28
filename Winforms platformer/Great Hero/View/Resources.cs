@@ -113,12 +113,15 @@ namespace Winforms_platformer
 
     public class LootResource
     {
-        public readonly Bitmap idNOtFound;
+        public Bitmap idNOtFound;
     }
 
     public class TreasuresRes : LootResource
     {
-        public readonly Bitmap idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Treasures\id-1.png");
+        public TreasuresRes()
+        {
+            idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Treasures\id-1.png");
+        }
         public readonly Size Size = new Size(75, 70);
 
         //СТРОГО НАЗЫВАТЬ id*ID* !!!!
@@ -127,7 +130,10 @@ namespace Winforms_platformer
 
     public class LootRes : LootResource
     {
-        public readonly Bitmap idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Loot\NotFound.png");
+        public LootRes()
+        {
+            idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Loot\NotFound.png");
+        }
         public readonly Size Size = new Size(20, 20);
 
         //СТРОГО НАЗЫВАТЬ id*ID* !!!!
