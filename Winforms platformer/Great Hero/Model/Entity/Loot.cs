@@ -13,7 +13,7 @@ namespace Winforms_platformer.Model
         {
         }
 
-        public virtual void Pickup()
+        public virtual void Pickup(Entity target)
         {
 
         }
@@ -22,8 +22,33 @@ namespace Winforms_platformer.Model
     public class HeartLoot : Loot
     {
         public int ID => 0;
+        public int HealPower;
+
         public HeartLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
         {
+            HealPower = 20;
+        }
+
+        public override void Pickup(Entity target)
+        {
+            target.hp += HealPower;
+        }
+    }
+
+    public class AmmoLoot : Loot
+    {
+        public int ID => 0;
+        public int AmmoCount;
+
+        public AmmoLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
+        {
+            AmmoCount = 1;
+        }
+
+        public override void Pickup(Entity target)
+        {
+            if (target is Creature creature)
+                creature.Ammo += AmmoCount;
         }
     }
 }

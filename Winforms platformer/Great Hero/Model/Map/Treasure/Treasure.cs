@@ -26,7 +26,7 @@ namespace Winforms_platformer
             Treasure = TreasurePool.GetTreasureByID(treasureID);
         }
 
-        public override void Pickup()
+        public override void Pickup(Entity target)
         {
             TreasurePool.GiveToPlayer(Treasure.ID);
         }
