@@ -18,7 +18,7 @@ namespace Winforms_platformer
 
         public static void GiveToPlayer(int treasureID)
         {
-            if (treasureID < treasures.Count)
+            if (treasureID < treasures.Count && treasureID >= 0)
             {
                 Game.Player.treasures.Add(treasures[treasureID]);
                 treasures[treasureID].Enable(Game.Player);
@@ -40,7 +40,7 @@ namespace Winforms_platformer
         {
             if (treasureID < treasures.Count)
                 return treasures[treasureID];
-            return null;
+            return new NotFoundedTreasure();
         }
 
         public static void SortPool() => treasures.OrderBy(treasure => treasure.ID);
@@ -65,7 +65,7 @@ namespace Winforms_platformer
         {
             var items = treasures.Where(e => e.Price == price).ToList();
             if (items.Count == 0)
-                return new NotFound();
+                return new NotFoundedTreasure();
             return items[Random.Next(items.Count)];
         }
 
@@ -78,7 +78,7 @@ namespace Winforms_platformer
         }
     }
 
-    public class NotFound : ITreasure
+    public class NotFoundedTreasure : ITreasure
     {
         int ITreasure.ID { get => -1; }
 

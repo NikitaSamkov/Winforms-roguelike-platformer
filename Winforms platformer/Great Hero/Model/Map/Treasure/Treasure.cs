@@ -18,12 +18,12 @@ namespace Winforms_platformer
     public class TreasureItem : Loot
     {
         public ITreasure Treasure { get; }
-        public int ID => Treasure.ID;
 
         public TreasureItem(int x, int y, Collider collider, Func<Room> CurrentRoom, int treasureID) 
             : base(x, y, collider, CurrentRoom)
         {
             Treasure = TreasurePool.GetTreasureByID(treasureID);
+            ID = Treasure.ID;
         }
 
         public override void Pickup(Entity target)

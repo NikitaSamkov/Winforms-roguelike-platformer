@@ -22,7 +22,7 @@ namespace Winforms_platformer
             hp = 20;
             damage = 10;
             xSpeed = 10;
-            treasureDropID = 0;
+            treasureDropID = -1;
             SetDropChances();
         }
 
