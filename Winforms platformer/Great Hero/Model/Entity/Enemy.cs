@@ -55,7 +55,7 @@ namespace Winforms_platformer
 
         protected virtual void SetDropChances()
         {
-            DropChances[LootType.Heart] = 100;
+            
         }
 
         protected void SetDropChanses(int heart, int ammo, int treasure)

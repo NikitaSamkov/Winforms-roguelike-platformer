@@ -33,11 +33,11 @@ namespace Winforms_platformer.Model
         {
             if (!GameOver)
             {
-                Map.Update();
-
                 if (Player.hp <= 0)
                     GameOver = true;
                 Player.Update();
+
+                Map.Update();
             }
         }
 
