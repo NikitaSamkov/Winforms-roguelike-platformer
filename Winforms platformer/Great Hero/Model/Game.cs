@@ -27,6 +27,7 @@ namespace Winforms_platformer.Model
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             SetKeyBindings();
+            RandomEnemyGenerator.Start();
         }
 
         public static void Update()

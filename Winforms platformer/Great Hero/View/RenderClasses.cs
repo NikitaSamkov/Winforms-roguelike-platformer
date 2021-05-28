@@ -224,7 +224,7 @@ namespace Winforms_platformer.View
             foreach (var field in resource.GetType().GetFields())
                 if (field.Name == "id" + ID)
                     return (Bitmap)field.GetValue(resource);
-            return resource.idNOtFound;
+            return resource.idNotFound;
         }
     }
 
@@ -266,7 +266,7 @@ namespace Winforms_platformer.View
             foreach (var field in Resources.Treasures.GetType().GetFields())
                 if (field.Name == "id" + treasureID)
                     return (Bitmap)field.GetValue(Resources.Treasures);
-            return Resources.Treasures.idNOtFound;
+            return Resources.Treasures.idNotFound;
         }
     }
 }

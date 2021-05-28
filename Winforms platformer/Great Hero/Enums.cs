@@ -41,4 +41,9 @@ namespace Winforms_platformer
         Ammo,
         Treasure
     }
+
+    public enum EnemyType
+    {
+        Dummy
+    }
 }

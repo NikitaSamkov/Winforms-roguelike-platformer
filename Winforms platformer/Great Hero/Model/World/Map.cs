@@ -10,7 +10,7 @@ namespace Winforms_platformer.Model
     public class Map
     {
         private Player player;
-        private List<Room> roomSamples;
+        private List<Room> roomTemplates;
         private List<Room> rooms;
         private int currentRoom;
         public Random Random;
@@ -27,27 +27,43 @@ namespace Winforms_platformer.Model
                 this.seed = GenerateSeed();
             Random = new Random(this.seed);
             this.player = player;
+            GetRoomTemplates();
+        }
 
-            roomSamples = new List<Room>
+        public void GetRoomTemplates()
+        {
+            roomTemplates = new List<Room>
             {
                 new Room(RoomType.RegularRoom, player, new List<Platform>
                 {
                     new Platform(200, 600, 350)
                 }),
+
                 new Room(RoomType.RegularRoom, player, new List<Platform>
                 {
                     new Platform(100, 300, 350),
                     new Platform(500, 700, 350)
                 }),
+
                 new Room(RoomType.RegularRoom, player, new List<Platform>
                 {
                     new Platform(100, 300, 400),
                     new Platform(500, 700, 400),
                     new Platform(300, 500, 300)
                 }, null, 10),
+
                 new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
-                new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 1),
-                new Room(RoomType.RegularRoom, player, new List<Platform> {new Platform(0, 800, 10) }, null, 0)
+
+                RoomGenerator.PictireToRoom(
+                    @"9
+ * * * * 
+---- ----
+         
+   ---   
+         
+- - - - -
+         
+#########")
             };
         }
 
@@ -118,7 +134,7 @@ namespace Winforms_platformer.Model
             currentRoom = 0;
             rooms = new List<Room>();
             rooms.Add(new Room(RoomType.StartingRoom, player));
-            if (roomSamples.Count != 0)
+            if (roomTemplates.Count != 0)
                 for (var i = 0; i < roomsCount - 1; i++)
                 {
                     if ((i - 1) % 3 == 0)
@@ -127,7 +143,7 @@ namespace Winforms_platformer.Model
                         { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,
                         treasures[(i - 1) / 3].ID)}));
                     else
-                        rooms.Add(roomSamples[Random.Next(roomSamples.Count)]);
+                        rooms.Add(roomTemplates[Random.Next(roomTemplates.Count)]);
                 }
         }
 
