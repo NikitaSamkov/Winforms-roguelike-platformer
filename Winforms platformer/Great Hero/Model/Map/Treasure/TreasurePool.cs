@@ -102,7 +102,7 @@ namespace Winforms_platformer
     {
         int ITreasure.ID { get => 0; }
 
-        int ITreasure.Price { get => 5; }
+        int ITreasure.Price { get => 10; }
 
         public void Enable(Player player)
         {

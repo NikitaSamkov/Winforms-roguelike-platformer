@@ -103,6 +103,8 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Q] = () => Player.Shoot();
 
+            KeyBindings[Keys.R] = () => Player.Ammo += 3;
+
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().TreasuresList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 0));
 

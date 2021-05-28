@@ -25,14 +25,14 @@ namespace Winforms_platformer
 
         public override void Shoot()
         {
-            if (ammo > 0)
+            if (Ammo > 0)
             {
                 var arrow = new Arrow(x, y + collider.field.Height / 2,
                         new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Ally);
                 arrow.MoveTo(direction);
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);
-                ammo--;
+                Ammo--;
             }
         }
     }
