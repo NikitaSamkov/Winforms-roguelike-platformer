@@ -58,7 +58,7 @@ namespace Winforms_platformer
             
         }
 
-        protected void SetDropChanses(int heart, int ammo, int treasure)
+        protected void SetDropChances(int heart, int ammo, int treasure)
         {
             DropChances[LootType.Heart] = heart;
             DropChances[LootType.Ammo] = ammo;
