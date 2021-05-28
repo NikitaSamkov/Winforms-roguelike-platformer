@@ -11,7 +11,8 @@ namespace Winforms_platformer
     public class Enemy : Creature
     {
         protected Player player;
-        protected Dictionary<LootType, int> DropChances = new Dictionary<LootType, int>();
+        protected Dictionary<LootType, int> dropChances = new Dictionary<LootType, int>();
+        protected int treasureDropID;
 
         public Enemy(int x, int y, Collider collider, Func<Room> room,
             Player player)
@@ -21,6 +22,7 @@ namespace Winforms_platformer
             hp = 20;
             damage = 10;
             xSpeed = 10;
+            treasureDropID = 0;
             SetDropChances();
         }
 
@@ -60,28 +62,28 @@ namespace Winforms_platformer
 
         protected void SetDropChances(int heart, int ammo, int treasure)
         {
-            DropChances[LootType.Heart] = heart;
-            DropChances[LootType.Ammo] = ammo;
-            DropChances[LootType.Treasure] = treasure;
+            dropChances[LootType.Heart] = heart;
+            dropChances[LootType.Ammo] = ammo;
+            dropChances[LootType.Treasure] = treasure;
         }
 
         public Loot GetDrop()
         {
             var random = new Random();
-            var chance = 101;
-            foreach (var lootType in DropChances.Keys)
+            foreach (var lootType in dropChances.Keys)
             {
-                if (random.Next(1, chance) <= DropChances[lootType])
+                if (random.Next(1, 101) <= dropChances[lootType])
                     switch (lootType)
                     {
                         case LootType.Heart:
                             return new HeartLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
                         case LootType.Ammo:
                             return new AmmoLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                        case LootType.Treasure:
+                            return new TreasureItem(x, y, new Collider(Resources.Treasures.Size), CurrentRoom, treasureDropID);
                         default:
                             return new NotFoundedLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
                     }
-                chance -= DropChances[lootType];
             }
             return null;
         }
