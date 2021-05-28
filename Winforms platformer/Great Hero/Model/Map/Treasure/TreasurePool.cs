@@ -57,10 +57,7 @@ namespace Winforms_platformer
             }
             for (var i = 0; i < treasuresPrices.Count; i++)
                 if (Random.Next(100) + 1 <= chances[i] * 100 / sum || i == treasuresPrices.Count - 1)
-                {
                     return treasuresPrices[i];
-                    break;
-                }
             return 0;
         }
 

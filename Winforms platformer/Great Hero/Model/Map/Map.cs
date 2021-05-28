@@ -55,11 +55,11 @@ namespace Winforms_platformer.Model
         {
             ChangeRoom();
 
-            foreach (var enemy in CurrentRoom().enemyList)
+            foreach (var enemy in CurrentRoom().EnemyList)
             {
                 if (enemy.hp <= 0)
                 {
-                    CurrentRoom().enemyList.Remove(enemy);
+                    CurrentRoom().EnemyList.Remove(enemy);
                     break;
                 }
                 if (enemy.IntersectsWithBody(player))
@@ -91,15 +91,15 @@ namespace Winforms_platformer.Model
                 projectile.Update();
             }
 
-            foreach (var treasure in CurrentRoom().TreasuresList)
+            foreach (var loot in CurrentRoom().LootList)
             {
-                if (treasure.IntersectsWithBody(player))
+                if (loot.IntersectsWithBody(player))
                 {
-                    treasure.GiveToPlayer();
-                    CurrentRoom().TreasuresList.Remove(treasure);
+                    loot.Pickup();
+                    CurrentRoom().LootList.Remove(loot);
                     break;
                 }
-                treasure.Update();
+                loot.Update();
             }
         }
 
@@ -120,7 +120,7 @@ namespace Winforms_platformer.Model
                 {
                     if ((i - 1) % 3 == 0)
                         rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>() 
-                        { new Platform(350, 450, 350) }, new List<TreasureItem> 
+                        { new Platform(350, 450, 350) }, new List<Loot> 
                         { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,  
                         treasures[(i - 1) / 3].ID)}));
                     else
@@ -169,8 +169,8 @@ namespace Winforms_platformer.Model
 
         public bool IsCurrentRoomFirst() => currentRoom <= 0;
 
-        public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom().enemyList.Count == 0;
-        public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom().enemyList.Count == 0;
+        public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom().EnemyList.Count == 0;
+        public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom().EnemyList.Count == 0;
     }
 
 }

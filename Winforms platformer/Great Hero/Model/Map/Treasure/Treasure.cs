@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winforms_platformer.Model;
 
 namespace Winforms_platformer
 {
@@ -14,7 +15,7 @@ namespace Winforms_platformer
         int Price { get; }
     }
 
-    public class TreasureItem : Entity
+    public class TreasureItem : Loot
     {
         public ITreasure Treasure { get; }
         public int ID => Treasure.ID;
@@ -25,7 +26,7 @@ namespace Winforms_platformer
             Treasure = TreasurePool.GetTreasureByID(treasureID);
         }
 
-        public void GiveToPlayer()
+        public override void Pickup()
         {
             TreasurePool.GiveToPlayer(Treasure.ID);
         }

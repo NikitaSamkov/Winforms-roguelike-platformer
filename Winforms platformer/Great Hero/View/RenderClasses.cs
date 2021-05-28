@@ -125,7 +125,7 @@ namespace Winforms_platformer.View
 
         public void Paint(Graphics g)
         {
-            foreach (var enemy in CurrentRoom().enemyList)
+            foreach (var enemy in CurrentRoom().EnemyList)
             {
                 var render = enemies.Where(e => e.Entity == (Entity)enemy).FirstOrDefault();
                 if (render == null)
@@ -197,30 +197,31 @@ namespace Winforms_platformer.View
         }
     }
 
-    public class TreasuresRender : IRenderable
+    public class LootRender : IRenderable
     {
         private Func<Room> CurrentRoom;
 
-        public TreasuresRender(Func<Room> CurrentRoom)
+        public LootRender(Func<Room> CurrentRoom)
         {
             this.CurrentRoom = CurrentRoom;
         }
 
         public void Paint(Graphics g)
         {
-            foreach (var treasure in CurrentRoom().TreasuresList)
+            foreach (var loot in CurrentRoom().LootList)
             {
-                g.DrawImage(GetSprite(treasure.ID), treasure.x, treasure.y);
+                g.DrawImage(GetSprite(loot.ID), loot.x, loot.y);
                 if (Game.DeveloperToolsON)
-                    g.DrawRectangle(new Pen(Color.Green), treasure.x, treasure.y, treasure.collider.field.Width,
-                        treasure.collider.field.Height);
+                    g.DrawRectangle(new Pen(Color.Green), loot.x, loot.y, loot.collider.field.Width,
+                        loot.collider.field.Height);
             }
+
         }
 
-        public Bitmap GetSprite(int treasureID)
+        public Bitmap GetSprite(int ID)
         {
             foreach (var field in Resources.Treasures.GetType().GetFields())
-                if (field.Name == "id" + treasureID)
+                if (field.Name == "id" + ID)
                     return (Bitmap)field.GetValue(Resources.Treasures);
             return Resources.Treasures.idNOtFound;
         }
@@ -231,8 +232,8 @@ namespace Winforms_platformer.View
         public void Paint(Graphics g)
         {
             #region HP
-            g.DrawImage(Resources.UI.HPBar, 50, 50, 
-                new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.hp / 100, Resources.UI.HPSize.Width), 
+            g.DrawImage(Resources.UI.HPBar, 50, 50,
+                new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.hp / 100, Resources.UI.HPSize.Width),
                 GraphicsUnit.Pixel);
             g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
             #endregion

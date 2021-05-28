@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winforms_platformer.Model;
 
 namespace Winforms_platformer
 {
@@ -14,18 +15,18 @@ namespace Winforms_platformer
         public RoomType Type { get; }
         public readonly int GroundLevel;
         public readonly List<Platform> Platforms;
-        public List<Enemy> enemyList = new List<Enemy>();
+        public List<Enemy> EnemyList = new List<Enemy>();
         public List<Projectile> ProjectilesList = new List<Projectile>();
-        public List<TreasureItem> TreasuresList = new List<TreasureItem>();
+        public List<Loot> LootList = new List<Loot>();
 
-        public Room(RoomType type, Player player, List<Platform> platforms = null, List<TreasureItem> treasureList = null,  int gravitationForce = 7, int groundLevel = 486)
+        public Room(RoomType type, Player player, List<Platform> platforms = null, List<Loot> lootList = null,  int gravitationForce = 7, int groundLevel = 486)
         {
             Platforms = platforms;
             if (Platforms == null)
                 Platforms = new List<Platform>();
-            TreasuresList = treasureList;
-            if (TreasuresList == null)
-                TreasuresList = new List<TreasureItem>();
+            LootList = lootList;
+            if (LootList == null)
+                LootList = new List<Loot>();
             gForce = gravitationForce;
             GroundLevel = groundLevel;
             Type = type;
@@ -58,7 +59,7 @@ namespace Winforms_platformer
         public List<Enemy> GetIntersectedEnemies(Collider collider, int colliderX, int colliderY)
         {
             var result = new List<Enemy>();
-            foreach (var enemy in enemyList)
+            foreach (var enemy in EnemyList)
                 if (new Rectangle(new Point(colliderX, colliderY), collider.field)
                     .IntersectsWith(
                     new Rectangle(new Point(enemy.collider.x + enemy.x, enemy.collider.y + enemy.y),
@@ -69,7 +70,7 @@ namespace Winforms_platformer
         public List<Entity> GetIntersectedEntities(Entity entity)
         {
             var result = new List<Entity>();
-            foreach (var enemy in enemyList)
+            foreach (var enemy in EnemyList)
                 if (entity.IntersectsWithBody(enemy))
                     result.Add(enemy);
             if (entity.IntersectsWithBody(player))

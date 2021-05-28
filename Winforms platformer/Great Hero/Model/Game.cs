@@ -89,7 +89,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
 
-            KeyBindings[Keys.D0] = () => Map.CurrentRoom().enemyList.Add(
+            KeyBindings[Keys.D0] = () => Map.CurrentRoom().EnemyList.Add(
                 new Enemy(Player.x, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
 
             KeyBindings[Keys.E] = () =>
@@ -105,7 +105,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.R] = () => Player.Ammo += 3;
 
-            KeyBindings[Keys.D1] = () => Map.CurrentRoom().TreasuresList.Add(
+            KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 0));
 
             KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(Player, 0);
