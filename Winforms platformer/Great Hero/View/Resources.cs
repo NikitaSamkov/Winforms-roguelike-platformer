@@ -17,6 +17,7 @@ namespace Winforms_platformer
         public static readonly ArrowRes Arrow = new ArrowRes();
         public static readonly TreasuresRes Treasures = new TreasuresRes();
         public static readonly UIRes UI = new UIRes();
+        public static readonly LootRes Loot = new LootRes();
     }
 
     public class EntityResource
@@ -126,7 +127,7 @@ namespace Winforms_platformer
 
     public class LootRes : LootResource
     {
-        public readonly Bitmap idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Treasures\NotFound.png");
+        public readonly Bitmap idNOtFound = new Bitmap(@"..\..\..\..\Sprites\Loot\NotFound.png");
         public readonly Size Size = new Size(20, 20);
 
         //СТРОГО НАЗЫВАТЬ id*ID* !!!!

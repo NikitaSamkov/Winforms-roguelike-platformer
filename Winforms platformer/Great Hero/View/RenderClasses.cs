@@ -210,7 +210,8 @@ namespace Winforms_platformer.View
         {
             foreach (var loot in CurrentRoom().LootList)
             {
-                g.DrawImage(GetSprite(loot.ID), loot.x, loot.y);
+                var resource = (loot is TreasureItem) ? (LootResource)Resources.Treasures : (LootResource)Resources.Loot;
+                g.DrawImage(GetSprite(loot.ID, resource), loot.x, loot.y);
                 if (Game.DeveloperToolsON)
                     g.DrawRectangle(new Pen(Color.Green), loot.x, loot.y, loot.collider.field.Width,
                         loot.collider.field.Height);
@@ -218,9 +219,9 @@ namespace Winforms_platformer.View
 
         }
 
-        public Bitmap GetSprite(int ID)
+        public Bitmap GetSprite(int ID, LootResource resource)
         {
-            foreach (var field in Resources.Treasures.GetType().GetFields())
+            foreach (var field in resource.GetType().GetFields())
                 if (field.Name == "id" + ID)
                     return (Bitmap)field.GetValue(Resources.Treasures);
             return Resources.Treasures.idNOtFound;
