@@ -100,13 +100,14 @@ namespace Winforms_platformer.View
             GetCurrentSheet();
             StopAttackingIfNeeded();
             currentFrame++;
-            g.DrawImage(CurrentSheet, ((int)Entity.direction == 0) ? Entity.x :
-                    Entity.x + Entity.collider.field.Width - currentFrameSize.Width,
-                Entity.y, new Rectangle(currentFrameSize.Width * frame,
-                    currentFrameSize.Height * (int)Entity.direction,
-                    currentFrameSize.Width,
-                    currentFrameSize.Height),
-                    GraphicsUnit.Pixel);
+            if (Entity.invincibility % 2 != 1 || !(Entity is Player))
+                g.DrawImage(CurrentSheet, ((int)Entity.direction == 0) ? Entity.x :
+                        Entity.x + Entity.collider.field.Width - currentFrameSize.Width,
+                    Entity.y, new Rectangle(currentFrameSize.Width * frame,
+                        currentFrameSize.Height * (int)Entity.direction,
+                        currentFrameSize.Width,
+                        currentFrameSize.Height),
+                        GraphicsUnit.Pixel);
             if (Game.DeveloperToolsON)
                 g.DrawRectangle(new Pen(Color.Green), Entity.x, Entity.y, Entity.collider.field.Width,
                         Entity.collider.field.Height);
