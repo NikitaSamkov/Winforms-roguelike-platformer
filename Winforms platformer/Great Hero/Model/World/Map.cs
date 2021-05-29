@@ -53,8 +53,7 @@ namespace Winforms_platformer.Model
 
                 //new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
 
-                RoomGenerator.PictireToRoom(
-                    @"9
+                RoomGenerator.PictireToRoom(@"9
          
 ---- ----
          
@@ -62,7 +61,8 @@ namespace Winforms_platformer.Model
   *   *  
 - - - - -
          
-#########")
+#########", 486)
+                
             };
         }
 

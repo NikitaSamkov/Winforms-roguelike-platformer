@@ -9,7 +9,7 @@ namespace Winforms_platformer.Model
 {
     public static class RoomGenerator
     {
-        public static Room PictireToRoom(string map, string separator = "\r\n")
+        public static Room PictireToRoom(string map, int customGroundLevel = -1, string separator = "\r\n")
         {
             #region HOW TO DRAW A MAP
             /*
@@ -27,6 +27,12 @@ namespace Winforms_platformer.Model
             var symbolWidth = 800 / int.Parse(rows[0]) + 1;
             var symbolHeight = 600 / rows.Length;
             var groundLevel = 0;
+            var customGround = false;
+            if (customGroundLevel > -1)
+            {
+                customGround = true;
+                groundLevel = customGroundLevel;
+            }
             var platforms = new List<Platform>();
             var enemies = new List<Enemy>();
             var treasures = new List<Loot>();
@@ -77,11 +83,12 @@ namespace Winforms_platformer.Model
                     }
                     else
                     {
-                        groundLevel = (y - 1) * symbolHeight;
+                        if (!customGround)
+                            groundLevel = (y - 1) * symbolHeight;
                         break;
                     }
                 }
-                if (groundLevel != 0)
+                if (groundLevel != 0 && !customGround)
                     break;
                 if (platform)
                 {
