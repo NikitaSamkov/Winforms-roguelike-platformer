@@ -15,6 +15,7 @@ namespace Winforms_platformer.Model
         {
             random = Game.Map.Random;
             enemyTypes.Add(EnemyType.Slime);
+            enemyTypes.Add(EnemyType.Roller);
         }
 
         public static Enemy GetRandomEnemy(int x, int y)
@@ -26,7 +27,8 @@ namespace Winforms_platformer.Model
                     return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
                 case EnemyType.Slime:
                     return new Slime(x, y, new Collider(Resources.Slime.IdleSize), Game.Map.CurrentRoom, Game.Player);
-                    
+                case EnemyType.Roller:
+                    return new Roller(x, y, new Collider(Resources.Roller.IdleSize), Game.Map.CurrentRoom, Game.Player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
         }

@@ -24,7 +24,7 @@ namespace Winforms_platformer
         {
             this.player = player;
             HP = 20;
-            MaxHP = 50;
+            MaxHP = 20;
             damage = 0;
             xSpeed = minSpeed;
             SetDropChances();
@@ -85,7 +85,7 @@ namespace Winforms_platformer
             var random = new Random();
             foreach (var lootType in dropChances.Keys)
             {
-                if (random.Next(1, 101) <= dropChances[lootType])
+                if (random.Next(1, 101) <= dropChances[lootType] * 20 / player.HP)
                     switch (lootType)
                     {
                         case LootType.Heart:
@@ -114,7 +114,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 400;
             jumpStrength = 50;
-            SetDropChances(100, 0, 0);
+            SetDropChances(10, 0, 0);
         }
     }
 
@@ -125,7 +125,7 @@ namespace Winforms_platformer
             HP = 1;
             MaxHP = 1;
             damage = 10;
-            minSpeed = 1;
+            minSpeed = 15;
             maxSpeed = 99;
             treasureDropID = -1;
             range = 1000;

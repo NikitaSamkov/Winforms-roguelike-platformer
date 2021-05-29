@@ -134,6 +134,8 @@ namespace Winforms_platformer.View
                     //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
                     if (enemy is Slime)
                         resources = Resources.Slime;
+                    if (enemy is Roller)
+                        resources = Resources.Roller;
                     render = new EntityRender(enemy, resources, 3);
                     enemies.Add(render);
                 }

@@ -14,6 +14,7 @@ namespace Winforms_platformer
         #region ENEMIES
         public static readonly DummyRes Dummy = new DummyRes();
         public static readonly SlimeRes Slime = new SlimeRes();
+        public static readonly RollerRes Roller = new RollerRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -61,6 +62,7 @@ namespace Winforms_platformer
         }
     }
 
+    #region ENEMIES
     public class DummyRes : EntityResource
     {
         public DummyRes()
@@ -82,6 +84,18 @@ namespace Winforms_platformer
             MoveSize = new Size(60, 39);
         }
     }
+
+    public class RollerRes : EntityResource
+    {
+        public RollerRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\RollerIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\RollerWalk.png");
+            IdleSize = new Size(60, 60);
+            MoveSize = new Size(60, 60);
+        }
+    }
+    #endregion
 
     public class RoomRes
     {
