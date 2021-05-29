@@ -17,6 +17,8 @@ namespace Winforms_platformer
         public static readonly RollerRes Roller = new RollerRes();
         public static readonly SwordsmanRes Swordsman = new SwordsmanRes();
         public static readonly ArcherRes Archer = new ArcherRes();
+        public static readonly MagicianRes Magician = new MagicianRes();
+        public static readonly SuperMagicianRes SuperMagician = new SuperMagicianRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -122,6 +124,28 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\ArcherWalk.png");
             IdleSize = new Size(112, 110);
             MoveSize = new Size(112, 110);
+        }
+    }
+
+    public class MagicianRes : EntityResource
+    {
+        public MagicianRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\MagicianIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\MagicianIdle.png");
+            IdleSize = new Size(64, 112);
+            MoveSize = new Size(64, 112);
+        }
+    }
+
+    public class SuperMagicianRes : EntityResource
+    {
+        public SuperMagicianRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\SuperMagicianIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\SuperMagicianIdle.png");
+            IdleSize = new Size(64, 112);
+            MoveSize = new Size(64, 112);
         }
     }
     #endregion

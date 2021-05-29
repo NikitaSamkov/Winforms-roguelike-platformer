@@ -269,4 +269,74 @@ namespace Winforms_platformer
             return false;
         }
     }
+
+    public class Magician : Enemy
+    {
+        private int power;
+        private int lastPlayerY;
+        public Magician(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 10;
+            MaxHP = HP;
+            damage = 0;
+            minSpeed = 0;
+            maxSpeed = 0;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 0;
+            power = 3;
+            lastPlayerY = -1;
+            SetDropChances(20, 20, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            var dx = 0;
+            var dy = 0;
+            if (lastPlayerY == -1)
+                lastPlayerY = player.y + player.collider.field.Height;
+            if (player.x > x)
+                dx = -power;
+            else
+                dx = power;
+            if (lastPlayerY > y + collider.field.Height)
+                dy = -power;
+            else
+                dy = power;
+            lastPlayerY += dy;
+            player.TeleportTo(player.x + dx, lastPlayerY - player.collider.field.Height);
+        }
+    }
+
+    public class SuperMagician : Enemy
+    {
+        private int cooldown;
+        public SuperMagician(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            var random = new Random();
+            HP = random.Next(1, 26);
+            MaxHP = HP;
+            damage = random.Next(25, 76);
+            minSpeed = 0;
+            maxSpeed = 0;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 0;
+            cooldown = random.Next(75, 999);
+            SetDropChances(random.Next(0, 101), random.Next(0, 101), 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            if (cooldown == 0)
+            {
+                player.TeleportTo(x, y);
+                cooldown = 100;
+            }
+            else
+                cooldown--;
+        }
+    }
 }

@@ -61,7 +61,8 @@ namespace Winforms_platformer
         {
             if (invincibility == 0)
             {
-                invincibility = damageInvincibility;
+                if (damage > 0)
+                    invincibility = damageInvincibility;
                 HP -= damage;
             }
         }

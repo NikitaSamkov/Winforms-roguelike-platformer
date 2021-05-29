@@ -140,6 +140,10 @@ namespace Winforms_platformer.View
                         resources = Resources.Swordsman;
                     if (enemy is Archer)
                         resources = Resources.Archer;
+                    if (enemy is Magician)
+                        resources = Resources.Magician;
+                    if (enemy is SuperMagician)
+                        resources = Resources.SuperMagician;
                     render = new EntityRender(enemy, resources, 3);
                     enemies.Add(render);
                 }

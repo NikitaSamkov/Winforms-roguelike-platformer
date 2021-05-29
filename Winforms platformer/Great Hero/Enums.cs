@@ -48,6 +48,8 @@ namespace Winforms_platformer
         Slime,
         Roller,
         Swordsman,
-        Archer
+        Archer,
+        Magician,
+        SuperMagician
     }
 }

@@ -18,6 +18,8 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.Roller);
             enemyTypes.Add(EnemyType.Swordsman);
             enemyTypes.Add(EnemyType.Archer);
+            enemyTypes.Add(EnemyType.Magician);
+            enemyTypes.Add(EnemyType.SuperMagician);
         }
 
         public static Enemy GetRandomEnemy(int x, int y)
@@ -37,6 +39,10 @@ namespace Winforms_platformer.Model
                 Game.Map.CurrentRoom, Game.Player);
                 case EnemyType.Archer:
                     return new Archer(x, y, new Collider(Resources.Archer.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                case EnemyType.Magician:
+                    return new Magician(x, y, new Collider(Resources.Magician.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                case EnemyType.SuperMagician:
+                    return new SuperMagician(x, y, new Collider(Resources.SuperMagician.IdleSize), Game.Map.CurrentRoom, Game.Player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
         }
