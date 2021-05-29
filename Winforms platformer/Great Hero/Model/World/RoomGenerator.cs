@@ -9,17 +9,18 @@ namespace Winforms_platformer.Model
 {
     public static class RoomGenerator
     {
-        public static Room PictireToRoom(string map, int customGroundLevel = -1, string separator = "\r\n")
+        public static Room PictireToRoom(string map, int customGroundLevel = -1, int customGravity = 7, string separator = "\r\n")
         {
             #region HOW TO DRAW A MAP
             /*
-            @"7       <-- number => standart row symbol count
-                      <-- 7 spaces => ' ' == nothing, air
-               %   1  <-- 3 spaces, 1 percent, 3 spaces, and NUMBER => percent == treasure, NUMBER == treasure ID. !!ATTENTION!!
-                          row has standart row symbol count + percent count + ',' count SYMBOLS! (if more than 1 treasure use ',')
-              ---     <-- 2 spaces, 3 dashes, 2 spaces => dash line == platform, dash lenght == platform lenght
-             *  **    <-- 1 space, 1 zvezdochka, 2 spaces, 2 zvezdochki, 1 space => zvezdochka == random monster spawn
-            #######"  <-- 7 hashs => hash == ground !!ATTENTION!! when generator will see hash, it will stop working immediately!
+            @"7         <-- number => standart row symbol count
+                        <-- 7 spaces => ' ' == nothing, air
+               %   1    <-- 3 spaces, 1 percent, 3 spaces, and NUMBER => percent == treasure, NUMBER == treasure ID. !!ATTENTION!!
+                            row has standart row symbol count + percent count + ',' count SYMBOLS! (if more than 1 treasure use ',')
+              ---       <-- 2 spaces, 3 dashes, 2 spaces => dash line == platform, dash lenght == platform lenght
+             *  **      <-- 1 space, 1 zvezdochka, 2 spaces, 2 zvezdochki, 1 space => zvezdochka == random monster spawn
+            -------=150 <-- 7 dasges, 1 = and NUMBER => = + NUMBER == custom height of line
+            #######"    <-- 7 hashs => hash == ground !!ATTENTION!! when generator will see hash, it will stop working immediately!
                                      it will calculate ground level by multiplying 1 symbol height by row count (vertical symbols)
             */
             #endregion
@@ -45,6 +46,8 @@ namespace Winforms_platformer.Model
                 var tempTreasuresPoints = new List<Point>();
                 var currentID = 0;
                 var tempTreasures = new List<Loot>();
+                var customHeight = false;
+                var height = -1;
                 for (var x = 0; x < rows[y].Length; x++)
                 {
                     if (rows[y][x] != '#')
@@ -55,7 +58,10 @@ namespace Winforms_platformer.Model
                             tempPlatforms.Add(new Platform(platformStart, x * symbolWidth, (y - 1) * symbolHeight));
                         }
                         if (int.TryParse(rows[y][x].ToString(), out var number))
-                            currentID = currentID * 10 + number;
+                            if (customHeight)
+                                height = height * 10 + number;
+                            else
+                                currentID = currentID * 10 + number;
                         switch (rows[y][x])
                         {
                             case '*':
@@ -72,12 +78,21 @@ namespace Winforms_platformer.Model
                             case '%':
                                 tempTreasuresPoints.Add(new Point(x * symbolWidth, (y - 1) * symbolHeight));
                                 break;
+                            case '=':
+                                customHeight = true;
+                                height = 0;
+                                break;
                             case ',':
-                                tempTreasures.Add(
-                                    new TreasureItem(tempTreasuresPoints[0].X, tempTreasuresPoints[0].Y,
-                                    new Collider(Resources.Treasures.Size), Game.Map.CurrentRoom, currentID));
-                                currentID = 0;
-                                tempTreasuresPoints.Remove(tempTreasuresPoints[0]);
+                                if (customHeight)
+                                    customHeight = false;
+                                else
+                                {
+                                    tempTreasures.Add(
+                                        new TreasureItem(tempTreasuresPoints[0].X, tempTreasuresPoints[0].Y,
+                                        new Collider(Resources.Treasures.Size), Game.Map.CurrentRoom, currentID));
+                                    currentID = 0;
+                                    tempTreasuresPoints.Remove(tempTreasuresPoints[0]);
+                                }
                                 break;
                         }
                     }
@@ -95,12 +110,26 @@ namespace Winforms_platformer.Model
                     platform = false;
                     tempPlatforms.Add(new Platform(platformStart, rows[y].Length * symbolWidth, (y - 1) * symbolHeight));
                 }
+                if (height > -1)
+                {
+                    tempPlatforms = tempPlatforms.Select(p => new Platform(p.leftBorder, p.rightBorder, height)).ToList();
+                    tempEnemies = tempEnemies.Select(e =>
+                    {
+                        e.TeleportTo(e.x, height);
+                        return e;
+                    }).ToList();
+                    tempTreasures = tempTreasures.Select(t =>
+                    {
+                        t.TeleportTo(t.x, height);
+                        return t;
+                    }).ToList();
+                }
                 platforms = platforms.Concat(tempPlatforms).ToList();
                 enemies = enemies.Concat(tempEnemies).ToList();
                 treasures = treasures.Concat(tempTreasures).ToList();
             }
 
-            return new Room(RoomType.RegularRoom, Game.Player, platforms, treasures, enemies, 7, groundLevel);
+            return new Room(RoomType.RegularRoom, Game.Player, platforms, treasures, enemies, customGravity, groundLevel);
         }
     }
 }

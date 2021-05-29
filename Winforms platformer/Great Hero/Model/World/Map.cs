@@ -62,13 +62,8 @@ namespace Winforms_platformer.Model
          
 #########", 486),
                 RoomGenerator.PictireToRoom(
-@"9
-         
-         
-         
-         
-  -----  
-         
+@"9    
+  -----  =350  
 #########", 486)
                 
             };
