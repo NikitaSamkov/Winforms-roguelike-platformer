@@ -15,6 +15,7 @@ namespace Winforms_platformer
         public static readonly DummyRes Dummy = new DummyRes();
         public static readonly SlimeRes Slime = new SlimeRes();
         public static readonly RollerRes Roller = new RollerRes();
+        public static readonly SwordsmanRes Swordsman = new SwordsmanRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -93,6 +94,22 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\RollerWalk.png");
             IdleSize = new Size(60, 60);
             MoveSize = new Size(60, 60);
+        }
+    }
+
+    public class SwordsmanRes : AttackingEntityResource
+    {
+        public SwordsmanRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\SwordsmanIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\SwordsmanWalk.png");
+            Attack = new Bitmap(@"..\..\..\..\Sprites\Enemy\SwordsmanAttack.png");
+            AttackMove = new Bitmap(@"..\..\..\..\Sprites\Enemy\SwordsmanAttack.png");
+            IdleSize = new Size(40, 112);
+            MoveSize = new Size(40, 112);
+            AttackSize = new Size(88, 112);
+            AttackMoveSize = new Size(88, 112);
+            AttackRange = new Size(40, 56);
         }
     }
     #endregion

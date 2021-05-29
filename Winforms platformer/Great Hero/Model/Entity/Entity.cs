@@ -72,6 +72,12 @@ namespace Winforms_platformer
                 .IntersectsWith(new Rectangle(new Point(target.x, target.y), target.collider.field));
         }
 
+        public bool IntersectsWithBody(Entity target, Collider targetCollider)
+        {
+            return new Rectangle(new Point(x, y), collider.field)
+                .IntersectsWith(new Rectangle(new Point(target.x, target.y), target.collider.field));
+        }
+
         public void MoveTo(Direction direction) => this.direction = direction;
         public void MoveDown(int distance) => y += distance;
         public void MoveDown() => y += xSpeed;

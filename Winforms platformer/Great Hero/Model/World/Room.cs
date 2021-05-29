@@ -19,7 +19,7 @@ namespace Winforms_platformer
         public List<Projectile> ProjectilesList = new List<Projectile>();
         public List<Loot> LootList;
 
-        public Room(RoomType type, Player player, List<Platform> platforms = null, List<Loot> lootList = null,  
+        public Room(RoomType type, Player player, List<Platform> platforms = null, List<Loot> lootList = null,
             List<Enemy> enemies = null, int gravitationForce = 7, int groundLevel = 486)
         {
             Platforms = platforms;
@@ -71,6 +71,24 @@ namespace Winforms_platformer
                     result.Add(enemy);
             return result;
         }
+
+        public List<Entity> GetIntersectedEntities(Collider collider, int colliderX, int colliderY)
+        {
+            var result = new List<Entity>();
+            foreach (var enemy in EnemyList)
+                if (new Rectangle(new Point(colliderX, colliderY), collider.field)
+                    .IntersectsWith(
+                    new Rectangle(new Point(enemy.collider.x + enemy.x, enemy.collider.y + enemy.y),
+                    enemy.collider.field)))
+                    result.Add(enemy);
+            if (new Rectangle(new Point(colliderX, colliderY), collider.field)
+                    .IntersectsWith(
+                    new Rectangle(new Point(player.collider.x + player.x, player.collider.y + player.y),
+                    player.collider.field)))
+                result.Add(player);
+            return result;
+        }
+
         public List<Entity> GetIntersectedEntities(Entity entity)
         {
             var result = new List<Entity>();

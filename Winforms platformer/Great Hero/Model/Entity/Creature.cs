@@ -15,7 +15,7 @@ namespace Winforms_platformer
         protected int jumpStrength = 50;
         public int Ammo { get; set; }
 
-        public Creature(int x, int y, Collider collider, Func<Room> room) 
+        public Creature(int x, int y, Collider collider, Func<Room> room)
             : base(x, y, collider, room)
         {
             bowStrenght = 75;
@@ -38,15 +38,24 @@ namespace Winforms_platformer
                 MoveY();
             if (invincibility > 0)
                 invincibility--;
-            if (status == Status.Attack || status == Status.AttackMove)
+            if ((status == Status.Attack || status == Status.AttackMove) && HitsAnybodyWithAttack(out var entities))
             {
-                var colliderX = ((int)direction == 0) ?
-                    collider.field.Width + collider.attackCollider.x + x :
-                    x - collider.attackCollider.x - collider.attackCollider.field.Width;
-                var colliderY = y + collider.attackCollider.y;
-                foreach (var target in CurrentRoom().GetIntersectedEnemies(collider, colliderX, colliderY))
+                foreach (var target in entities)
                     target.Hurt(damage);
             }
+        }
+
+        public bool HitsAnybodyWithAttack(out List<Entity> entities)
+        {
+            var colliderX = ((int)direction == 0) ?
+                    collider.field.Width + collider.attackCollider.x + x :
+                    x - collider.attackCollider.x - collider.attackCollider.field.Width;
+            var colliderY = y + collider.attackCollider.y;
+            entities = CurrentRoom().GetIntersectedEntities(collider.attackCollider, colliderX, colliderY)
+                .Where(e => e != this).ToList();
+            if (entities.Count != 0)
+                return true;
+            return false;
         }
 
         public virtual void Shoot()

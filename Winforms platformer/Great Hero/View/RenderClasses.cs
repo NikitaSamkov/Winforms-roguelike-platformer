@@ -77,7 +77,7 @@ namespace Winforms_platformer.View
             {
                 if (CurrentSheet == attackingResource.Attack)
                 {
-                    Game.Player.status = Status.Idle;
+                    Entity.status = Status.Idle;
                     CurrentSheet = Resource.Idle;
                     maxFrames = Resource.Idle.Width / Resource.IdleSize.Width;
                     currentFrameSize = Resource.IdleSize;
@@ -85,7 +85,7 @@ namespace Winforms_platformer.View
                 }
                 else if (CurrentSheet == attackingResource.AttackMove)
                 {
-                    Game.Player.status = Status.Move;
+                    Entity.status = Status.Move;
                     CurrentSheet = Resource.Move;
                     maxFrames = Resource.Move.Width / Resource.MoveSize.Width;
                     currentFrameSize = Resource.MoveSize;
@@ -136,6 +136,8 @@ namespace Winforms_platformer.View
                         resources = Resources.Slime;
                     if (enemy is Roller)
                         resources = Resources.Roller;
+                    if (enemy is Swordsman)
+                        resources = Resources.Swordsman;
                     render = new EntityRender(enemy, resources, 3);
                     enemies.Add(render);
                 }

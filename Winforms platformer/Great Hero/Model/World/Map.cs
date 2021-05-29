@@ -167,7 +167,7 @@ namespace Winforms_platformer.Model
                     CurrentRoom().EnemyList.Remove(enemy);
                     break;
                 }
-                if (enemy.IntersectsWithBody(player))
+                if (enemy.HitsPlayer())
                     player.Hurt(enemy.damage);
                 enemy.Update();
             }

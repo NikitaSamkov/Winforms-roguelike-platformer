@@ -46,6 +46,7 @@ namespace Winforms_platformer
     {
         Dummy,
         Slime,
-        Roller
+        Roller,
+        Swordsman
     }
 }

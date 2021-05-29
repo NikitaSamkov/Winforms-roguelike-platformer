@@ -44,12 +44,18 @@ namespace Winforms_platformer
                                     GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Bottom))));
             if (distance > range)
             {
-                status = Status.Idle;
+                if (status == Status.AttackMove || status == Status.Attack)
+                    status = Status.Attack;
+                else
+                    status = Status.Idle;
                 xSpeed = 0;
             }
             else
             {
-                status = Status.Move;
+                if (status == Status.AttackMove || status == Status.Attack)
+                    status = Status.AttackMove;
+                else
+                    status = Status.Move;
                 direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
                 var neededX = (direction == Direction.Left) ?
                     player.x + player.collider.field.Width / 2 :
@@ -63,14 +69,19 @@ namespace Winforms_platformer
                     xSpeed = Math.Abs(x - neededX);
                 if (player.y + player.collider.field.Height < y + collider.field.Height && distance < 200)
                     Jump();
-                if (player.y + player.collider.field.Height > y + collider.field.Height && distance < 200)
+                if (player.y + player.collider.field.Height > y + collider.field.Height && distance <= range)
                     MoveDown(1);
             }
         }
 
+        public virtual bool HitsPlayer()
+        {
+            return IntersectsWithBody(player);
+        }
+
         protected virtual void SetDropChances()
         {
-            
+
         }
 
         protected void SetDropChances(int heart, int ammo, int treasure)
@@ -111,6 +122,7 @@ namespace Winforms_platformer
             damage = 5;
             minSpeed = 5;
             maxSpeed = 7;
+            xSpeed = minSpeed;
             treasureDropID = -1;
             range = 400;
             jumpStrength = 50;
@@ -127,10 +139,40 @@ namespace Winforms_platformer
             damage = 10;
             minSpeed = 15;
             maxSpeed = 99;
+            xSpeed = minSpeed;
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 0;
             SetDropChances(5, 10, 0);
+        }
+    }
+
+    public class Swordsman : Enemy
+    {
+        public Swordsman(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 50;
+            MaxHP = HP;
+            damage = 10;
+            minSpeed = 3;
+            maxSpeed = 5;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 500;
+            jumpStrength = 30;
+            SetDropChances(25, 25, 0);
+        }
+
+        public override void Update()
+        {
+            if (HitsAnybodyWithAttack(out var entities) && entities.Contains(player))
+                status = Status.AttackMove;
+            base.Update();
+        }
+
+        public override bool HitsPlayer()
+        {
+            return false;
         }
     }
 }
