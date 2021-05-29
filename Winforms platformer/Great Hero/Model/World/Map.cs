@@ -159,7 +159,7 @@ namespace Winforms_platformer.Model
 
             foreach (var enemy in CurrentRoom().EnemyList)
             {
-                if (enemy.hp <= 0)
+                if (enemy.HP <= 0)
                 {
                     var drop = enemy.GetDrop();
                     if (drop != null)
@@ -189,7 +189,7 @@ namespace Winforms_platformer.Model
                     targets
                     .OrderBy(target => target.GetDistanceTo(projectile.x, projectile.y))
                     .First()
-                    .hp -= projectile.damage;
+                    .HP -= projectile.damage;
                     CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
                 }

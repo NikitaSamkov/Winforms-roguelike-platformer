@@ -236,7 +236,7 @@ namespace Winforms_platformer.View
         {
             #region HP
             g.DrawImage(Resources.UI.HPBar, 50, 50,
-                new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.hp / 100, Resources.UI.HPSize.Width),
+                new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.HP / 100, Resources.UI.HPSize.Width),
                 GraphicsUnit.Pixel);
             g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
             #endregion

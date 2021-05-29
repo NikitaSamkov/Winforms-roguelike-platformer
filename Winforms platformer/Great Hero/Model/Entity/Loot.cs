@@ -41,7 +41,10 @@ namespace Winforms_platformer.Model
 
         public override void Pickup(Entity target)
         {
-            target.hp += HealPower;
+            if (target.HP + HealPower <= target.MaxHP)
+                target.HP += HealPower;
+            else
+                target.HP = target.MaxHP;
         }
     }
 

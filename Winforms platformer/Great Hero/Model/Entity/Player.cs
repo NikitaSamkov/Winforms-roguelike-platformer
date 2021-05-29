@@ -19,7 +19,8 @@ namespace Winforms_platformer
             direction = Direction.Right;
             xSpeed = 20;
             treasures = new List<ITreasure>();
-            hp = 100;
+            HP = 100;
+            MaxHP = HP;
             damage = 10;
         }
 

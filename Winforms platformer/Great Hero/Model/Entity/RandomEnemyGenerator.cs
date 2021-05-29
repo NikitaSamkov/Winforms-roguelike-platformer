@@ -14,14 +14,13 @@ namespace Winforms_platformer.Model
         public static void Start()
         {
             random = Game.Map.Random;
-            enemyTypes.Add(EnemyType.Dummy);
             enemyTypes.Add(EnemyType.Slime);
         }
 
         public static Enemy GetRandomEnemy(int x, int y)
         {
-            var type = random.Next(enemyTypes.Count);
-            switch ((EnemyType)type)
+            var type = enemyTypes[random.Next(enemyTypes.Count)];
+            switch (type)
             {
                 case EnemyType.Dummy:
                     return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);

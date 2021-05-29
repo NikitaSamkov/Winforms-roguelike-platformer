@@ -35,7 +35,7 @@ namespace Winforms_platformer.Model
         {
             if (!GameOver)
             {
-                if (Player.hp <= 0)
+                if (Player.HP <= 0)
                     GameOver = true;
                 Player.Update();
 

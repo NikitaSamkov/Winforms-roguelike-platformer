@@ -17,7 +17,8 @@ namespace Winforms_platformer
         public Direction direction { get; protected set; }
         public Status status { get; set; }
         public Collider collider { get; protected set; }
-        public int hp { get; set; }
+        public int HP { get; set; }
+        public int MaxHP { get; set; }
         public int damage { get; protected set; }
         public int invincibility { get; protected set; }
         public Func<Room> CurrentRoom;
@@ -28,6 +29,8 @@ namespace Winforms_platformer
             this.y = y;
             this.collider = collider;
             this.CurrentRoom = CurrentRoom;
+            HP = 50;
+            MaxHP = HP;
             damageInvincibility = 12;
         }
 
@@ -59,7 +62,7 @@ namespace Winforms_platformer
             if (invincibility == 0)
             {
                 invincibility = damageInvincibility;
-                hp -= damage;
+                HP -= damage;
             }
         }
 

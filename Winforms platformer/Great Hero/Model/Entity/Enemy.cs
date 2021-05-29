@@ -23,9 +23,10 @@ namespace Winforms_platformer
             : base(x, y, collider, room)
         {
             this.player = player;
-            hp = 20;
+            HP = 20;
+            MaxHP = 50;
             damage = 0;
-            xSpeed = 10;
+            xSpeed = minSpeed;
             SetDropChances();
         }
 
@@ -54,9 +55,9 @@ namespace Winforms_platformer
                     player.x + player.collider.field.Width / 2 :
                     player.x - player.collider.field.Width / 2;
 
-                if (distance > 150 && xSpeed < 15 || distance <= 100 && xSpeed < 10)
+                if (distance > 150 && xSpeed < maxSpeed || distance <= 100 && xSpeed < minSpeed)
                     xSpeed++;
-                else if (distance <= 100 && xSpeed > 10)
+                else if (distance <= 100 && xSpeed > minSpeed)
                     xSpeed--;
                 if (Math.Abs(x - neededX) < xSpeed)
                     xSpeed = Math.Abs(x - neededX);
@@ -105,13 +106,31 @@ namespace Winforms_platformer
     {
         public Slime(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
         {
-            hp = 10;
+            HP = 10;
+            MaxHP = HP;
             damage = 5;
-            xSpeed = 5;
+            minSpeed = 5;
+            maxSpeed = 7;
             treasureDropID = -1;
             range = 400;
             jumpStrength = 50;
-            SetDropChances(10, 0, 0);
+            SetDropChances(100, 0, 0);
+        }
+    }
+
+    public class Roller : Enemy
+    {
+        public Roller(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 1;
+            MaxHP = 1;
+            damage = 10;
+            minSpeed = 1;
+            maxSpeed = 99;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 0;
+            SetDropChances(5, 10, 0);
         }
     }
 }
