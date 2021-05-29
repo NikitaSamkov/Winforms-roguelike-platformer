@@ -127,14 +127,14 @@ namespace Winforms_platformer.Model
             return r.Next(10000);
         }
 
-        public void GenerateRooms(int roomsCount = 10)
+        public void GenerateMap(int roomsCount = 10)
         {
             var treasures = TreasurePool.GenerateItems(roomsCount / 3);
             currentRoom = 0;
             rooms = new List<Room>();
             rooms.Add(new Room(RoomType.StartingRoom, player));
             if (roomTemplates.Count != 0)
-                for (var i = 0; i < roomsCount - 1; i++)
+                for (var i = 0; i < Math.Min(roomsCount - 1, roomTemplates.Count); i++)
                 {
                     if ((i - 1) % 3 == 0)
                         rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>()

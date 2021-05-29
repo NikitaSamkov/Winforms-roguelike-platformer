@@ -25,7 +25,7 @@ namespace Winforms_platformer.Model
             Map = new Map(Player);
             RandomEnemyGenerator.Start();
             Map.SetRoomTemplates();
-            Map.GenerateRooms();
+            Map.GenerateMap();
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             SetKeyBindings();
