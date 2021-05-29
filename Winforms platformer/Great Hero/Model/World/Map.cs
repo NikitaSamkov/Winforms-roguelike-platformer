@@ -31,26 +31,6 @@ namespace Winforms_platformer.Model
         {
             roomTemplates = new List<Room>
             {
-                //new Room(RoomType.RegularRoom, player, new List<Platform>
-                //{
-                //    new Platform(200, 600, 350)
-                //}),
-
-                //new Room(RoomType.RegularRoom, player, new List<Platform>
-                //{
-                //    new Platform(100, 300, 350),
-                //    new Platform(500, 700, 350)
-                //}),
-
-                //new Room(RoomType.RegularRoom, player, new List<Platform>
-                //{
-                //    new Platform(100, 300, 400),
-                //    new Platform(500, 700, 400),
-                //    new Platform(300, 500, 300)
-                //}, null, 10),
-
-                //new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
-
                 RoomGenerator.PictireToRoom(
 @"9
          
@@ -61,11 +41,114 @@ namespace Winforms_platformer.Model
 - - - - -
          
 #########", 486),
+
                 RoomGenerator.PictireToRoom(
-@"9    
+@"9
+    *    =250
   -----  =350  
-#########", 486)
-                
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+  * * *  =250
+ --- --- =350
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+    *    =150
+  -----  =300
+  *   *  =350
+ --   -- =400
+#########", 486, 10),
+
+                RoomGenerator.PictireToRoom(
+@"9
+
+
+- - - - -
+ *     *
+ - - - -
+    *
+- - - - -
+
+ - - - -
+
+- - - - -
+
+#########", -1, 10),
+
+                RoomGenerator.PictireToRoom(
+@"9
+ *  *  *
+---------
+-       -
+-       -
+-       -
+-       -
+-       -
+
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+
+*       *
+---   ---=250
+  -----  =350
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+*   *   *=250
+---------=350
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+*   *   *
+-   -   -
+-   -   -
+-   -   -
+-   -   -
+-   -   -
+-   -   -
+-   -   -
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+*   *   *
+-        
+ -
+  -
+   -
+    -
+     -
+      -
+       -
+        -
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"9
+        -
+       -
+      -
+     -
+    -
+   -
+  -
+-      **
+#########", 486),
+
+                RoomGenerator.PictireToRoom(
+@"5
+ * *
+- - -=325
+ - - =350
+#####", 486)
+
             };
         }
 
@@ -136,7 +219,7 @@ namespace Winforms_platformer.Model
             currentRoom = 0;
             rooms = new List<Room>();
             rooms.Add(new Room(RoomType.StartingRoom, player));
-            roomsCount = Math.Min(roomsCount - 1, roomTemplates.Count + (roomTemplates.Count + 1) / 3);
+            roomsCount = Math.Min(roomsCount - 1, roomTemplates.Count + roomTemplates.Count / 2);
             if (roomTemplates.Count != 0)
                 for (var i = 0; i < roomsCount; i++)
                 {
