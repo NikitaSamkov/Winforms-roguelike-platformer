@@ -16,6 +16,7 @@ namespace Winforms_platformer
         public static readonly SlimeRes Slime = new SlimeRes();
         public static readonly RollerRes Roller = new RollerRes();
         public static readonly SwordsmanRes Swordsman = new SwordsmanRes();
+        public static readonly ArcherRes Archer = new ArcherRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -110,6 +111,17 @@ namespace Winforms_platformer
             AttackSize = new Size(88, 112);
             AttackMoveSize = new Size(88, 112);
             AttackRange = new Size(40, 56);
+        }
+    }
+
+    public class ArcherRes : EntityResource
+    {
+        public ArcherRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\ArcherIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\ArcherWalk.png");
+            IdleSize = new Size(112, 110);
+            MoveSize = new Size(112, 110);
         }
     }
     #endregion

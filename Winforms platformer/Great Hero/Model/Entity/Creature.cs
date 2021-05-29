@@ -67,7 +67,6 @@ namespace Winforms_platformer
                 arrow.MoveTo(direction);
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);
-                Ammo--;
             }
         }
 

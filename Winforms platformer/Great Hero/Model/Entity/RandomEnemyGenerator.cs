@@ -17,6 +17,7 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.Slime);
             enemyTypes.Add(EnemyType.Roller);
             enemyTypes.Add(EnemyType.Swordsman);
+            enemyTypes.Add(EnemyType.Archer);
         }
 
         public static Enemy GetRandomEnemy(int x, int y)
@@ -34,6 +35,8 @@ namespace Winforms_platformer.Model
                     return new Swordsman(x, y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
                 new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)), 
                 Game.Map.CurrentRoom, Game.Player);
+                case EnemyType.Archer:
+                    return new Archer(x, y, new Collider(Resources.Archer.IdleSize), Game.Map.CurrentRoom, Game.Player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
         }

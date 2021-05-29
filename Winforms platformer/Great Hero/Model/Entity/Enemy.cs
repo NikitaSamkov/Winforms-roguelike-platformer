@@ -38,10 +38,7 @@ namespace Winforms_platformer
 
         protected virtual void MoveToPlayer()
         {
-            var distance = Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Top),
-                           Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Bottom),
-                           Math.Min(GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Top),
-                                    GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Bottom))));
+            var distance = GetShotestDistanceToPlayer();
             if (distance > range)
             {
                 if (status == Status.AttackMove || status == Status.Attack)
@@ -111,6 +108,14 @@ namespace Winforms_platformer
             }
             return null;
         }
+
+        public int GetShotestDistanceToPlayer()
+        {
+            return Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Top),
+                   Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Bottom),
+                   Math.Min(GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Top),
+                   GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Bottom))));
+        }
     }
 
     public class Slime : Enemy
@@ -154,8 +159,8 @@ namespace Winforms_platformer
             HP = 50;
             MaxHP = HP;
             damage = 10;
-            minSpeed = 3;
-            maxSpeed = 5;
+            minSpeed = 5;
+            maxSpeed = 7;
             xSpeed = minSpeed;
             treasureDropID = -1;
             range = 500;
@@ -168,6 +173,95 @@ namespace Winforms_platformer
             if (HitsAnybodyWithAttack(out var entities) && entities.Contains(player))
                 status = Status.AttackMove;
             base.Update();
+        }
+
+        public override bool HitsPlayer()
+        {
+            return false;
+        }
+    }
+
+    public class Archer : Enemy
+    {
+        private int reloadTime;
+        private int reload;
+        private Direction lastSafeDirection;
+        private bool safe;
+        public Archer(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 5;
+            MaxHP = HP;
+            damage = 0;
+            minSpeed = 5;
+            maxSpeed = 10;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 60;
+            reloadTime = 25;
+            SetDropChances(0, 50, 0);
+        }
+
+        public override void Update()
+        {
+            MoveToPlayer();
+            base.Update();
+            if (reload == 0)
+            {
+                direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+                Shoot();
+                reload = reloadTime;
+            }
+            else
+                reload--;
+            if (reload == 10 && Math.Abs(player.x - x) > 600)
+                Jump();
+        }
+
+        protected override void MoveToPlayer()
+        {
+            var distance = GetShotestDistanceToPlayer();
+            if (distance > 400)
+            {
+                direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+                status = Status.Idle;
+                xSpeed = 0;
+            }
+            else if (distance <= 400 && distance >= 100)
+            {
+                status = Status.Move;
+                direction = (x - player.x >= 0) ? Direction.Right : Direction.Left;
+                safe = true;
+                lastSafeDirection = direction;
+
+                if (distance > 150 && xSpeed > minSpeed)
+                    xSpeed--;
+
+                if (player.y + player.collider.field.Height < y + collider.field.Height)
+                    Jump();
+                if (player.y + player.collider.field.Height > y + collider.field.Height)
+                    MoveDown(1);
+            }
+            else if (distance <= 100)
+            {
+                if (safe)
+                {
+                    safe = false;
+                    if (lastSafeDirection == Direction.Right)
+                        lastSafeDirection = Direction.Left;
+                    else
+                        lastSafeDirection = Direction.Right;
+                    direction = lastSafeDirection;
+                }
+                else
+                    direction = lastSafeDirection;
+                status = Status.Move;
+                xSpeed++;
+                if (player.y >= y)
+                    Jump();
+                else
+                    MoveDown(1);
+            }
         }
 
         public override bool HitsPlayer()

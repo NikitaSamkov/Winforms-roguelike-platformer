@@ -138,6 +138,8 @@ namespace Winforms_platformer.View
                         resources = Resources.Roller;
                     if (enemy is Swordsman)
                         resources = Resources.Swordsman;
+                    if (enemy is Archer)
+                        resources = Resources.Archer;
                     render = new EntityRender(enemy, resources, 3);
                     enemies.Add(render);
                 }

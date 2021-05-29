@@ -170,6 +170,16 @@ namespace Winforms_platformer.Model
                 if (enemy.HitsPlayer())
                     player.Hurt(enemy.damage);
                 enemy.Update();
+                if (enemy.x + enemy.collider.field.Width > Game.WindowSize.Width)
+                {
+                    enemy.TeleportTo(Game.WindowSize.Width - enemy.collider.field.Width);
+                    enemy.status = Status.Idle;
+                }
+                if (enemy.x < 0)
+                {
+                    enemy.TeleportTo(0);
+                    enemy.status = Status.Idle;
+                }
             }
 
             foreach (var projectile in CurrentRoom().ProjectilesList)
