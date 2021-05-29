@@ -17,8 +17,6 @@ namespace Winforms_platformer.Model
         public readonly int seed;
         public Room CurrentRoom() => rooms[currentRoom];
 
-
-
         public Map(Player player, int? seed = null)
         {
             if (seed != null)
@@ -53,13 +51,23 @@ namespace Winforms_platformer.Model
 
                 //new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
 
-                RoomGenerator.PictireToRoom(@"9
+                RoomGenerator.PictireToRoom(
+@"9
          
 ---- ----
          
    ---   
   *   *  
 - - - - -
+         
+#########", 486),
+                RoomGenerator.PictireToRoom(
+@"9
+         
+         
+         
+         
+  -----  
          
 #########", 486)
                 
@@ -133,8 +141,9 @@ namespace Winforms_platformer.Model
             currentRoom = 0;
             rooms = new List<Room>();
             rooms.Add(new Room(RoomType.StartingRoom, player));
+            roomsCount = Math.Min(roomsCount - 1, roomTemplates.Count + (roomTemplates.Count + 1) / 3);
             if (roomTemplates.Count != 0)
-                for (var i = 0; i < Math.Min(roomsCount - 1, roomTemplates.Count); i++)
+                for (var i = 0; i < roomsCount; i++)
                 {
                     if ((i - 1) % 3 == 0)
                         rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>()
@@ -142,7 +151,11 @@ namespace Winforms_platformer.Model
                         { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,
                         treasures[(i - 1) / 3].ID)}));
                     else
-                        rooms.Add(roomTemplates[Random.Next(roomTemplates.Count)]);
+                    {
+                        var template = Random.Next(roomTemplates.Count);
+                        rooms.Add(roomTemplates[template]);
+                        roomTemplates.RemoveAt(template);
+                    }
                 }
         }
 
