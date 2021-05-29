@@ -113,12 +113,12 @@ namespace Winforms_platformer.View
         }
     }
 
-    public class EnemysRender : IRenderable
+    public class EnemiesRender : IRenderable
     {
         private Func<Room> CurrentRoom;
         private List<EntityRender> enemies = new List<EntityRender>();
 
-        public EnemysRender(Func<Room> CurrentRoom)
+        public EnemiesRender(Func<Room> CurrentRoom)
         {
             this.CurrentRoom = CurrentRoom;
         }
@@ -130,8 +130,10 @@ namespace Winforms_platformer.View
                 var render = enemies.Where(e => e.Entity == (Entity)enemy).FirstOrDefault();
                 if (render == null)
                 {
-                    var resources = Resources.Dummy;
+                    EntityResource resources = Resources.Dummy;
                     //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
+                    if (enemy is Slime)
+                        resources = Resources.Slime;
                     render = new EntityRender(enemy, resources, 3);
                     enemies.Add(render);
                 }

@@ -11,7 +11,10 @@ namespace Winforms_platformer
     {
         public static readonly SystemRes System = new SystemRes();
         public static readonly PlayerRes Player = new PlayerRes();
+        #region ENEMIES
         public static readonly DummyRes Dummy = new DummyRes();
+        public static readonly SlimeRes Slime = new SlimeRes();
+        #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
         public static readonly ArrowRes Arrow = new ArrowRes();
@@ -69,6 +72,16 @@ namespace Winforms_platformer
         }
     }
 
+    public class SlimeRes : EntityResource
+    {
+        public SlimeRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\SlimeIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\SlimeWalk.png");
+            IdleSize = new Size(60, 39);
+            MoveSize = new Size(60, 39);
+        }
+    }
 
     public class RoomRes
     {

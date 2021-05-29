@@ -12,7 +12,11 @@ namespace Winforms_platformer
     {
         protected Player player;
         protected Dictionary<LootType, int> dropChances = new Dictionary<LootType, int>();
-        protected int treasureDropID;
+        protected int treasureDropID = -1;
+        protected int range = 400;
+        protected int maxSpeed = 15;
+        protected int minSpeed = 10;
+
 
         public Enemy(int x, int y, Collider collider, Func<Room> room,
             Player player)
@@ -22,7 +26,6 @@ namespace Winforms_platformer
             hp = 20;
             damage = 0;
             xSpeed = 10;
-            treasureDropID = -1;
             SetDropChances();
         }
 
@@ -34,25 +37,34 @@ namespace Winforms_platformer
 
         protected virtual void MoveToPlayer()
         {
-            status = Status.Move;
-            direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
-            var neededX = (direction == Direction.Left) ?
-                player.x + player.collider.field.Width / 2 :
-                player.x - player.collider.field.Width / 2;
             var distance = Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Top),
                            Math.Min(GetDistanceTo(player.x + player.collider.Left, player.y + player.collider.Bottom),
                            Math.Min(GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Top),
                                     GetDistanceTo(player.x + player.collider.Right, player.y + player.collider.Bottom))));
-            if (distance > 150 && xSpeed < 15 || distance <= 100 && xSpeed < 10)
-                xSpeed++;
-            else if (distance <= 100 && xSpeed > 10)
-                xSpeed--;
-            if (Math.Abs(x - neededX) < xSpeed)
-                xSpeed = Math.Abs(x - neededX);
-            if (player.y + player.collider.field.Height < y + collider.field.Height && distance < 200)
-                Jump();
-            if (player.y + player.collider.field.Height > y + collider.field.Height && distance < 200)
-                MoveDown(1);
+            if (distance > range)
+            {
+                status = Status.Idle;
+                xSpeed = 0;
+            }
+            else
+            {
+                status = Status.Move;
+                direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+                var neededX = (direction == Direction.Left) ?
+                    player.x + player.collider.field.Width / 2 :
+                    player.x - player.collider.field.Width / 2;
+
+                if (distance > 150 && xSpeed < 15 || distance <= 100 && xSpeed < 10)
+                    xSpeed++;
+                else if (distance <= 100 && xSpeed > 10)
+                    xSpeed--;
+                if (Math.Abs(x - neededX) < xSpeed)
+                    xSpeed = Math.Abs(x - neededX);
+                if (player.y + player.collider.field.Height < y + collider.field.Height && distance < 200)
+                    Jump();
+                if (player.y + player.collider.field.Height > y + collider.field.Height && distance < 200)
+                    MoveDown(1);
+            }
         }
 
         protected virtual void SetDropChances()
@@ -86,6 +98,20 @@ namespace Winforms_platformer
                     }
             }
             return null;
+        }
+    }
+
+    public class Slime : Enemy
+    {
+        public Slime(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            hp = 10;
+            damage = 5;
+            xSpeed = 5;
+            treasureDropID = -1;
+            range = 400;
+            jumpStrength = 50;
+            SetDropChances(10, 0, 0);
         }
     }
 }

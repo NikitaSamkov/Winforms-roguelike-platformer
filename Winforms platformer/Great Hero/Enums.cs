@@ -44,6 +44,7 @@ namespace Winforms_platformer
 
     public enum EnemyType
     {
-        Dummy
+        Dummy,
+        Slime
     }
 }

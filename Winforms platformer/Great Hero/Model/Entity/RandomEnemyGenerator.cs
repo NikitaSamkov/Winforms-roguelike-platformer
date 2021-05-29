@@ -15,15 +15,19 @@ namespace Winforms_platformer.Model
         {
             random = Game.Map.Random;
             enemyTypes.Add(EnemyType.Dummy);
+            enemyTypes.Add(EnemyType.Slime);
         }
 
         public static Enemy GetRandomEnemy(int x, int y)
         {
-            var type = random.Next(1);
+            var type = random.Next(enemyTypes.Count);
             switch ((EnemyType)type)
             {
                 case EnemyType.Dummy:
                     return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                case EnemyType.Slime:
+                    return new Slime(x, y, new Collider(Resources.Slime.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
         }
