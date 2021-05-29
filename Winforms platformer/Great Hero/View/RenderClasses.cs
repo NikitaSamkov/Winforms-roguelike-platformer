@@ -188,12 +188,12 @@ namespace Winforms_platformer.View
         {
             GetResource();
             g.DrawImage(Resource.Wall, 0, 0, Game.WindowSize.Width, Game.WindowSize.Height);
+            foreach (var platform in CurrentRoom().Platforms)
+                g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
             g.DrawImage(Resource.Ground,
                 Resource.Wall.Width - Resource.Ground.Width,
                 CurrentRoom().GroundLevel,
                 Game.WindowSize.Width, Resource.Ground.Height);
-            foreach (var platform in CurrentRoom().Platforms)
-                g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
         }
     }
 
