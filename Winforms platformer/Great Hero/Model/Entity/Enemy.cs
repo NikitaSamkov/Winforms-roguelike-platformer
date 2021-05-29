@@ -20,7 +20,7 @@ namespace Winforms_platformer
         {
             this.player = player;
             hp = 20;
-            damage = 10;
+            damage = 0;
             xSpeed = 10;
             treasureDropID = -1;
             SetDropChances();

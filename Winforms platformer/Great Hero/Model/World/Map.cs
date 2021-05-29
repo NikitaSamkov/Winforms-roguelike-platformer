@@ -139,6 +139,7 @@ namespace Winforms_platformer.Model
     -
    -
   -
+ -     
 -      **
 #########", 486),
 
