@@ -23,11 +23,12 @@ namespace Winforms_platformer.Model
                 new Collider(Resources.Player.AttackRange, -10, Resources.Player.Idle.Height / 8)),
                 null);
             Map = new Map(Player);
+            RandomEnemyGenerator.Start();
+            Map.SetRoomTemplates();
             Map.GenerateRooms();
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             SetKeyBindings();
-            RandomEnemyGenerator.Start();
         }
 
         public static void Update()

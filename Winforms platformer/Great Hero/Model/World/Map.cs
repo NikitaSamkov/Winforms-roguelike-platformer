@@ -27,40 +27,39 @@ namespace Winforms_platformer.Model
                 this.seed = GenerateSeed();
             Random = new Random(this.seed);
             this.player = player;
-            GetRoomTemplates();
         }
 
-        public void GetRoomTemplates()
+        public void SetRoomTemplates()
         {
             roomTemplates = new List<Room>
             {
-                new Room(RoomType.RegularRoom, player, new List<Platform>
-                {
-                    new Platform(200, 600, 350)
-                }),
+                //new Room(RoomType.RegularRoom, player, new List<Platform>
+                //{
+                //    new Platform(200, 600, 350)
+                //}),
 
-                new Room(RoomType.RegularRoom, player, new List<Platform>
-                {
-                    new Platform(100, 300, 350),
-                    new Platform(500, 700, 350)
-                }),
+                //new Room(RoomType.RegularRoom, player, new List<Platform>
+                //{
+                //    new Platform(100, 300, 350),
+                //    new Platform(500, 700, 350)
+                //}),
 
-                new Room(RoomType.RegularRoom, player, new List<Platform>
-                {
-                    new Platform(100, 300, 400),
-                    new Platform(500, 700, 400),
-                    new Platform(300, 500, 300)
-                }, null, 10),
+                //new Room(RoomType.RegularRoom, player, new List<Platform>
+                //{
+                //    new Platform(100, 300, 400),
+                //    new Platform(500, 700, 400),
+                //    new Platform(300, 500, 300)
+                //}, null, 10),
 
-                new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
+                //new Room(RoomType.RegularRoom, player, new List<Platform>(), null, 7, 250),
 
                 RoomGenerator.PictireToRoom(
                     @"9
- * * * * 
+         
 ---- ----
          
    ---   
-         
+  *   *  
 - - - - -
          
 #########")

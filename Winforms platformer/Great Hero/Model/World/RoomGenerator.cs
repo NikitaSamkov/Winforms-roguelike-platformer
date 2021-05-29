@@ -93,7 +93,7 @@ namespace Winforms_platformer.Model
                 treasures = treasures.Concat(tempTreasures).ToList();
             }
 
-            return new Room(RoomType.RegularRoom, Game.Player, platforms, treasures, 7, groundLevel);
+            return new Room(RoomType.RegularRoom, Game.Player, platforms, treasures, enemies, 7, groundLevel);
         }
     }
 }
