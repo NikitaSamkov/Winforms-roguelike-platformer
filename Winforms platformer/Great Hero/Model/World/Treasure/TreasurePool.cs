@@ -21,15 +21,17 @@ namespace Winforms_platformer
             if (treasureID < treasures.Count && treasureID >= 0)
             {
                 Game.Player.treasures.Add(treasures[treasureID]);
+                treasures[treasureID].Enable();
             }
         }
 
-        public static void RemoveFromPlayer(Player player, int treasureID)
+        public static void RemoveFromPlayer(int treasureID)
         {
-            for (var i = 0; i < player.treasures.Count; i++)
-                if (player.treasures[i].ID == treasureID)
+            for (var i = 0; i < Game.Player.treasures.Count; i++)
+                if (Game.Player.treasures[i].ID == treasureID)
                 {
-                    player.treasures.RemoveAt(i);
+                    Game.Player.treasures.RemoveAt(i);
+                    treasures[treasureID].Disable();
                     break;
                 }
         }
@@ -81,6 +83,16 @@ namespace Winforms_platformer
         int ITreasure.ID { get => -1; }
 
         int ITreasure.Price { get => -1; }
+
+        public void Disable()
+        {
+            
+        }
+
+        public void Enable()
+        {
+            
+        }
     }
 
     public class AmuletOfFlying : ITreasure
@@ -88,5 +100,15 @@ namespace Winforms_platformer
         int ITreasure.ID { get => 0; }
 
         int ITreasure.Price { get => 10; }
+
+        public void Disable()
+        {
+            
+        }
+
+        public void Enable()
+        {
+            
+        }
     }
 }

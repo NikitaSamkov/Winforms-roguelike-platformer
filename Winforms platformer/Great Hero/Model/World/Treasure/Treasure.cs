@@ -11,6 +11,8 @@ namespace Winforms_platformer
     {
         int ID { get; }
         int Price { get; }
+        void Enable();
+        void Disable();
     }
 
     public class TreasureItem : Loot
