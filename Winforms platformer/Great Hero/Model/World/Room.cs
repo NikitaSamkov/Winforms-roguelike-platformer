@@ -11,7 +11,7 @@ namespace Winforms_platformer
     public class Room
     {
         private Player player;
-        public int gForce { get; private set; }
+        public int gForce { get; set; }
         public RoomType Type { get; }
         public readonly int GroundLevel;
         public readonly List<Platform> Platforms;

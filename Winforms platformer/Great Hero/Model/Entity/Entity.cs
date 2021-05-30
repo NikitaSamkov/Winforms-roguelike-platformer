@@ -90,5 +90,7 @@ namespace Winforms_platformer
             this.x = x;
             this.y = y;
         }
+
+        public void FreezeInAir() => ySpeed = 0;
     }
 }

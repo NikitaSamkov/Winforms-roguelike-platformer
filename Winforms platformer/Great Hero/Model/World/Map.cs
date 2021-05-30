@@ -180,6 +180,11 @@ namespace Winforms_platformer.Model
                     enemy.TeleportTo(0);
                     enemy.status = Status.Idle;
                 }
+                if (enemy.y < 0)
+                {
+                    enemy.TeleportTo(enemy.x, 0);
+                    enemy.FreezeInAir();
+                }
             }
 
             foreach (var projectile in CurrentRoom().ProjectilesList)
@@ -203,7 +208,12 @@ namespace Winforms_platformer.Model
                     CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
                 }
-                projectile.Update();
+                projectile.Update(); 
+                if (projectile.y < 0)
+                {
+                    projectile.TeleportTo(projectile.x, 0);
+                    projectile.FreezeInAir();
+                }
             }
 
             foreach (var loot in CurrentRoom().LootList)
@@ -215,6 +225,12 @@ namespace Winforms_platformer.Model
                     break;
                 }
                 loot.Update();
+            }
+
+            if (player.y < 0)
+            {
+                player.TeleportTo(player.x, 0);
+                player.FreezeInAir();
             }
         }
 
@@ -291,6 +307,16 @@ namespace Winforms_platformer.Model
 
         public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom().EnemyList.Count == 0;
         public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom().EnemyList.Count == 0;
+
+        public void ChangeGravitation(double multiplier)
+        {
+            foreach (var room in rooms)
+            {
+                room.gForce = (int)(room.gForce * multiplier);
+                if (room.gForce == 0)
+                    room.gForce = 1;
+            }
+        }
     }
 
 }

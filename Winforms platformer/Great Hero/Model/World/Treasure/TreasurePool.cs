@@ -14,7 +14,8 @@ namespace Winforms_platformer
         private static List<ITreasure> treasures = new List<ITreasure>
         {
             new AmuletOfFlying(),
-            new EternalBow()
+            new EternalBow(),
+            new GravityFeather()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -143,5 +144,24 @@ namespace Winforms_platformer
         }
 
         public void SetTimer() => timer = reloadTime;
+    }
+
+    public class GravityFeather : ITreasure
+    {
+        int ITreasure.ID { get => 2; }
+
+        int ITreasure.Price { get => 1; }
+
+        public void Disable()
+        {
+            if (Game.Player.treasures.Where(t => t == TreasurePool.GetTreasureByID(1)).Count() == 0)
+                Game.Map.ChangeGravitation(2);
+        }
+
+        public void Enable()
+        {
+            if (Game.Player.treasures.Where(t => t == TreasurePool.GetTreasureByID(1)).Count() == 0)
+                Game.Map.ChangeGravitation(0.5);
+        }
     }
 }
