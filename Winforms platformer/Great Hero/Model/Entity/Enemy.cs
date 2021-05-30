@@ -339,4 +339,42 @@ namespace Winforms_platformer
                 cooldown--;
         }
     }
+
+    public class BigCow : Enemy
+    {
+        private int timer;
+        public BigCow(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 100;
+            MaxHP = HP;
+            damage = 0;
+            minSpeed = 0;
+            maxSpeed = 15;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 100;
+            SetDropChances(200, 0, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            if (timer == 0)
+            {
+                var random = new Random(GetShotestDistanceToPlayer());
+                direction = (Direction)random.Next(0, 2);
+                xSpeed = random.Next(0, 16);
+                if (xSpeed == 0)
+                    status = Status.Idle;
+                else
+                    status = Status.Move;
+                if (random.Next(11) == 0)
+                    Jump();
+                if (random.Next(11) == 10)
+                    MoveDown(1);
+                timer = random.Next(0, 26);
+            }
+            else timer--;
+        }
+    }
 }

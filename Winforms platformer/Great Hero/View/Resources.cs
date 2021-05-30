@@ -19,6 +19,7 @@ namespace Winforms_platformer
         public static readonly ArcherRes Archer = new ArcherRes();
         public static readonly MagicianRes Magician = new MagicianRes();
         public static readonly SuperMagicianRes SuperMagician = new SuperMagicianRes();
+        public static readonly BigCowRes BigCow = new BigCowRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -135,6 +136,19 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\MagicianIdle.png");
             IdleSize = new Size(64, 112);
             MoveSize = new Size(64, 112);
+        }
+    }
+
+    public class BigCowRes : EntityResource
+    {
+        public readonly Size ColliderSize;
+        public BigCowRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\BigCowIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\BigCowWalk.png");
+            ColliderSize = new Size(90, 76);
+            IdleSize = new Size(90, 82);
+            MoveSize = new Size(90, 82);
         }
     }
 

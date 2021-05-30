@@ -109,8 +109,11 @@ namespace Winforms_platformer.View
                         currentFrameSize.Height),
                         GraphicsUnit.Pixel);
             if (Game.DeveloperToolsON)
+            {
                 g.DrawRectangle(new Pen(Color.Green), Entity.x, Entity.y, Entity.collider.field.Width,
                         Entity.collider.field.Height);
+                g.DrawEllipse(new Pen(Color.Red), Entity.x, Entity.y, 1, 1);
+            }
         }
     }
 
@@ -145,6 +148,8 @@ namespace Winforms_platformer.View
                         resources = Resources.Magician;
                     if (enemy is SuperMagician)
                         resources = Resources.SuperMagician;
+                    if (enemy is BigCow)
+                        resources = Resources.BigCow;
                     render = new EntityRender(enemy, resources, 3);
                     enemies.Add(render);
                 }

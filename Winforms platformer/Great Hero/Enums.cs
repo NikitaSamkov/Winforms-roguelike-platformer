@@ -50,6 +50,7 @@ namespace Winforms_platformer
         Swordsman,
         Archer,
         Magician,
-        SuperMagician
+        SuperMagician,
+        BigCow
     }
 }

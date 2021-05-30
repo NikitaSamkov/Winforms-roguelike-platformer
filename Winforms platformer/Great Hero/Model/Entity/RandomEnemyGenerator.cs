@@ -22,6 +22,12 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.SuperMagician);
         }
 
+        public static void AddToGenerator(EnemyType type)
+        {
+            if (!enemyTypes.Contains(type))
+                enemyTypes.Add(type);
+        }
+
         public static Enemy GetRandomEnemy(int x, int y)
         {
             var type = enemyTypes[random.Next(enemyTypes.Count)];
@@ -43,6 +49,8 @@ namespace Winforms_platformer.Model
                     return new Magician(x, y, new Collider(Resources.Magician.IdleSize), Game.Map.CurrentRoom, Game.Player);
                 case EnemyType.SuperMagician:
                     return new SuperMagician(x, y, new Collider(Resources.SuperMagician.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                case EnemyType.BigCow:
+                    return new BigCow(x, y, new Collider(Resources.BigCow.ColliderSize, 0, 6), Game.Map.CurrentRoom, Game.Player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
         }

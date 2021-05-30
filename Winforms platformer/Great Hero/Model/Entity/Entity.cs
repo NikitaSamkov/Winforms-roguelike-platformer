@@ -36,7 +36,7 @@ namespace Winforms_platformer
 
         protected virtual void MoveY()
         {
-            ySpeed = CurrentRoom().GetYSpeed(x, y + collider.field.Height, collider.field.Width, ySpeed);
+            ySpeed = CurrentRoom().GetYSpeed(x, y + collider.field.Height + collider.y, collider.field.Width, ySpeed);
             y += ySpeed;
         }
 
