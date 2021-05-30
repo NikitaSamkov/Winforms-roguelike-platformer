@@ -24,6 +24,13 @@ namespace Winforms_platformer
             damage = 10;
         }
 
+        public override void Update()
+        {
+            if (Ammo == -1)
+                (TreasurePool.GetTreasureByID(1) as EternalBow).UpdateTimer();
+            base.Update();
+        }
+
         public override void Shoot()
         {
             if (Ammo > 0)
@@ -34,6 +41,19 @@ namespace Winforms_platformer
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);
                 Ammo--;
+            }
+            else if (Ammo == -1)
+            {
+                var bow = TreasurePool.GetTreasureByID(1) as EternalBow;
+                if (bow.timer == 0)
+                {
+                    var arrow = new Arrow(x, y + collider.field.Height / 2,
+                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Ally);
+                    arrow.MoveTo(direction);
+                    arrow.status = Status.Move;
+                    CurrentRoom().ProjectilesList.Add(arrow);
+                    bow.SetTimer();
+                }
             }
         }
     }

@@ -256,6 +256,16 @@ namespace Winforms_platformer.View
             {
                 g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
             }
+            if (Game.Player.Ammo == -1)
+            {
+                var bow = TreasurePool.GetTreasureByID(1) as EternalBow;
+                if (bow.timer == 0)
+                    g.DrawImage(Resources.UI.EternalAmmo, 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
+                else
+                    g.DrawImage(Resources.UI.EternalAmmoReloading, 50, 100, 
+                        new Rectangle(0, 0, Resources.UI.AmmoSize.Width, 
+                        Resources.UI.AmmoSize.Height * (bow.reloadTime - bow.timer) / bow.reloadTime), GraphicsUnit.Pixel);
+            }
             #endregion
             #region Treasures
             var column = 0;

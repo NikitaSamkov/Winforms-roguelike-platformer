@@ -60,7 +60,8 @@ namespace Winforms_platformer.Model
 
         public override void Pickup(Entity target)
         {
-            if (target is Creature creature)
+            if (target is Creature creature && (!(target is Player) && 
+                !(target as Player).treasures.Contains(TreasurePool.GetTreasureByID(1))))
                 creature.Ammo += AmmoCount;
         }
     }

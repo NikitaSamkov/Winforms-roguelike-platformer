@@ -13,7 +13,8 @@ namespace Winforms_platformer
 
         private static List<ITreasure> treasures = new List<ITreasure>
         {
-            new AmuletOfFlying()
+            new AmuletOfFlying(),
+            new EternalBow()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -86,12 +87,12 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            
+
         }
 
         public void Enable()
         {
-            
+
         }
     }
 
@@ -103,12 +104,44 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            
+
         }
 
         public void Enable()
         {
-            
+
         }
+    }
+
+    public class EternalBow : ITreasure
+    {
+        private int playerAmmo;
+        public int reloadTime { get => 25; }
+        public int timer { get; protected set; }
+
+        int ITreasure.ID { get => 1; }
+
+        int ITreasure.Price { get => 9; }
+
+        public void Disable()
+        {
+            if (Game.Player.treasures.Where(t => t == TreasurePool.GetTreasureByID(1)).Count() == 0)
+                Game.Player.Ammo = playerAmmo;
+        }
+
+        public void Enable()
+        {
+            if (Game.Player.Ammo != -1)
+                playerAmmo = Game.Player.Ammo;
+            Game.Player.Ammo = -1;
+        }
+
+        public void UpdateTimer()
+        {
+            if (timer > 0)
+                timer--;
+        }
+
+        public void SetTimer() => timer = reloadTime;
     }
 }

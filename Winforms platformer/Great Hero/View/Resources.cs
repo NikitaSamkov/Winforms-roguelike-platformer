@@ -188,6 +188,8 @@ namespace Winforms_platformer
         public readonly Bitmap HPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\frame.png");
         public readonly Size HPSize = new Size(275, 38);
         public readonly Bitmap Ammo = new Bitmap(@"..\..\..\..\Sprites\UI\ammo.png");
+        public readonly Bitmap EternalAmmo = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmo.png");
+        public readonly Bitmap EternalAmmoReloading = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmoReloading.png");
         public readonly Size AmmoSize = new Size(12, 52);
     }
 
@@ -206,6 +208,7 @@ namespace Winforms_platformer
 
         //СТРОГО НАЗЫВАТЬ id*ID* !!!!
         public readonly Bitmap id0 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id0.png");
+        public readonly Bitmap id1 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id1.png");
     }
 
     public class LootRes : LootResource
