@@ -73,7 +73,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Up] = KeyBindings[Keys.Space] = () =>
             {
-                if (Player.flying)
+                if (Player.treasures.Contains(TreasurePool.GetTreasureByID(0)))
                     Player.MoveUp();
                 else
                     Player.Jump();
@@ -111,6 +111,7 @@ namespace Winforms_platformer.Model
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 0));
 
             KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(Player, 0);
+            KeyBindings[Keys.T] = () => Console.WriteLine(Player.treasures.Contains(TreasurePool.GetTreasureByID(0)));
 
             KeyBindings[Keys.Z] = () =>
             {
