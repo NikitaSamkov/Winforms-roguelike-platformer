@@ -15,15 +15,16 @@ namespace Winforms_platformer
         {
             new AmuletOfFlying(),
             new EternalBow(),
-            new GravityFeather()
+            new GravityFeather(),
+            new AngryHearts()
         };
 
         public static void GiveToPlayer(int treasureID)
         {
             if (treasureID < treasures.Count && treasureID >= 0)
             {
-                Game.Player.treasures.Add(treasures[treasureID]);
                 treasures[treasureID].Enable();
+                Game.Player.treasures.Add(treasures[treasureID]);
             }
         }
 
@@ -126,7 +127,7 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            if (Game.Player.treasures.Where(t => t == TreasurePool.GetTreasureByID(1)).Count() == 0)
+            if (Game.Player.treasures.Where(t => t == this).Count() == 0)
                 Game.Player.Ammo = playerAmmo;
         }
 
@@ -154,14 +155,35 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            if (Game.Player.treasures.Where(t => t == TreasurePool.GetTreasureByID(1)).Count() == 0)
-                Game.Map.ChangeGravitation(2);
+            Game.Map.ChangeGravitation(2);
         }
 
         public void Enable()
         {
-            if (Game.Player.treasures.Where(t => t == TreasurePool.GetTreasureByID(1)).Count() == 0)
-                Game.Map.ChangeGravitation(0.5);
+            Game.Map.ChangeGravitation(0.5);
+        }
+    }
+
+    public class AngryHearts : ITreasure
+    {
+        int ITreasure.ID { get => 3; }
+
+        int ITreasure.Price { get => 3; }
+
+        public void Disable()
+        {
+            if (Game.Player.treasures.Contains(this))
+                HeartLoot.HealPower /= 2;
+            else
+                HeartLoot.HealPower /= -2;
+        }
+
+        public void Enable()
+        {
+            if (Game.Player.treasures.Contains(this))
+                HeartLoot.HealPower *= 2;
+            else
+                HeartLoot.HealPower *= -2;
         }
     }
 }

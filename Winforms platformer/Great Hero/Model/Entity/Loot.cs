@@ -31,11 +31,10 @@ namespace Winforms_platformer.Model
 
     public class HeartLoot : Loot
     {
-        public int HealPower;
+        public static int HealPower = 20;
 
         public HeartLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
         {
-            HealPower = 20;
             ID = 0;
         }
 
@@ -50,11 +49,10 @@ namespace Winforms_platformer.Model
 
     public class AmmoLoot : Loot
     {
-        public int AmmoCount;
+        public static int AmmoCount = 1;
 
         public AmmoLoot(int x, int y, Collider collider, Func<Room> CurrentRoom) : base(x, y, collider, CurrentRoom)
         {
-            AmmoCount = 1;
             ID = 1;
         }
 

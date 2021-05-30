@@ -93,14 +93,14 @@ namespace Winforms_platformer.Model
                 RoomGenerator.PictireToRoom(
 @"9
 
-*       *
+    *   *
 ---   ---=250
   -----  =350
 #########", 486),
 
                 RoomGenerator.PictireToRoom(
 @"9
-*   *   *=250
+    * * *=250
 ---------=350
 #########", 486),
 
@@ -118,7 +118,7 @@ namespace Winforms_platformer.Model
 
                 RoomGenerator.PictireToRoom(
 @"9
-*   *   *
+    * * *
 -        
  -
   -
@@ -218,9 +218,15 @@ namespace Winforms_platformer.Model
 
             foreach (var loot in CurrentRoom().LootList)
             {
-                if (loot.IntersectsWithBody(player))
+                var entities = CurrentRoom().GetIntersectedEntities(loot);
+                Entity target = null;
+                if (player.treasures.Contains(TreasurePool.GetTreasureByID(3)) && loot is HeartLoot)
+                    target = entities.FirstOrDefault();
+                else if (loot.IntersectsWithBody(player))
+                    target = player;
+                if (target != null)
                 {
-                    loot.Pickup(player);
+                    loot.Pickup(target);
                     CurrentRoom().LootList.Remove(loot);
                     break;
                 }

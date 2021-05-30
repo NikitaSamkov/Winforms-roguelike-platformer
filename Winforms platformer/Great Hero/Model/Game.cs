@@ -108,9 +108,12 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.R] = () => Player.Ammo += 3;
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
-                new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 2));
+                new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, 3));
 
-            KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(2);
+            KeyBindings[Keys.D3] = () => Map.CurrentRoom().LootList.Add(
+                new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+
+            KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(3);
             KeyBindings[Keys.T] = () => Console.WriteLine(Player.treasures.Contains(TreasurePool.GetTreasureByID(0)));
 
             KeyBindings[Keys.Z] = () =>

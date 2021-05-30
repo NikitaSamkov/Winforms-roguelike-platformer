@@ -234,6 +234,8 @@ namespace Winforms_platformer.View
 
         public Bitmap GetSprite(int ID, LootResource resource)
         {
+            if (ID == 0 && resource is LootRes && Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(3)))
+                return (resource as LootRes).id0alt;
             foreach (var field in resource.GetType().GetFields())
                 if (field.Name == "id" + ID)
                     return (Bitmap)field.GetValue(resource);
