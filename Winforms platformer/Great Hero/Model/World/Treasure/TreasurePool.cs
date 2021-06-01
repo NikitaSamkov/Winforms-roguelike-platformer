@@ -155,23 +155,27 @@ namespace Winforms_platformer
 
     public class GravityFeather : ITreasure
     {
+        private double gravityMultiplier = 0.5;
+
         int ITreasure.ID { get => 2; }
 
         int ITreasure.Price { get => 1; }
 
         public void Disable()
         {
-            Game.Map.ChangeGravitation(2);
+            Game.Map.ChangeGravitation(1 / gravityMultiplier);
         }
 
         public void Enable()
         {
-            Game.Map.ChangeGravitation(0.5);
+            Game.Map.ChangeGravitation(gravityMultiplier);
         }
     }
 
     public class AngryHearts : ITreasure
     {
+        private int multiplier = 2;
+
         int ITreasure.ID { get => 3; }
 
         int ITreasure.Price { get => 3; }
@@ -179,17 +183,17 @@ namespace Winforms_platformer
         public void Disable()
         {
             if (Game.Player.treasures.Contains(this))
-                HeartLoot.HealPower /= 2;
+                HeartLoot.HealPower /= multiplier;
             else
-                HeartLoot.HealPower /= -2;
+                HeartLoot.HealPower /= -multiplier;
         }
 
         public void Enable()
         {
             if (Game.Player.treasures.Contains(this))
-                HeartLoot.HealPower *= 2;
+                HeartLoot.HealPower *= multiplier;
             else
-                HeartLoot.HealPower *= -2;
+                HeartLoot.HealPower *= -multiplier;
         }
     }
 
@@ -229,72 +233,80 @@ namespace Winforms_platformer
 
     public class Meat : ITreasure
     {
+        private int buff = 10;
+
         int ITreasure.ID { get => 6; }
 
         int ITreasure.Price { get => 8; }
 
         public void Disable()
         {
-            Game.Player.damage -= 10;
+            Game.Player.damage -= buff;
         }
 
         public void Enable()
         {
-            Game.Player.damage += 10;
+            Game.Player.damage += buff;
         }
     }
 
     public class Essentuki : ITreasure
     {
+        private int buff = 20;
+
         int ITreasure.ID { get => 7; }
 
         int ITreasure.Price { get => 6; }
 
         public void Disable()
         {
-            Game.Player.MaxHP -= 20;
+            Game.Player.MaxHP -= buff;
             if (Game.Player.HP > Game.Player.MaxHP)
                 Game.Player.HP = Game.Player.MaxHP;
         }
 
         public void Enable()
         {
-            Game.Player.MaxHP += 20;
+            Game.Player.MaxHP += buff;
             Game.Player.HP = Game.Player.MaxHP;
         }
     }
 
     public class EnergyDrink : ITreasure
     {
+        private double multiplier = 1.5;
+
         int ITreasure.ID { get => 8; }
 
         int ITreasure.Price { get => 2; }
 
         public void Disable()
         {
-            Game.Player.xSpeed = (int)(Game.Player.xSpeed / 1.5);
+            Game.Player.xSpeed = (int)(Game.Player.xSpeed / multiplier);
         }
 
         public void Enable()
         {
-            Game.Player.xSpeed = (int)(Game.Player.xSpeed * 1.5);
+            Game.Player.xSpeed = (int)(Game.Player.xSpeed * multiplier);
         }
     }
 
     public class HolyCross : ITreasure
     {
+        private int additionalTicks = 5;
+
         int ITreasure.ID { get => 9; }
 
         int ITreasure.Price { get => 4; }
 
         public void Disable()
         {
-            Game.Player.damageInvincibility -= 100;
+            Game.Player.damageInvincibility -= additionalTicks;
         }
 
         public void Enable()
         {
-            Game.Player.damageInvincibility += 100;
+            Game.Player.damageInvincibility += additionalTicks;
         }
     }
 }
