@@ -16,7 +16,8 @@ namespace Winforms_platformer
             new AmuletOfFlying(),
             new EternalBow(),
             new GravityFeather(),
-            new AngryHearts()
+            new AngryHearts(),
+            new CowMan()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -184,6 +185,23 @@ namespace Winforms_platformer
                 HeartLoot.HealPower *= 2;
             else
                 HeartLoot.HealPower *= -2;
+        }
+    }
+
+    public class CowMan : ITreasure
+    {
+        int ITreasure.ID { get => 4; }
+
+        int ITreasure.Price { get => 3; }
+
+        public void Disable()
+        {
+            RandomEnemyGenerator.RemoveFromGenerator(EnemyType.BigCow);
+        }
+
+        public void Enable()
+        {
+            RandomEnemyGenerator.AddToGenerator(EnemyType.BigCow);
         }
     }
 }

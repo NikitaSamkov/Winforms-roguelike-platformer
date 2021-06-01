@@ -114,7 +114,6 @@ namespace Winforms_platformer.Model
                 new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
 
             KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(3);
-            KeyBindings[Keys.T] = () => Console.WriteLine(Player.treasures.Contains(TreasurePool.GetTreasureByID(0)));
 
             KeyBindings[Keys.Z] = () =>
             {

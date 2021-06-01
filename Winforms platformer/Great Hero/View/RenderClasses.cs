@@ -135,6 +135,7 @@ namespace Winforms_platformer.View
                 if (render == null)
                 {
                     EntityResource resources = Resources.Dummy;
+                    var ticksPerFrame = 3;
                     //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
                     if (enemy is Slime)
                         resources = Resources.Slime;
@@ -149,8 +150,11 @@ namespace Winforms_platformer.View
                     if (enemy is SuperMagician)
                         resources = Resources.SuperMagician;
                     if (enemy is BigCow)
+                    {
                         resources = Resources.BigCow;
-                    render = new EntityRender(enemy, resources, 3);
+                        ticksPerFrame = 2;
+                    }
+                    render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);
                 }
                 render.Paint(g);

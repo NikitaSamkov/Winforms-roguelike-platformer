@@ -361,7 +361,7 @@ namespace Winforms_platformer
         {
             if (timer == 0)
             {
-                var random = new Random(GetShotestDistanceToPlayer());
+                var random = Game.Map.Random;
                 direction = (Direction)random.Next(0, 2);
                 xSpeed = random.Next(0, 16);
                 if (xSpeed == 0)

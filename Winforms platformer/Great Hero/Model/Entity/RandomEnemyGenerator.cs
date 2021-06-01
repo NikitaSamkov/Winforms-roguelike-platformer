@@ -28,6 +28,11 @@ namespace Winforms_platformer.Model
                 enemyTypes.Add(type);
         }
 
+        public static void RemoveFromGenerator(EnemyType type)
+        {
+            enemyTypes.Remove(type);
+        }
+
         public static Enemy GetRandomEnemy(int x, int y)
         {
             var type = enemyTypes[random.Next(enemyTypes.Count)];
