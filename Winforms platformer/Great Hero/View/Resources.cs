@@ -20,6 +20,7 @@ namespace Winforms_platformer
         public static readonly MagicianRes Magician = new MagicianRes();
         public static readonly SuperMagicianRes SuperMagician = new SuperMagicianRes();
         public static readonly BigCowRes BigCow = new BigCowRes();
+        public static readonly GhostRes Ghost = new GhostRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -160,6 +161,17 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\SuperMagicianIdle.png");
             IdleSize = new Size(64, 112);
             MoveSize = new Size(64, 112);
+        }
+    }
+
+    public class GhostRes : EntityResource
+    {
+        public GhostRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\GhostIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\GhostIdle.png");
+            IdleSize = new Size(94, 92);
+            MoveSize = new Size(94, 92);
         }
     }
     #endregion

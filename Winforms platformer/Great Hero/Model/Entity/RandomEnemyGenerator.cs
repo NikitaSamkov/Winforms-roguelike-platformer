@@ -20,6 +20,7 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.Archer);
             enemyTypes.Add(EnemyType.Magician);
             enemyTypes.Add(EnemyType.SuperMagician);
+            enemyTypes.Add(EnemyType.Ghost);
         }
 
         public static void AddToGenerator(EnemyType type)
@@ -38,28 +39,32 @@ namespace Winforms_platformer.Model
             var type = enemyTypes[random.Next(enemyTypes.Count)];
             if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(10)) && type != EnemyType.BigCow)
                 type = EnemyType.Roller;
+            Func<Room> currentRoom = Game.Map.CurrentRoom;
+            var player = Game.Player;
             switch (type)
             {
                 case EnemyType.Dummy:
-                    return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom, player);
                 case EnemyType.Slime:
-                    return new Slime(x, y, new Collider(Resources.Slime.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    return new Slime(x, y, new Collider(Resources.Slime.IdleSize), currentRoom, player);
                 case EnemyType.Roller:
-                    return new Roller(x, y, new Collider(Resources.Roller.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    return new Roller(x, y, new Collider(Resources.Roller.IdleSize), currentRoom, player);
                 case EnemyType.Swordsman:
                     return new Swordsman(x, y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
                 new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)), 
-                Game.Map.CurrentRoom, Game.Player);
+                currentRoom, player);
                 case EnemyType.Archer:
-                    return new Archer(x, y, new Collider(Resources.Archer.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    return new Archer(x, y, new Collider(Resources.Archer.IdleSize), currentRoom, player);
                 case EnemyType.Magician:
-                    return new Magician(x, y, new Collider(Resources.Magician.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    return new Magician(x, y, new Collider(Resources.Magician.IdleSize), currentRoom, player);
                 case EnemyType.SuperMagician:
-                    return new SuperMagician(x, y, new Collider(Resources.SuperMagician.IdleSize), Game.Map.CurrentRoom, Game.Player);
+                    return new SuperMagician(x, y, new Collider(Resources.SuperMagician.IdleSize), currentRoom, player);
                 case EnemyType.BigCow:
-                    return new BigCow(x, y, new Collider(Resources.BigCow.ColliderSize, 0, 6), Game.Map.CurrentRoom, Game.Player);
+                    return new BigCow(x, y, new Collider(Resources.BigCow.ColliderSize, 0, 6), currentRoom, player);
+                case EnemyType.Ghost:
+                    return new Ghost(x, y, new Collider(Resources.Ghost.IdleSize), currentRoom, player);
             }
-            return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), Game.Map.CurrentRoom, Game.Player);
+            return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize),currentRoom, player);
         }
     }
 }

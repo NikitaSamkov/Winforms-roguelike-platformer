@@ -154,6 +154,8 @@ namespace Winforms_platformer.View
                         resources = Resources.BigCow;
                         ticksPerFrame = 2;
                     }
+                    if (enemy is Ghost)
+                        resources = Resources.Ghost;
                     render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);
                 }

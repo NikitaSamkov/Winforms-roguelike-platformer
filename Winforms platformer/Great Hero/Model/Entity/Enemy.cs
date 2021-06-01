@@ -377,4 +377,40 @@ namespace Winforms_platformer
             else timer--;
         }
     }
+
+    public class Ghost : Enemy
+    {
+        public Ghost(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 50;
+            MaxHP = HP;
+            damage = 10;
+            minSpeed = 0;
+            maxSpeed = 0;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 300;
+            jumpStrength = 0;
+            flying = true;
+            SetDropChances(20, 0, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            if (player.x > x)
+            {
+                direction = Direction.Right;
+                x += 2;
+            }
+            else
+            {
+                direction = Direction.Left;
+                x -= 2;
+            }
+            if (player.y > y)
+                y += 2;
+            else
+                y -= 2;
+        }
+    }
 }

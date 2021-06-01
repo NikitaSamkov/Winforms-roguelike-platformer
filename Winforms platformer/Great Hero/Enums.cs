@@ -51,6 +51,7 @@ namespace Winforms_platformer
         Archer,
         Magician,
         SuperMagician,
-        BigCow
+        BigCow,
+        Ghost
     }
 }
