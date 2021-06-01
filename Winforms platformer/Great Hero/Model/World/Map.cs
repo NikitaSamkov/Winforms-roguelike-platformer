@@ -199,10 +199,13 @@ namespace Winforms_platformer.Model
                     targets = targets.Where(target => target == player).ToList();
                 if (targets.Count > 0)
                 {
-                    targets
-                    .OrderBy(target => target.GetDistanceTo(projectile.x, projectile.y))
-                    .First()
-                    .HP -= projectile.damage;
+                    var target = targets
+                    .OrderBy(t => t.GetDistanceTo(projectile.x, projectile.y))
+                    .First();
+                    if (target is Player)
+                        target.Hurt(projectile.damage);
+                    else
+                        target.HP -= projectile.damage;
                     CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
                 }
