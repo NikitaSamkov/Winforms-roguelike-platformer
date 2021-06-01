@@ -24,7 +24,9 @@ namespace Winforms_platformer
             new EnergyDrink(),
             new HolyCross(),
             new RollerAmulet(),
-            new Hammer()
+            new Hammer(),
+            new BetterHearts(),
+            new BetterAmmo()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -362,6 +364,25 @@ namespace Winforms_platformer
         public void Enable()
         {
             HeartLoot.HealPower = (int)(HeartLoot.HealPower * multiplier);
+        }
+    }
+
+    public class BetterAmmo : ITreasure
+    {
+        private double multiplier = 2;
+
+        int ITreasure.ID { get => 13; }
+
+        int ITreasure.Price { get => 7; }
+
+        public void Disable()
+        {
+            AmmoLoot.AmmoCount = (int)(AmmoLoot.AmmoCount / multiplier);
+        }
+
+        public void Enable()
+        {
+            AmmoLoot.AmmoCount = (int)(AmmoLoot.AmmoCount * multiplier);
         }
     }
 }
