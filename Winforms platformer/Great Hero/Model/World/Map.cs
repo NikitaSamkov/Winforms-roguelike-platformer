@@ -11,7 +11,7 @@ namespace Winforms_platformer.Model
     {
         private Player player;
         private List<Room> roomTemplates;
-        private List<Room> rooms;
+        public List<Room> rooms;
         private int currentRoom;
         public Random Random;
         public readonly int seed;
@@ -194,10 +194,8 @@ namespace Winforms_platformer.Model
                     CurrentRoom().ProjectilesList.Remove(projectile);
                     break;
                 }
-                var targets = CurrentRoom().GetIntersectedEntities(projectile);
-                if (projectile.type == ProjectileType.Ally)
-                    targets = targets.Where(target => target != player).ToList();
-                if (projectile.type == ProjectileType.Enemy)
+                var targets = CurrentRoom().GetIntersectedEntities(projectile).Where(t => t != projectile.Sender).ToList();
+                if (projectile.type == ProjectileType.Enemy && !player.treasures.Contains(TreasurePool.GetTreasureByID(5)))
                     targets = targets.Where(target => target == player).ToList();
                 if (targets.Count > 0)
                 {

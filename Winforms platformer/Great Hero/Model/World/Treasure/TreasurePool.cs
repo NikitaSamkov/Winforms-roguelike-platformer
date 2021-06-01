@@ -17,7 +17,8 @@ namespace Winforms_platformer
             new EternalBow(),
             new GravityFeather(),
             new AngryHearts(),
-            new CowMan()
+            new CowMan(),
+            new AngryArrows()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -202,6 +203,23 @@ namespace Winforms_platformer
         public void Enable()
         {
             RandomEnemyGenerator.AddToGenerator(EnemyType.BigCow);
+        }
+    }
+
+    public class AngryArrows : ITreasure
+    {
+        int ITreasure.ID { get => 5; }
+
+        int ITreasure.Price { get => 5; }
+
+        public void Disable()
+        {
+
+        }
+
+        public void Enable()
+        {
+
         }
     }
 }
