@@ -132,7 +132,7 @@ namespace Winforms_platformer.Model
             {
                 foreach (var treasureRoom in Map.rooms.Where(r => r.LootList.Count != 0))
                     foreach (var loot in treasureRoom.LootList)
-                        Console.Write(loot.ID + " ");
+                        Console.Write(loot.ID + "(" + (loot as TreasureItem).Treasure.Price + ")" + " ");
                 Console.WriteLine();
             };
 
