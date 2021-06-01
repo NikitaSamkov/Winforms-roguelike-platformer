@@ -309,6 +309,12 @@ namespace Winforms_platformer.Model
             player.TeleportTo(Game.WindowSize.Width - player.collider.field.Width,
                 rooms[currentRoom - 1].GroundLevel - (CurrentRoom().GroundLevel - player.y));
             currentRoom--;
+            if (CurrentRoom().EnemySpots.Count != 0)
+            {
+                foreach (var spot in CurrentRoom().EnemySpots)
+                    CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetRandomEnemy(spot.X, spot.Y));
+                CurrentRoom().EnemySpots = new List<System.Drawing.Point>();
+            }
         }
 
         public bool IsCurrentRoomLast() => currentRoom == rooms.Count - 1;

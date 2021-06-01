@@ -93,7 +93,7 @@ namespace Winforms_platformer
             var random = new Random();
             foreach (var lootType in dropChances.Keys)
             {
-                if (random.Next(1, 101) <= dropChances[lootType] * 50 / player.HP)
+                if (random.Next(1, 101) <= dropChances[lootType] * player.MaxHP / (2 * player.HP))
                     switch (lootType)
                     {
                         case LootType.Heart:
@@ -324,7 +324,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 0;
-            cooldown = random.Next(75, 999);
+            cooldown = random.Next(75, 100);
             SetDropChances(random.Next(0, 101), random.Next(0, 101), 0);
         }
 

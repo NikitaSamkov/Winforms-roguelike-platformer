@@ -257,10 +257,19 @@ namespace Winforms_platformer.View
         public void Paint(Graphics g)
         {
             #region HP
+            var hpSize = new Size(Resources.UI.HPSize100.Width * Game.Player.MaxHP / 100, Resources.UI.HPSize.Height);
             g.DrawImage(Resources.UI.HPBar, 50, 50,
-                new Rectangle(0, 0, Resources.UI.HPSize.Width * Game.Player.HP / 100, Resources.UI.HPSize.Width),
+                new Rectangle(0, 0, hpSize.Width * Game.Player.HP / Game.Player.MaxHP, hpSize.Height),
                 GraphicsUnit.Pixel);
-            g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
+            if (hpSize.Width >= Resources.UI.HPSize.Width)
+                g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
+            else
+            {
+                g.DrawImage(Resources.UI.HPFrame, 50, 50, 
+                    new Rectangle(0, 0, hpSize.Width / 2 + 1, hpSize.Height), GraphicsUnit.Pixel);
+                g.DrawImage(Resources.UI.HPFrame, 50 + hpSize.Width / 2 + 1, 50,
+                    new Rectangle(Resources.UI.HPSize.Width - hpSize.Width / 2, 0, hpSize.Width / 2, hpSize.Height), GraphicsUnit.Pixel);
+            }
             #endregion
             #region Ammo
             for (var i = 0; i < Game.Player.Ammo; i++)
