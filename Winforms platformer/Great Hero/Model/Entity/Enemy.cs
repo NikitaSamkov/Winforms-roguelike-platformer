@@ -141,7 +141,7 @@ namespace Winforms_platformer
         {
             HP = 1;
             MaxHP = 1;
-            damage = 10;
+            damage = 20;
             minSpeed = 15;
             maxSpeed = 99;
             xSpeed = minSpeed;

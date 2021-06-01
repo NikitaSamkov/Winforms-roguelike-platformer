@@ -23,7 +23,8 @@ namespace Winforms_platformer
             new Essentuki(),
             new EnergyDrink(),
             new HolyCross(),
-            new RollerAmulet()
+            new RollerAmulet(),
+            new Hammer()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -316,6 +317,23 @@ namespace Winforms_platformer
         int ITreasure.ID { get => 10; }
 
         int ITreasure.Price { get => 2; }
+
+        public void Disable()
+        {
+
+        }
+
+        public void Enable()
+        {
+
+        }
+    }
+
+    public class Hammer : ITreasure
+    {
+        int ITreasure.ID { get => 11; }
+
+        int ITreasure.Price { get => 1; }
 
         public void Disable()
         {

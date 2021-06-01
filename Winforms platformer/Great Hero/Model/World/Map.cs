@@ -234,7 +234,7 @@ namespace Winforms_platformer.Model
                 loot.Update();
             }
 
-            if (player.y < 0)
+            if (player.y < 0 && !(player.treasures.Contains(TreasurePool.GetTreasureByID(10))))
             {
                 player.TeleportTo(player.x, 0);
                 player.FreezeInAir();
