@@ -19,7 +19,8 @@ namespace Winforms_platformer
             new AngryHearts(),
             new CowMan(),
             new AngryArrows(),
-            new Meat()
+            new Meat(),
+            new Essentuki()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -238,6 +239,26 @@ namespace Winforms_platformer
         public void Enable()
         {
             Game.Player.damage += 10;
+        }
+    }
+
+    public class Essentuki : ITreasure
+    {
+        int ITreasure.ID { get => 7; }
+
+        int ITreasure.Price { get => 6; }
+
+        public void Disable()
+        {
+            Game.Player.MaxHP -= 20;
+            if (Game.Player.HP > Game.Player.MaxHP)
+                Game.Player.HP = Game.Player.MaxHP;
+        }
+
+        public void Enable()
+        {
+            Game.Player.MaxHP += 20;
+            Game.Player.HP = Game.Player.MaxHP;
         }
     }
 }

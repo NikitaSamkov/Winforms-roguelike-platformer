@@ -228,6 +228,7 @@ namespace Winforms_platformer
         public readonly Bitmap id4 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id4.png");
         public readonly Bitmap id5 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id5.png");
         public readonly Bitmap id6 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id6.png");
+        public readonly Bitmap id7 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id7.png");
     }
 
     public class LootRes : LootResource
