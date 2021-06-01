@@ -93,7 +93,7 @@ namespace Winforms_platformer
             var random = new Random();
             foreach (var lootType in dropChances.Keys)
             {
-                if (random.Next(1, 101) <= dropChances[lootType] * player.MaxHP / (2 * player.HP))
+                if (player.HP > 0 && random.Next(1, 101) <= dropChances[lootType] * player.MaxHP / (2 * player.HP))
                     switch (lootType)
                     {
                         case LootType.Heart:

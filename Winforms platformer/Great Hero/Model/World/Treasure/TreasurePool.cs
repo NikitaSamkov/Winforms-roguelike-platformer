@@ -345,4 +345,23 @@ namespace Winforms_platformer
 
         }
     }
+
+    public class BetterHearts : ITreasure
+    {
+        private double multiplier = 1.5;
+
+        int ITreasure.ID { get => 12; }
+
+        int ITreasure.Price { get => 7; }
+
+        public void Disable()
+        {
+            HeartLoot.HealPower = (int)(HeartLoot.HealPower / multiplier);
+        }
+
+        public void Enable()
+        {
+            HeartLoot.HealPower = (int)(HeartLoot.HealPower * multiplier);
+        }
+    }
 }
