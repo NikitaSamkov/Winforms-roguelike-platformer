@@ -26,7 +26,8 @@ namespace Winforms_platformer
             new RollerAmulet(),
             new Hammer(),
             new BetterHearts(),
-            new BetterAmmo()
+            new BetterAmmo(),
+            new BestFriend()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -260,7 +261,7 @@ namespace Winforms_platformer
 
         int ITreasure.ID { get => 7; }
 
-        int ITreasure.Price { get => 6; }
+        int ITreasure.Price { get => 7; }
 
         public void Disable()
         {
@@ -383,6 +384,30 @@ namespace Winforms_platformer
         public void Enable()
         {
             AmmoLoot.AmmoCount = (int)(AmmoLoot.AmmoCount * multiplier);
+        }
+    }
+
+    public class BestFriend : ITreasure
+    {
+        private int hpBuff = 10;
+        private int damageBuff = 5;
+
+        int ITreasure.ID { get => 14; }
+
+        int ITreasure.Price { get => 6; }
+
+        public void Disable()
+        {
+            Game.Player.MaxHP -= hpBuff;
+            if (Game.Player.HP > Game.Player.MaxHP)
+                Game.Player.HP = Game.Player.MaxHP;
+            Game.Player.damage -= damageBuff;
+        }
+
+        public void Enable()
+        {
+            Game.Player.MaxHP += hpBuff;
+            Game.Player.damage += damageBuff;
         }
     }
 }
