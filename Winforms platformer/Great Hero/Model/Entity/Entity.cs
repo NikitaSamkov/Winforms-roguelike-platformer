@@ -10,7 +10,7 @@ namespace Winforms_platformer
     public class Entity
     {
         protected int ySpeed;
-        protected int xSpeed = 5;
+        public int xSpeed = 5;
         protected int damageInvincibility;
         public int x { get; protected set; }
         public int y { get; protected set; }

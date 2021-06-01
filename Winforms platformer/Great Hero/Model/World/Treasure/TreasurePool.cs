@@ -20,7 +20,8 @@ namespace Winforms_platformer
             new CowMan(),
             new AngryArrows(),
             new Meat(),
-            new Essentuki()
+            new Essentuki(),
+            new EnergyDrink()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -259,6 +260,23 @@ namespace Winforms_platformer
         {
             Game.Player.MaxHP += 20;
             Game.Player.HP = Game.Player.MaxHP;
+        }
+    }
+
+    public class EnergyDrink : ITreasure
+    {
+        int ITreasure.ID { get => 8; }
+
+        int ITreasure.Price { get => 2; }
+
+        public void Disable()
+        {
+            Game.Player.xSpeed = (int)(Game.Player.xSpeed / 1.5);
+        }
+
+        public void Enable()
+        {
+            Game.Player.xSpeed = (int)(Game.Player.xSpeed * 1.5);
         }
     }
 }
