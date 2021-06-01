@@ -35,14 +35,14 @@ namespace Winforms_platformer.Model
                 groundLevel = customGroundLevel;
             }
             var platforms = new List<Platform>();
-            var enemies = new List<Enemy>();
+            var enemies = new List<Point>();
             var treasures = new List<Loot>();
             for (var y = 1; y < rows.Length; y++)
             {
                 var platform = false;
                 var platformStart = 0;
                 var tempPlatforms = new List<Platform>();
-                var tempEnemies = new List<Enemy>();
+                var tempEnemies = new List<Point>();
                 var tempTreasuresPoints = new List<Point>();
                 var currentID = 0;
                 var tempTreasures = new List<Loot>();
@@ -65,8 +65,7 @@ namespace Winforms_platformer.Model
                         switch (rows[y][x])
                         {
                             case '*':
-                                tempEnemies.Add(RandomEnemyGenerator.GetRandomEnemy(
-                                    x * symbolWidth, (y - 1) * symbolHeight));
+                                tempEnemies.Add(new Point(x * symbolWidth, (y - 1) * symbolHeight));
                                 break;
                             case '-':
                                 if (!platform)
@@ -115,7 +114,7 @@ namespace Winforms_platformer.Model
                     tempPlatforms = tempPlatforms.Select(p => new Platform(p.leftBorder, p.rightBorder, height)).ToList();
                     tempEnemies = tempEnemies.Select(e =>
                     {
-                        e.TeleportTo(e.x, height);
+                        e.Y = height;
                         return e;
                     }).ToList();
                     tempTreasures = tempTreasures.Select(t =>

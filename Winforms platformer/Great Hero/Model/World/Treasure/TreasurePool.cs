@@ -18,7 +18,8 @@ namespace Winforms_platformer
             new GravityFeather(),
             new AngryHearts(),
             new CowMan(),
-            new AngryArrows()
+            new AngryArrows(),
+            new Meat()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -220,6 +221,23 @@ namespace Winforms_platformer
         public void Enable()
         {
 
+        }
+    }
+
+    public class Meat : ITreasure
+    {
+        int ITreasure.ID { get => 6; }
+
+        int ITreasure.Price { get => 8; }
+
+        public void Disable()
+        {
+            Game.Player.damage -= 10;
+        }
+
+        public void Enable()
+        {
+            Game.Player.damage += 10;
         }
     }
 }

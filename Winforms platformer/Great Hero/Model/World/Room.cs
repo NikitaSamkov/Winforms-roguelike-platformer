@@ -18,9 +18,10 @@ namespace Winforms_platformer
         public List<Enemy> EnemyList;
         public List<Projectile> ProjectilesList = new List<Projectile>();
         public List<Loot> LootList;
+        public List<Point> EnemySpots;
 
         public Room(RoomType type, Player player, List<Platform> platforms = null, List<Loot> lootList = null,
-            List<Enemy> enemies = null, int gravitationForce = 7, int groundLevel = 486)
+            List<Point> enemies = null, int gravitationForce = 7, int groundLevel = 486)
         {
             Platforms = platforms;
             if (Platforms == null)
@@ -28,9 +29,10 @@ namespace Winforms_platformer
             LootList = lootList;
             if (LootList == null)
                 LootList = new List<Loot>();
-            EnemyList = enemies;
-            if (EnemyList == null)
-                EnemyList = new List<Enemy>();
+            EnemySpots = enemies;
+            if (EnemySpots == null)
+                EnemySpots = new List<Point>();
+            EnemyList = new List<Enemy>();
             gForce = gravitationForce;
             GroundLevel = groundLevel;
             Type = type;

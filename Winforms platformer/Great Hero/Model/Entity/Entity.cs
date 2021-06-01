@@ -19,7 +19,7 @@ namespace Winforms_platformer
         public Collider collider { get; protected set; }
         public int HP { get; set; }
         public int MaxHP { get; set; }
-        public int damage { get; protected set; }
+        public int damage { get; set; }
         public int invincibility { get; protected set; }
         public Func<Room> CurrentRoom;
 

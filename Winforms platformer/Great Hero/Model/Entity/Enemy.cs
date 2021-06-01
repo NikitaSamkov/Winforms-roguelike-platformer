@@ -314,7 +314,7 @@ namespace Winforms_platformer
         private int cooldown;
         public SuperMagician(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
         {
-            var random = new Random();
+            var random = Game.Map.Random;
             HP = random.Next(1, 26);
             MaxHP = HP;
             damage = random.Next(25, 76);

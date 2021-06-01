@@ -296,6 +296,9 @@ namespace Winforms_platformer.Model
         {
             player.TeleportTo(0, rooms[currentRoom + 1].GroundLevel - (CurrentRoom().GroundLevel - player.y));
             currentRoom++;
+            if (CurrentRoom().EnemySpots.Count != 0)
+                foreach (var spot in CurrentRoom().EnemySpots)
+                    CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetRandomEnemy(spot.X, spot.Y));
         }
 
         public void GoToPrevious()
