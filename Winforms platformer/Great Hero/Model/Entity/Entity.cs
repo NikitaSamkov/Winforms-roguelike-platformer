@@ -11,7 +11,7 @@ namespace Winforms_platformer
     {
         protected int ySpeed;
         public int xSpeed = 5;
-        protected int damageInvincibility;
+        public int damageInvincibility;
         public int x { get; protected set; }
         public int y { get; protected set; }
         public Direction direction { get; protected set; }

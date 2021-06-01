@@ -21,7 +21,8 @@ namespace Winforms_platformer
             new AngryArrows(),
             new Meat(),
             new Essentuki(),
-            new EnergyDrink()
+            new EnergyDrink(),
+            new HolyCross()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -277,6 +278,23 @@ namespace Winforms_platformer
         public void Enable()
         {
             Game.Player.xSpeed = (int)(Game.Player.xSpeed * 1.5);
+        }
+    }
+
+    public class HolyCross : ITreasure
+    {
+        int ITreasure.ID { get => 9; }
+
+        int ITreasure.Price { get => 4; }
+
+        public void Disable()
+        {
+            Game.Player.damageInvincibility -= 100;
+        }
+
+        public void Enable()
+        {
+            Game.Player.damageInvincibility += 100;
         }
     }
 }
