@@ -36,6 +36,8 @@ namespace Winforms_platformer.Model
         public static Enemy GetRandomEnemy(int x, int y)
         {
             var type = enemyTypes[random.Next(enemyTypes.Count)];
+            if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(10)) && type != EnemyType.BigCow)
+                type = EnemyType.Roller;
             switch (type)
             {
                 case EnemyType.Dummy:

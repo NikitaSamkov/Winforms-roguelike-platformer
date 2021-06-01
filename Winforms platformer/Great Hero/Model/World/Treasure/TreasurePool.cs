@@ -22,7 +22,8 @@ namespace Winforms_platformer
             new Meat(),
             new Essentuki(),
             new EnergyDrink(),
-            new HolyCross()
+            new HolyCross(),
+            new RollerAmulet()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -307,6 +308,23 @@ namespace Winforms_platformer
         public void Enable()
         {
             Game.Player.damageInvincibility += additionalTicks;
+        }
+    }
+
+    public class RollerAmulet : ITreasure
+    {
+        int ITreasure.ID { get => 10; }
+
+        int ITreasure.Price { get => 2; }
+
+        public void Disable()
+        {
+
+        }
+
+        public void Enable()
+        {
+
         }
     }
 }
