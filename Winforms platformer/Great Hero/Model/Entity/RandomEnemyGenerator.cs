@@ -15,14 +15,14 @@ namespace Winforms_platformer.Model
         {
             random = Game.Map.Random;
 
-            /*enemyTypes.Add(EnemyType.Slime);
+            enemyTypes.Add(EnemyType.Slime);
             enemyTypes.Add(EnemyType.Roller);
             enemyTypes.Add(EnemyType.Swordsman);
             enemyTypes.Add(EnemyType.Archer);
             enemyTypes.Add(EnemyType.Magician);
             enemyTypes.Add(EnemyType.SuperMagician);
             enemyTypes.Add(EnemyType.Ghost);
-            enemyTypes.Add(EnemyType.InvisibleMan);*/
+            enemyTypes.Add(EnemyType.InvisibleMan);
             enemyTypes.Add(EnemyType.Turret);
         }
 
