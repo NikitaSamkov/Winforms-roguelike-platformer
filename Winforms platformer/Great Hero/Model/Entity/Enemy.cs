@@ -470,6 +470,8 @@ namespace Winforms_platformer
                 var dy = y - player.y;
                 var angle = (int)(Math.Atan2(dy, dx) * 180 / Math.PI);
                 Shoot(angle);
+                if (reloadTime > 5)
+                    reloadTime--;
                 timer = reloadTime;
             }
             else timer--;

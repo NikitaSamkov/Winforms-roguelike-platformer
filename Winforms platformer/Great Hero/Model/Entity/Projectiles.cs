@@ -34,6 +34,7 @@ namespace Winforms_platformer
     {
         public Plasma(int x, int y, Collider collider, Func<Room> room, int angle, int power, ProjectileType type, Creature sender) : base(x, y, collider, room, angle, power, type, sender)
         {
+            damage = 10;
         }
 
         public override void Update()
