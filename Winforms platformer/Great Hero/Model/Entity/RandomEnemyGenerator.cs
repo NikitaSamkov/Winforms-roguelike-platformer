@@ -21,6 +21,7 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.Magician);
             enemyTypes.Add(EnemyType.SuperMagician);
             enemyTypes.Add(EnemyType.Ghost);
+            enemyTypes.Add(EnemyType.InvisibleMan);
         }
 
         public static void AddToGenerator(EnemyType type)
@@ -63,6 +64,8 @@ namespace Winforms_platformer.Model
                     return new BigCow(x, y, new Collider(Resources.BigCow.ColliderSize, 0, 6), currentRoom, player);
                 case EnemyType.Ghost:
                     return new Ghost(x, y, new Collider(Resources.Ghost.IdleSize), currentRoom, player);
+                case EnemyType.InvisibleMan:
+                    return new InvisibleMan(x, y, new Collider(Resources.InvisibleMan.IdleSize), currentRoom, player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize),currentRoom, player);
         }

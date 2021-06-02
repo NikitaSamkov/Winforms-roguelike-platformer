@@ -156,6 +156,8 @@ namespace Winforms_platformer.View
                     }
                     if (enemy is Ghost)
                         resources = Resources.Ghost;
+                    if (enemy is InvisibleMan)
+                        resources = Resources.InvisibleMan;
                     render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);
                 }

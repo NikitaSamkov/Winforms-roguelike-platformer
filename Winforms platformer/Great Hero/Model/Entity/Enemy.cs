@@ -10,6 +10,7 @@ namespace Winforms_platformer
 {
     public class Enemy : Creature
     {
+        public int difficulty { get; protected set; } // 1 - 5
         protected Player player;
         protected Dictionary<LootType, int> dropChances = new Dictionary<LootType, int>();
         protected int treasureDropID = -1;
@@ -131,6 +132,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 400;
             jumpStrength = 50;
+            difficulty = 1;
             SetDropChances(10, 0, 0);
         }
     }
@@ -148,6 +150,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 0;
+            difficulty = 3;
             SetDropChances(5, 10, 0);
         }
     }
@@ -165,6 +168,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 500;
             jumpStrength = 30;
+            difficulty = 3;
             SetDropChances(25, 25, 0);
         }
 
@@ -199,6 +203,7 @@ namespace Winforms_platformer
             range = 1000;
             jumpStrength = 60;
             reloadTime = 25;
+            difficulty = 4;
             SetDropChances(0, 50, 0);
         }
 
@@ -287,6 +292,7 @@ namespace Winforms_platformer
             jumpStrength = 0;
             power = 3;
             lastPlayerY = -1;
+            difficulty = 1;
             SetDropChances(20, 20, 0);
         }
 
@@ -324,6 +330,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 0;
+            difficulty = 3;
             cooldown = random.Next(75, 100);
             SetDropChances(random.Next(0, 101), random.Next(0, 101), 0);
         }
@@ -354,6 +361,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 100;
+            difficulty = 1;
             SetDropChances(200, 0, 0);
         }
 
@@ -392,6 +400,7 @@ namespace Winforms_platformer
             range = 300;
             jumpStrength = 0;
             flying = true;
+            difficulty = 2;
             SetDropChances(20, 0, 0);
         }
 
@@ -411,6 +420,24 @@ namespace Winforms_platformer
                 y += 2;
             else
                 y -= 2;
+        }
+    }
+
+    public class InvisibleMan : Enemy
+    {
+        public InvisibleMan(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 20;
+            MaxHP = HP;
+            damage = 10;
+            minSpeed = 15;
+            maxSpeed = 20;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 50;
+            difficulty = 5;
+            SetDropChances(50, 20, 0);
         }
     }
 }

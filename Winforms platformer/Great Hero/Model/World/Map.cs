@@ -300,11 +300,7 @@ namespace Winforms_platformer.Model
             player.TeleportTo(0, rooms[currentRoom + 1].GroundLevel - (CurrentRoom().GroundLevel - player.y));
             currentRoom++;
             if (CurrentRoom().EnemySpots.Count != 0)
-            {
-                foreach (var spot in CurrentRoom().EnemySpots)
-                    CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetRandomEnemy(spot.X, spot.Y));
-                CurrentRoom().EnemySpots = new List<System.Drawing.Point>();
-            }
+                SpawnEnemies();
         }
 
         public void GoToPrevious()
@@ -313,11 +309,23 @@ namespace Winforms_platformer.Model
                 rooms[currentRoom - 1].GroundLevel - (CurrentRoom().GroundLevel - player.y));
             currentRoom--;
             if (CurrentRoom().EnemySpots.Count != 0)
+                SpawnEnemies();
+        }
+
+        private void SpawnEnemies()
+        {
+            CurrentRoom().EnemySpots.Reverse();
+            var optimalDifficulty = 3 * CurrentRoom().EnemySpots.Count + 1;
+            foreach (var spot in CurrentRoom().EnemySpots)
             {
-                foreach (var spot in CurrentRoom().EnemySpots)
-                    CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetRandomEnemy(spot.X, spot.Y));
-                CurrentRoom().EnemySpots = new List<System.Drawing.Point>();
+                var enemy = RandomEnemyGenerator.GetRandomEnemy(spot.X, spot.Y);
+                if (optimalDifficulty - enemy.difficulty >= 0)
+                {
+                    CurrentRoom().EnemyList.Add(enemy);
+                    optimalDifficulty -= enemy.difficulty;
+                }
             }
+            CurrentRoom().EnemySpots = new List<System.Drawing.Point>();
         }
 
         public bool IsCurrentRoomLast() => currentRoom == rooms.Count - 1;

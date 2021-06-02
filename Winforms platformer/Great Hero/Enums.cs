@@ -52,6 +52,7 @@ namespace Winforms_platformer
         Magician,
         SuperMagician,
         BigCow,
-        Ghost
+        Ghost,
+        InvisibleMan
     }
 }
