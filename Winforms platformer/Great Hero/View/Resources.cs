@@ -23,6 +23,8 @@ namespace Winforms_platformer
         public static readonly GhostRes Ghost = new GhostRes();
         public static readonly InvisibleManRes InvisibleMan = new InvisibleManRes();
         public static readonly TurretRes Turret = new TurretRes();
+        public static readonly StickerRes Sticker = new StickerRes();
+        public static readonly StickerAttackRes StickerAttack = new StickerAttackRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -197,6 +199,28 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\TurretIdle.png");
             IdleSize = new Size(56, 96);
             MoveSize = new Size(56, 96);
+        }
+    }
+
+    public class StickerRes : EntityResource
+    {
+        public StickerRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\StickerIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\StickerIdle.png");
+            IdleSize = new Size(40, 24);
+            MoveSize = new Size(40, 24);
+        }
+    }
+
+    public class StickerAttackRes : EntityResource
+    {
+        public StickerAttackRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\StickerAttackIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\StickerAttackIdle.png");
+            IdleSize = new Size(60, 70);
+            MoveSize = new Size(60, 70);
         }
     }
     #endregion

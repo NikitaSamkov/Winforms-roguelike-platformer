@@ -11,7 +11,7 @@ namespace Winforms_platformer.View
     public class EntityRender : IRenderable
     {
         public Entity Entity;
-        private EntityResource Resource;
+        public EntityResource Resource;
         private Bitmap CurrentSheet;
         private int frame => (currentFrame / framePause) % maxFrames;
         private int maxFrames;
@@ -160,9 +160,13 @@ namespace Winforms_platformer.View
                         resources = Resources.InvisibleMan;
                     if (enemy is Turret)
                         resources = Resources.Turret;
+                    if (enemy is Sticker)
+                        resources = Resources.Sticker;
                     render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);
                 }
+                if (render.Entity is Sticker && (render.Entity as Sticker).stickerStatus == Status.Attack && render.Resource != Resources.StickerAttack)
+                    render.Resource = Resources.StickerAttack;
                 render.Paint(g);
             }
         }
@@ -273,7 +277,7 @@ namespace Winforms_platformer.View
                 g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
             else
             {
-                g.DrawImage(Resources.UI.HPFrame, 50, 50, 
+                g.DrawImage(Resources.UI.HPFrame, 50, 50,
                     new Rectangle(0, 0, hpSize.Width / 2 + 1, hpSize.Height), GraphicsUnit.Pixel);
                 g.DrawImage(Resources.UI.HPFrame, 50 + hpSize.Width / 2 + 1, 50,
                     new Rectangle(Resources.UI.HPSize.Width - hpSize.Width / 2, 0, hpSize.Width / 2, hpSize.Height), GraphicsUnit.Pixel);
@@ -290,8 +294,8 @@ namespace Winforms_platformer.View
                 if (bow.timer == 0)
                     g.DrawImage(Resources.UI.EternalAmmo, 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
                 else
-                    g.DrawImage(Resources.UI.EternalAmmoReloading, 50, 100, 
-                        new Rectangle(0, 0, Resources.UI.AmmoSize.Width, 
+                    g.DrawImage(Resources.UI.EternalAmmoReloading, 50, 100,
+                        new Rectangle(0, 0, Resources.UI.AmmoSize.Width,
                         Resources.UI.AmmoSize.Height * (bow.reloadTime - bow.timer) / bow.reloadTime), GraphicsUnit.Pixel);
             }
             #endregion

@@ -24,6 +24,7 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.Ghost);
             enemyTypes.Add(EnemyType.InvisibleMan);
             enemyTypes.Add(EnemyType.Turret);
+            enemyTypes.Add(EnemyType.Sticker);
         }
 
         public static void AddToGenerator(EnemyType type)
@@ -70,6 +71,8 @@ namespace Winforms_platformer.Model
                     return new InvisibleMan(x, y, new Collider(Resources.InvisibleMan.IdleSize), currentRoom, player);
                 case EnemyType.Turret:
                     return new Turret(x, y, new Collider(Resources.Turret.IdleSize), currentRoom, player);
+                case EnemyType.Sticker:
+                    return new Sticker(x, y, new Collider(Resources.Sticker.IdleSize), currentRoom, player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize),currentRoom, player);
         }

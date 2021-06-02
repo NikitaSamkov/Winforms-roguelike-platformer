@@ -54,6 +54,7 @@ namespace Winforms_platformer
         BigCow,
         Ghost,
         InvisibleMan,
-        Turret
+        Turret,
+        Sticker
     }
 }

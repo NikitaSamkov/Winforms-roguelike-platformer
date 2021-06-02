@@ -485,4 +485,39 @@ namespace Winforms_platformer
             CurrentRoom().ProjectilesList.Add(plasma);
         }
     }
+
+    public class Sticker : Enemy
+    {
+        public Status stickerStatus { get; private set; }
+
+        public Sticker(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 60;
+            MaxHP = HP;
+            damage = 5;
+            minSpeed = 0;
+            maxSpeed = 0;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 0;
+            jumpStrength = 0;
+            difficulty = 3;
+            damageInvincibility = 12;
+            stickerStatus = Status.Idle;
+            SetDropChances(50, 10, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+            if (stickerStatus == Status.Idle && IntersectsWithBody(player))
+            {
+                stickerStatus = Status.Attack;
+                flying = true;
+                collider = new Collider(Resources.StickerAttack.IdleSize);
+            }
+            if (stickerStatus == Status.Attack)
+                TeleportTo(player.x, player.y);
+        }
+    }
 }
