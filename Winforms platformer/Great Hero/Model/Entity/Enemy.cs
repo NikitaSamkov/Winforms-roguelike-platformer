@@ -443,7 +443,7 @@ namespace Winforms_platformer
 
     public class Turret : Enemy
     {
-        private int reloadTime = 5;
+        private int reloadTime = 15;
         private int timer = 0;
 
         public Turret(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
@@ -458,7 +458,7 @@ namespace Winforms_platformer
             range = 1000;
             jumpStrength = 0;
             ShootingPower = 20;
-            difficulty = 3;
+            difficulty = 5;
             SetDropChances(0, 50, 0);
         }
 
