@@ -158,6 +158,8 @@ namespace Winforms_platformer.View
                         resources = Resources.Ghost;
                     if (enemy is InvisibleMan)
                         resources = Resources.InvisibleMan;
+                    if (enemy is Turret)
+                        resources = Resources.Turret;
                     render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);
                 }
@@ -179,8 +181,10 @@ namespace Winforms_platformer.View
         {
             foreach (var projectile in CurrentRoom().ProjectilesList)
             {
-                var resources = Resources.Arrow;
+                EntityResource resources = Resources.Arrow;
                 //вставить сюда if (projectile is CustomClass) resources = Resources.CustomClass
+                if (projectile is Plasma)
+                    resources = Resources.Plasma;
                 var render = new EntityRender(projectile, resources);
                 render.Paint(g);
             }

@@ -14,14 +14,16 @@ namespace Winforms_platformer.Model
         public static void Start()
         {
             random = Game.Map.Random;
-            enemyTypes.Add(EnemyType.Slime);
+
+            /*enemyTypes.Add(EnemyType.Slime);
             enemyTypes.Add(EnemyType.Roller);
             enemyTypes.Add(EnemyType.Swordsman);
             enemyTypes.Add(EnemyType.Archer);
             enemyTypes.Add(EnemyType.Magician);
             enemyTypes.Add(EnemyType.SuperMagician);
             enemyTypes.Add(EnemyType.Ghost);
-            enemyTypes.Add(EnemyType.InvisibleMan);
+            enemyTypes.Add(EnemyType.InvisibleMan);*/
+            enemyTypes.Add(EnemyType.Turret);
         }
 
         public static void AddToGenerator(EnemyType type)
@@ -66,6 +68,8 @@ namespace Winforms_platformer.Model
                     return new Ghost(x, y, new Collider(Resources.Ghost.IdleSize), currentRoom, player);
                 case EnemyType.InvisibleMan:
                     return new InvisibleMan(x, y, new Collider(Resources.InvisibleMan.IdleSize), currentRoom, player);
+                case EnemyType.Turret:
+                    return new Turret(x, y, new Collider(Resources.Turret.IdleSize), currentRoom, player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize),currentRoom, player);
         }

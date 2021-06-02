@@ -31,12 +31,12 @@ namespace Winforms_platformer
             base.Update();
         }
 
-        public override void Shoot()
+        public override void Shoot(int angle = 15)
         {
             if (Ammo > 0)
             {
                 var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Ally, this);
+                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
                 arrow.MoveTo(direction);
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);
@@ -48,7 +48,7 @@ namespace Winforms_platformer
                 if (bow.timer == 0)
                 {
                     var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Ally, this);
+                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, ShootingPower, ProjectileType.Ally, this);
                     arrow.MoveTo(direction);
                     arrow.status = Status.Move;
                     CurrentRoom().ProjectilesList.Add(arrow);

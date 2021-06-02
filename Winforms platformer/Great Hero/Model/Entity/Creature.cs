@@ -11,14 +11,14 @@ namespace Winforms_platformer
     public class Creature : Entity
     {
         public bool flying { get; set; }
-        public int bowStrenght { get; set; }
+        public int ShootingPower { get; set; }
         protected int jumpStrength = 50;
         public int Ammo { get; set; }
 
         public Creature(int x, int y, Collider collider, Func<Room> room)
             : base(x, y, collider, room)
         {
-            bowStrenght = 75;
+            ShootingPower = 75;
             Ammo = 3;
         }
 
@@ -58,12 +58,12 @@ namespace Winforms_platformer
             return false;
         }
 
-        public virtual void Shoot()
+        public virtual void Shoot(int angle = 15)
         {
             if (Ammo > 0)
             {
                 var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, bowStrenght, ProjectileType.Enemy, this);
+                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Enemy, this);
                 arrow.MoveTo(direction);
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);

@@ -440,4 +440,47 @@ namespace Winforms_platformer
             SetDropChances(50, 20, 0);
         }
     }
+
+    public class Turret : Enemy
+    {
+        private int reloadTime = 5;
+        private int timer = 0;
+
+        public Turret(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 1;
+            MaxHP = HP;
+            damage = 0;
+            minSpeed = 0;
+            maxSpeed = 0;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 0;
+            ShootingPower = 20;
+            difficulty = 3;
+            SetDropChances(0, 50, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            if (timer == 0)
+            {
+                var dx = player.x - x;
+                var dy = y - player.y;
+                var angle = (int)(Math.Atan2(dy, dx) * 180 / Math.PI);
+                Shoot(angle);
+                timer = reloadTime;
+            }
+            else timer--;
+        }
+
+        public override void Shoot(int angle = 0)
+        {
+            var plasma = new Plasma(x, y + collider.field.Height / 2,
+                        new Collider(Resources.Plasma.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Enemy, this);
+            plasma.status = Status.Move;
+            CurrentRoom().ProjectilesList.Add(plasma);
+        }
+    }
 }

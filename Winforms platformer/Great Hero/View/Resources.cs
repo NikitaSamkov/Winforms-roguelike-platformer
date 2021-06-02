@@ -22,11 +22,13 @@ namespace Winforms_platformer
         public static readonly BigCowRes BigCow = new BigCowRes();
         public static readonly GhostRes Ghost = new GhostRes();
         public static readonly InvisibleManRes InvisibleMan = new InvisibleManRes();
+        public static readonly TurretRes Turret = new TurretRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
-        public static readonly ArrowRes Arrow = new ArrowRes();
         public static readonly TreasuresRes Treasures = new TreasuresRes();
+        public static readonly ArrowRes Arrow = new ArrowRes();
+        public static readonly PlasmaRes Plasma = new PlasmaRes();
         public static readonly UIRes UI = new UIRes();
         public static readonly LootRes Loot = new LootRes();
     }
@@ -186,6 +188,17 @@ namespace Winforms_platformer
             MoveSize = new Size(40, 96);
         }
     }
+
+    public class TurretRes : EntityResource
+    {
+        public TurretRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\TurretIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\TurretIdle.png");
+            IdleSize = new Size(56, 96);
+            MoveSize = new Size(56, 96);
+        }
+    }
     #endregion
 
     public class RoomRes
@@ -208,6 +221,16 @@ namespace Winforms_platformer
         }
     }
 
+    public class PlasmaRes : EntityResource
+    {
+        public PlasmaRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Projectiles\Plasma.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Projectiles\Plasma.png");
+            IdleSize = new Size(25, 25);
+            MoveSize = new Size(25, 25);
+        }
+    }
 
     public class ArrowRes : EntityResource
     {
