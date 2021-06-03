@@ -14,6 +14,7 @@ namespace Winforms_platformer.Model
         public static Map Map;
         public static Size WindowSize = new Size();
         public static Dictionary<Keys, Action> KeyBindings = new Dictionary<Keys, Action>();
+        public static Keys lastKey;
         public static bool GameOver = false;
         public static bool DeveloperToolsON = false;
 
@@ -53,6 +54,7 @@ namespace Winforms_platformer.Model
         {
             KeyBindings[Keys.Left] = () =>
             {
+                lastKey = Keys.A;
                 Player.MoveTo(Direction.Left);
                 if (Player.status == Status.Attack)
                     Player.status = Status.AttackMove;
@@ -63,6 +65,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Right] = () =>
             {
+                lastKey = Keys.D;
                 Player.MoveTo(Direction.Right);
                 if (Player.status == Status.Attack)
                     Player.status = Status.AttackMove;
@@ -107,7 +110,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.R] = () => Player.Ammo += 3;
 
-            var treasureID = 10;
+            var treasureID = 0;
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));

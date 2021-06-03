@@ -44,7 +44,7 @@ namespace Winforms_platformer
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left || e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
+            if ((e.KeyCode == Keys.A || e.KeyCode == Keys.Left || e.KeyCode == Keys.D || e.KeyCode == Keys.Right) && e.KeyCode == Game.lastKey)
                 if (Game.Player.status == Status.AttackMove)
                     Game.Player.status = Status.Attack;
                 else
