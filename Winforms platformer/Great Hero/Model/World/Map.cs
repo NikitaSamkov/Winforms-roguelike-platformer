@@ -239,7 +239,7 @@ namespace Winforms_platformer.Model
                 player.TeleportTo(player.x, 0);
                 player.FreezeInAir();
             }
-            if (CurrentRoom().AdditionalEnemies.Count != 0)
+            if (CurrentRoom().AdditionalEnemies.Count != 0 && CurrentRoom().EnemyList.Count + CurrentRoom().AdditionalEnemies.Count < 32)
             {
                 CurrentRoom().EnemyList = CurrentRoom().EnemyList.Concat(CurrentRoom().AdditionalEnemies).ToList();
                 CurrentRoom().AdditionalEnemies = new List<Enemy>();

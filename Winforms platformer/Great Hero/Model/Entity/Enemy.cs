@@ -523,8 +523,9 @@ namespace Winforms_platformer
 
     public class Clone : Enemy
     {
-        private int cloneCooldown = 25;
+        private int cloneCooldown = 5;
         private int timer;
+        private int maxClones = 15;
 
         public Clone(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
         {
@@ -537,7 +538,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 500;
             jumpStrength = 50;
-            difficulty = 2;
+            difficulty = 3;
             timer = cloneCooldown;
             SetDropChances(0, 0, 0);
         }
@@ -546,8 +547,10 @@ namespace Winforms_platformer
         {
             if (timer == 0)
             {
-                timer = cloneCooldown + 1;
-                CreateNewClone();
+                var clones = CurrentRoom().EnemyList.Where(e => e is Clone).Count() + CurrentRoom().AdditionalEnemies.Where(e => e is Clone).Count();
+                timer = cloneCooldown + clones;
+                if (clones < maxClones)
+                    CreateNewClone();
             }
             if (timer == 5)
                 status = Status.Idle;
