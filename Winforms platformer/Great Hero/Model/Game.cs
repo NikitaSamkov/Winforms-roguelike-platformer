@@ -28,7 +28,7 @@ namespace Winforms_platformer.Model
             Map = new Map();
             RandomEnemyGenerator.Start();
             Map.SetRoomTemplates();
-            Map.GenerateMap(2);
+            Map.GenerateMap();
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             BossZones.Create();
@@ -110,38 +110,40 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.Q] = () => Player.Shoot();
 
             var treasureID = 16;
-
-            KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
-                new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));
-
-            KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(treasureID);
-
-            KeyBindings[Keys.D3] = () => Map.CurrentRoom().LootList.Add(
-                new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
-
-            KeyBindings[Keys.D4] = () => Map.CurrentRoom().LootList.Add(
-                new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
-
-            KeyBindings[Keys.D5] = () => Map.CurrentRoom().EnemyList.Add(
-                new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
-                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
-                Map.CurrentRoom, Player));
-
-            KeyBindings[Keys.Z] = () =>
+            if (DeveloperToolsON)
             {
-                if (DeveloperToolsON)
-                    DeveloperToolsON = false;
-                else
-                    DeveloperToolsON = true;
-            };
+                KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
+                    new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));
 
-            KeyBindings[Keys.T] = () =>
-            {
-                foreach (var treasureRoom in Map.rooms.Where(r => r.LootList.Count != 0))
-                    foreach (var loot in treasureRoom.LootList.Where(l => l is TreasureItem))
-                        Console.Write(loot.ID + "(" + (loot as TreasureItem).Treasure.Price + ")" + " ");
-                Console.WriteLine();
-            };
+                KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(treasureID);
+
+                KeyBindings[Keys.D3] = () => Map.CurrentRoom().LootList.Add(
+                    new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+
+                KeyBindings[Keys.D4] = () => Map.CurrentRoom().LootList.Add(
+                    new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+
+                KeyBindings[Keys.D5] = () => Map.CurrentRoom().EnemyList.Add(
+                    new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
+                    new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
+                    Map.CurrentRoom, Player));
+
+                KeyBindings[Keys.Z] = () =>
+                {
+                    if (DeveloperToolsON)
+                        DeveloperToolsON = false;
+                    else
+                        DeveloperToolsON = true;
+                };
+
+                KeyBindings[Keys.T] = () =>
+                {
+                    foreach (var treasureRoom in Map.rooms.Where(r => r.LootList.Count != 0))
+                        foreach (var loot in treasureRoom.LootList.Where(l => l is TreasureItem))
+                            Console.Write(loot.ID + "(" + (loot as TreasureItem).Treasure.Price + ")" + " ");
+                    Console.WriteLine();
+                };
+            }
 
             KeyBindings[Keys.O] = () =>
             {
@@ -165,11 +167,6 @@ namespace Winforms_platformer.Model
                     Resources.Boss.Body = new Bitmap(@"..\..\..\..\Sprites\Room\SuperSecret.png");
                 else
                     superSecret = 0;
-            };
-
-            KeyBindings[Keys.P] = () =>
-            {
-                Console.WriteLine("ABOBA");
             };
         }
     }
