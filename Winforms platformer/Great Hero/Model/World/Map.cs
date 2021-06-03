@@ -17,14 +17,14 @@ namespace Winforms_platformer.Model
         public readonly int seed;
         public Room CurrentRoom() => rooms[currentRoom];
 
-        public Map(Player player, int? seed = null)
+        public Map(int? seed = null)
         {
             if (seed != null)
                 this.seed = (int)seed;
             else
                 this.seed = GenerateSeed();
             Random = new Random(this.seed);
-            this.player = player;
+            player = Game.Player;
         }
 
         public void SetRoomTemplates()
@@ -157,6 +157,9 @@ namespace Winforms_platformer.Model
         {
             ChangeRoom();
 
+            if (CurrentRoom().Type == RoomType.BossRoom)
+                Game.Boss.Update();
+
             foreach (var enemy in CurrentRoom().EnemyList)
             {
                 if (enemy.HP <= 0)
@@ -262,6 +265,11 @@ namespace Winforms_platformer.Model
             if (roomTemplates.Count != 0)
                 for (var i = 0; i < roomsCount; i++)
                 {
+                    if (i == roomsCount - 1)
+                    {
+                        rooms.Add(new Room(RoomType.BossRoom, player));
+                        break;
+                    }
                     if ((i - 1) % 3 == 0)
                         rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>()
                         { new Platform(350, 450, 350) }, new List<Loot>
@@ -337,8 +345,8 @@ namespace Winforms_platformer.Model
 
         public bool IsCurrentRoomFirst() => currentRoom <= 0;
 
-        public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom().EnemyList.Count == 0;
-        public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom().EnemyList.Count == 0;
+        public bool CanPlayerGoToNextRoom() => !IsCurrentRoomLast() && CurrentRoom().EnemyList.Count == 0 && CurrentRoom().Type != RoomType.BossRoom;
+        public bool CanPlayerGoToPreviousRoom() => !IsCurrentRoomFirst() && CurrentRoom().EnemyList.Count == 0 && CurrentRoom().Type != RoomType.BossRoom;
 
         public void ChangeGravitation(double multiplier)
         {

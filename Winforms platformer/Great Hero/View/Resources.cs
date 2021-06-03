@@ -36,6 +36,7 @@ namespace Winforms_platformer
         public static readonly PlasmaRes Plasma = new PlasmaRes();
         public static readonly UIRes UI = new UIRes();
         public static readonly LootRes Loot = new LootRes();
+        public static readonly BossRes Boss = new BossRes();
     }
 
     public class EntityResource
@@ -366,5 +367,18 @@ namespace Winforms_platformer
         public readonly Bitmap id0 = new Bitmap(@"..\..\..\..\Sprites\Loot\Heart.png");
         public readonly Bitmap id0alt = new Bitmap(@"..\..\..\..\Sprites\Loot\HeartAngry.png");
         public readonly Bitmap id1 = new Bitmap(@"..\..\..\..\Sprites\Loot\Ammo.png");
+    }
+
+    public class BossRes
+    {
+        public Size ZoneSize = new Size(265, 600);
+        public Size PalmSize = new Size(200, 159);
+        public Size FistSize = new Size(155, 159);
+        public Size BodySize = new Size(491, 482);
+        public Bitmap LeftPalm = new Bitmap(@"..\..\..\..\Sprites\Boss\LeftPalm.png");
+        public Bitmap LeftFist = new Bitmap(@"..\..\..\..\Sprites\Boss\LeftFist.png");
+        public Bitmap RightPalm = new Bitmap(@"..\..\..\..\Sprites\Boss\RightPalm.png");
+        public Bitmap RightFist = new Bitmap(@"..\..\..\..\Sprites\Boss\RightFist.png");
+        public Bitmap Body = new Bitmap(@"..\..\..\..\Sprites\Boss\Body.png");
     }
 }

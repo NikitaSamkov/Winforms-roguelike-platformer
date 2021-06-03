@@ -340,4 +340,31 @@ namespace Winforms_platformer.View
             return Resources.Treasures.idNotFound;
         }
     }
+
+    public class BossRender : IRenderable
+    {
+        private Func<Room> CurrentRoom;
+
+        public BossRender(Func<Room> CurrentRoom)
+        {
+            this.CurrentRoom = CurrentRoom;
+        }
+
+        public void Paint(Graphics g)
+        {
+            if (CurrentRoom().Type == RoomType.BossRoom)
+            {
+                g.DrawImage(Resources.Boss.Body, Game.Boss.x, Game.Boss.y);
+                foreach (var hand in Game.Boss.Hands)
+                {
+                    Bitmap sprite;
+                    if (hand.HandStatus == BossHandStatus.Palm)
+                        sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Resources.Boss.LeftPalm : Resources.Boss.RightPalm;
+                    else
+                        sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Resources.Boss.LeftFist : Resources.Boss.RightFist;
+                    g.DrawImage(sprite, hand.x, hand.y);
+                }
+            }
+        }
+    }
 }

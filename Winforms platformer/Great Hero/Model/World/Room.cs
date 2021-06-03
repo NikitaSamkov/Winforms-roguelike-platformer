@@ -33,6 +33,8 @@ namespace Winforms_platformer
             EnemySpots = enemies;
             if (EnemySpots == null)
                 EnemySpots = new List<Point>();
+            if (Type == RoomType.BossRoom)
+                EnemyList.Add(Game.Boss);
             gForce = gravitationForce;
             GroundLevel = groundLevel;
             Type = type;
@@ -88,6 +90,11 @@ namespace Winforms_platformer
                     new Rectangle(new Point(player.collider.x + player.x, player.collider.y + player.y),
                     player.collider.field)))
                 result.Add(player);
+            if (new Rectangle(new Point(colliderX, colliderY), collider.field)
+                    .IntersectsWith(
+                    new Rectangle(new Point(Game.Boss.collider.x + Game.Boss.x, Game.Boss.collider.y + Game.Boss.y),
+                    Game.Boss.collider.field)))
+                result.Add(Game.Boss);
             return result;
         }
 

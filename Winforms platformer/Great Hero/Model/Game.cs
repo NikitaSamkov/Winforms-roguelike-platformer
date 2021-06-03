@@ -11,24 +11,27 @@ namespace Winforms_platformer.Model
     public static class Game
     {
         public static Player Player;
+        public static Boss Boss;
         public static Map Map;
         public static Size WindowSize = new Size();
         public static Dictionary<Keys, Action> KeyBindings = new Dictionary<Keys, Action>();
         public static Keys lastKey;
         public static bool GameOver = false;
         public static bool DeveloperToolsON = false;
+        private static int superSecret;
 
         static Game()
         {
             Player = new Player(150, 150, new Collider(Resources.Player.IdleSize, 0, 0,
-                new Collider(Resources.Player.AttackRange, -10, 0)),
-                null);
-            Map = new Map(Player);
+                new Collider(Resources.Player.AttackRange, -10, 0)), null);
+            Map = new Map();
             RandomEnemyGenerator.Start();
             Map.SetRoomTemplates();
-            Map.GenerateMap();
+            Map.GenerateMap(2);
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
+            BossZones.Create();
+            Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, Player);
             SetKeyBindings();
         }
 
@@ -94,9 +97,6 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
 
-            KeyBindings[Keys.D0] = () => Map.CurrentRoom().EnemyList.Add(
-                new Enemy(Player.x, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
-
             KeyBindings[Keys.E] = () =>
             {
                 if (Player.status != Status.Attack && Player.status != Status.AttackMove)
@@ -107,8 +107,6 @@ namespace Winforms_platformer.Model
             };
 
             KeyBindings[Keys.Q] = () => Player.Shoot();
-
-            KeyBindings[Keys.R] = () => Player.Ammo += 3;
 
             var treasureID = 0;
 
@@ -140,6 +138,30 @@ namespace Winforms_platformer.Model
                     foreach (var loot in treasureRoom.LootList.Where(l => l is TreasureItem))
                         Console.Write(loot.ID + "(" + (loot as TreasureItem).Treasure.Price + ")" + " ");
                 Console.WriteLine();
+            };
+
+            KeyBindings[Keys.O] = () =>
+            {
+                if (superSecret == 0)
+                    superSecret = 1;
+                else
+                    superSecret = 0;
+            };
+
+            KeyBindings[Keys.M] = () =>
+            {
+                if (superSecret == 1)
+                    superSecret = 2;
+                else
+                    superSecret = 0;
+            };
+
+            KeyBindings[Keys.G] = () =>
+            {
+                if (superSecret == 2)
+                    Resources.Boss.Body = new Bitmap(@"..\..\..\..\Sprites\Room\SuperSecret.png");
+                else
+                    superSecret = 0;
             };
 
             KeyBindings[Keys.P] = () =>

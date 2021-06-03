@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Entity\Boss.cs" />
     <Compile Include="Model\Entity\Loot.cs" />
     <Compile Include="Model\Entity\Projectiles.cs" />
     <Compile Include="Model\Entity\RandomEnemyGenerator.cs" />

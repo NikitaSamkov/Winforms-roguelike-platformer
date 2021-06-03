@@ -176,7 +176,23 @@ namespace Winforms_platformer
         {
             if (HitsAnybodyWithAttack(out var entities) && entities.Contains(player))
                 status = Status.AttackMove;
-            base.Update();
+
+            if (status != Status.Idle && status != Status.Attack)
+                switch (direction)
+                {
+                    case Direction.Left:
+                        x -= xSpeed;
+                        break;
+                    case Direction.Right:
+                        x += xSpeed;
+                        break;
+                }
+            if (!flying)
+                MoveY();
+            if (invincibility > 0)
+                invincibility--;
+            if (status == Status.Attack || status == Status.AttackMove)
+                player.Hurt(damage);
         }
 
         public override bool HitsPlayer()

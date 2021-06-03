@@ -60,4 +60,24 @@ namespace Winforms_platformer
         SuperRoller,
         Chameleon
     }
+
+    public enum BossStatus
+    {
+        Attack,
+        SummonEnemies
+    }
+
+    public enum BossHandStatus
+    {
+        Fist,
+        Palm
+    }
+
+    public enum Zone
+    {
+        Left,
+        CenterLeft,
+        CenterRight,
+        Right
+    }
 }

@@ -10,7 +10,6 @@ namespace Winforms_platformer
 {
     public class Creature : Entity
     {
-        public bool flying { get; set; }
         public int ShootingPower { get; set; }
         protected int jumpStrength = 50;
         public int Ammo { get; set; }
