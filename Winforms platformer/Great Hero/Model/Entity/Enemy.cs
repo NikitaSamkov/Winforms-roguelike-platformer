@@ -520,4 +520,47 @@ namespace Winforms_platformer
                 TeleportTo(player.x, player.y);
         }
     }
+
+    public class Clone : Enemy
+    {
+        private int cloneCooldown = 25;
+        private int timer;
+
+        public Clone(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 20;
+            MaxHP = HP;
+            damage = 5;
+            minSpeed = 10;
+            maxSpeed = 15;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 500;
+            jumpStrength = 50;
+            difficulty = 2;
+            timer = cloneCooldown;
+            SetDropChances(0, 0, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            if (timer == 0)
+            {
+                timer = cloneCooldown + 1;
+                CreateNewClone();
+            }
+            if (timer == 5)
+                status = Status.Idle;
+            else if (timer > 5)
+                base.MoveToPlayer();
+            timer--;
+        }
+
+        private void CreateNewClone()
+        {
+            Clone clone = (Clone)this.MemberwiseClone();
+            clone.x = x + collider.field.Width + collider.x;
+            CurrentRoom().AdditionalEnemies.Add(clone);
+        }
+    }
 }

@@ -239,6 +239,11 @@ namespace Winforms_platformer.Model
                 player.TeleportTo(player.x, 0);
                 player.FreezeInAir();
             }
+            if (CurrentRoom().AdditionalEnemies.Count != 0)
+            {
+                CurrentRoom().EnemyList = CurrentRoom().EnemyList.Concat(CurrentRoom().AdditionalEnemies).ToList();
+                CurrentRoom().AdditionalEnemies = new List<Enemy>();
+            }
         }
 
         private int GenerateSeed()

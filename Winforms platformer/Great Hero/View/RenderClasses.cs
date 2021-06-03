@@ -113,10 +113,14 @@ namespace Winforms_platformer.View
                 g.DrawRectangle(new Pen(Color.Green), Entity.x + Entity.collider.x, Entity.y + Entity.collider.y, Entity.collider.field.Width,
                         Entity.collider.field.Height);
                 g.DrawEllipse(new Pen(Color.Red), Entity.x, Entity.y, 1, 1);
-                if (Entity.status == Status.Attack)
-                    g.DrawRectangle(new Pen(Color.Purple), Entity.x + Entity.collider.x + Entity.collider.attackCollider.x + Entity.collider.field.Width, 
-                        Entity.y + Entity.collider.y + Entity.collider.attackCollider.y, Entity.collider.attackCollider.field.Width,
-                        Entity.collider.attackCollider.field.Height);
+                if (Entity.status == Status.Attack || Entity.status == Status.AttackMove)
+                {
+                    var colliderX = (Entity.direction == 0) ?
+                    Entity.collider.field.Width + Entity.collider.attackCollider.x + Entity.x + Entity.collider.x :
+                    Entity.x - Entity.collider.attackCollider.x - Entity.collider.attackCollider.field.Width - Entity.collider.x;
+                    var colliderY = Entity.y + Entity.collider.attackCollider.y + Entity.collider.y;
+                    g.DrawRectangle(new Pen(Color.Purple), colliderX, colliderY, Entity.collider.attackCollider.field.Width, Entity.collider.attackCollider.field.Height);
+                }
             }
         }
     }
@@ -140,6 +144,7 @@ namespace Winforms_platformer.View
                 {
                     EntityResource resources = Resources.Dummy;
                     var ticksPerFrame = 3;
+
                     //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
                     if (enemy is Slime)
                         resources = Resources.Slime;
@@ -166,6 +171,9 @@ namespace Winforms_platformer.View
                         resources = Resources.Turret;
                     if (enemy is Sticker)
                         resources = Resources.Sticker;
+                    if (enemy is Clone)
+                        resources = Resources.Clone;
+
                     render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);
                 }

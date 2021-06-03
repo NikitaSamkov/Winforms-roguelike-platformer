@@ -69,8 +69,8 @@ namespace Winforms_platformer
 
         public bool IntersectsWithBody(Entity target)
         {
-            return new Rectangle(new Point(x, y), collider.field)
-                .IntersectsWith(new Rectangle(new Point(target.x, target.y), target.collider.field));
+            return new Rectangle(new Point(x + collider.x, y + collider.y), collider.field)
+                .IntersectsWith(new Rectangle(new Point(target.x + target.collider.x, target.y + target.collider.y), target.collider.field));
         }
 
         public bool IntersectsWithBody(Entity target, Collider targetCollider)

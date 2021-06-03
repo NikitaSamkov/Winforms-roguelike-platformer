@@ -25,6 +25,7 @@ namespace Winforms_platformer
         public static readonly TurretRes Turret = new TurretRes();
         public static readonly StickerRes Sticker = new StickerRes();
         public static readonly StickerAttackRes StickerAttack = new StickerAttackRes();
+        public static readonly CloneRes Clone = new CloneRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -221,6 +222,17 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\StickerAttackIdle.png");
             IdleSize = new Size(60, 70);
             MoveSize = new Size(60, 70);
+        }
+    }
+
+    public class CloneRes : EntityResource
+    {
+        public CloneRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\CloneIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\CloneWalk.png");
+            IdleSize = new Size(27, 54);
+            MoveSize = new Size(27, 54);
         }
     }
     #endregion

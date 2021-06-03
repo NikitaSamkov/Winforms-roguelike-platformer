@@ -47,7 +47,7 @@ namespace Winforms_platformer
 
         public bool HitsAnybodyWithAttack(out List<Entity> entities)
         {
-            var colliderX = ((int)direction == 0) ?
+            var colliderX = (direction == 0) ?
                     collider.field.Width + collider.attackCollider.x + x + collider.x :
                     x - collider.attackCollider.x - collider.attackCollider.field.Width + collider.x;
             var colliderY = y + collider.attackCollider.y + collider.y;

@@ -15,7 +15,8 @@ namespace Winforms_platformer
         public RoomType Type { get; }
         public readonly int GroundLevel;
         public readonly List<Platform> Platforms;
-        public List<Enemy> EnemyList;
+        public List<Enemy> EnemyList = new List<Enemy>();
+        public List<Enemy> AdditionalEnemies = new List<Enemy>();
         public List<Projectile> ProjectilesList = new List<Projectile>();
         public List<Loot> LootList;
         public List<Point> EnemySpots;
@@ -32,7 +33,6 @@ namespace Winforms_platformer
             EnemySpots = enemies;
             if (EnemySpots == null)
                 EnemySpots = new List<Point>();
-            EnemyList = new List<Enemy>();
             gForce = gravitationForce;
             GroundLevel = groundLevel;
             Type = type;
@@ -62,17 +62,17 @@ namespace Winforms_platformer
             return false;
         }
 
-        public List<Enemy> GetIntersectedEnemies(Collider collider, int colliderX, int colliderY)
-        {
-            var result = new List<Enemy>();
-            foreach (var enemy in EnemyList)
-                if (new Rectangle(new Point(colliderX, colliderY), collider.field)
-                    .IntersectsWith(
-                    new Rectangle(new Point(enemy.collider.x + enemy.x, enemy.collider.y + enemy.y),
-                    enemy.collider.field)))
-                    result.Add(enemy);
-            return result;
-        }
+        //public List<Enemy> GetIntersectedEnemies(Collider collider, int colliderX, int colliderY)
+        //{
+        //    var result = new List<Enemy>();
+        //    foreach (var enemy in EnemyList)
+        //        if (new Rectangle(new Point(colliderX, colliderY), collider.field)
+        //            .IntersectsWith(
+        //            new Rectangle(new Point(enemy.collider.x + enemy.x, enemy.collider.y + enemy.y),
+        //            enemy.collider.field)))
+        //            result.Add(enemy);
+        //    return result;
+        //}
 
         public List<Entity> GetIntersectedEntities(Collider collider, int colliderX, int colliderY)
         {

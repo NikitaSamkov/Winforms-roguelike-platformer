@@ -55,6 +55,7 @@ namespace Winforms_platformer
         Ghost,
         InvisibleMan,
         Turret,
-        Sticker
+        Sticker,
+        Clone
     }
 }
