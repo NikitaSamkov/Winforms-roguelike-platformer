@@ -267,7 +267,7 @@ namespace Winforms_platformer.Model
                 {
                     if (i == roomsCount - 1)
                     {
-                        rooms.Add(new Room(RoomType.BossRoom, player));
+                        rooms.Add(new Room(RoomType.BossRoom, player, new List<Platform> { new Platform(0, 200, 350), new Platform(600, 800, 350) }));
                         break;
                     }
                     if ((i - 1) % 3 == 0)

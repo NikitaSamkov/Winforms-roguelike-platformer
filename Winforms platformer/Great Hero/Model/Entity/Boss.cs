@@ -9,19 +9,24 @@ namespace Winforms_platformer.Model
 {
     public class Boss : Enemy
     {
-        private int attackCooldown;
-        private int attackTimer;
         public List<BossHand> Hands;
         public BossStatus Status;
+        public int summonTimer { get; private set; }
+
+        private int attackCooldown;
+        private int attackTimer;
+        private int summonCooldown;
 
         public Boss(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
         {
             MaxHP = 500;
-            HP = 100;
+            HP = MaxHP;
             damage = 33;
 
             attackCooldown = 50;
             attackTimer = attackCooldown;
+            summonCooldown = 125;
+            summonTimer = summonCooldown;
 
             Hands = new List<BossHand>()
             {
@@ -49,9 +54,23 @@ namespace Winforms_platformer.Model
                     attackCooldown = 25;
                 attackTimer = attackCooldown + 1;
             }
+
+            if (summonTimer == 18)
+            {
+                Status = BossStatus.SummonEnemies;
+            }
+            if (summonTimer == 0)
+            {
+                Status = BossStatus.Attack;
+                summonCooldown = 80 * HP / MaxHP;
+                if (summonCooldown < 50)
+                    summonCooldown = 50;
+                summonTimer = summonCooldown + 1;
+            }    
             foreach (var hand in Hands)
                 hand.Update();
             attackTimer--;
+            summonTimer--;
             if (invincibility > 0)
                 invincibility--;
         }

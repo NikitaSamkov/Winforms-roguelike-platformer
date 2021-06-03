@@ -382,5 +382,6 @@ namespace Winforms_platformer
         public Bitmap RightPalm = new Bitmap(@"..\..\..\..\Sprites\Boss\RightPalm.png");
         public Bitmap RightFist = new Bitmap(@"..\..\..\..\Sprites\Boss\RightFist.png");
         public Bitmap Body = new Bitmap(@"..\..\..\..\Sprites\Boss\Body.png");
+        public Bitmap Summon = new Bitmap(@"..\..\..\..\Sprites\Boss\Summon.png");
     }
 }

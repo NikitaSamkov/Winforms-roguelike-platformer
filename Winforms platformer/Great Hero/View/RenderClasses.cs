@@ -354,7 +354,14 @@ namespace Winforms_platformer.View
         {
             if (CurrentRoom().Type == RoomType.BossRoom)
             {
-                g.DrawImage(Resources.Boss.Body, Game.Boss.x, Game.Boss.y);
+                if (Game.Boss.Status == BossStatus.SummonEnemies)
+                {
+                    g.DrawImage(Resources.Boss.Summon, Game.Boss.x, Game.Boss.y,
+                        new Rectangle(((5 - Game.Boss.summonTimer / 3 == 5) ? 4 : (5 - Game.Boss.summonTimer / 3)) * Resources.Boss.BodySize.Width, 0, Resources.Boss.BodySize.Width, 
+                        Resources.Boss.BodySize.Height), GraphicsUnit.Pixel);
+                }
+                else
+                    g.DrawImage(Resources.Boss.Body, Game.Boss.x, Game.Boss.y);
                 foreach (var hand in Game.Boss.Hands)
                 {
                     Bitmap sprite;
