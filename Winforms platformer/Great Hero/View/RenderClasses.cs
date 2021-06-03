@@ -110,9 +110,13 @@ namespace Winforms_platformer.View
                         GraphicsUnit.Pixel);
             if (Game.DeveloperToolsON)
             {
-                g.DrawRectangle(new Pen(Color.Green), Entity.x, Entity.y, Entity.collider.field.Width,
+                g.DrawRectangle(new Pen(Color.Green), Entity.x + Entity.collider.x, Entity.y + Entity.collider.y, Entity.collider.field.Width,
                         Entity.collider.field.Height);
                 g.DrawEllipse(new Pen(Color.Red), Entity.x, Entity.y, 1, 1);
+                if (Entity.status == Status.Attack)
+                    g.DrawRectangle(new Pen(Color.Purple), Entity.x + Entity.collider.x + Entity.collider.attackCollider.x + Entity.collider.field.Width, 
+                        Entity.y + Entity.collider.y + Entity.collider.attackCollider.y, Entity.collider.attackCollider.field.Width,
+                        Entity.collider.attackCollider.field.Height);
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Winforms_platformer.Model
         static Game()
         {
             Player = new Player(150, 150, new Collider(Resources.Player.IdleSize, 0, 0,
-                new Collider(Resources.Player.AttackRange, -10, Resources.Player.Idle.Height / 8)),
+                new Collider(Resources.Player.AttackRange, -10, 0)),
                 null);
             Map = new Map(Player);
             RandomEnemyGenerator.Start();
@@ -107,7 +107,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.R] = () => Player.Ammo += 3;
 
-            var treasureID = 14;
+            var treasureID = 10;
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));

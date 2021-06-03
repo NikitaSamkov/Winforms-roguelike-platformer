@@ -48,9 +48,9 @@ namespace Winforms_platformer
         public bool HitsAnybodyWithAttack(out List<Entity> entities)
         {
             var colliderX = ((int)direction == 0) ?
-                    collider.field.Width + collider.attackCollider.x + x :
-                    x - collider.attackCollider.x - collider.attackCollider.field.Width;
-            var colliderY = y + collider.attackCollider.y;
+                    collider.field.Width + collider.attackCollider.x + x + collider.x :
+                    x - collider.attackCollider.x - collider.attackCollider.field.Width + collider.x;
+            var colliderY = y + collider.attackCollider.y + collider.y;
             entities = CurrentRoom().GetIntersectedEntities(collider.attackCollider, colliderX, colliderY)
                 .Where(e => e != this).ToList();
             if (entities.Count != 0)

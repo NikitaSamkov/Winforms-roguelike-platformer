@@ -69,7 +69,7 @@ namespace Winforms_platformer
             MoveSize = new Size(40, 112);
             AttackSize = new Size(88, 112);
             AttackMoveSize = new Size(88, 112);
-            AttackRange = new Size(60, 56);
+            AttackRange = new Size(60, 112);
         }
     }
 
