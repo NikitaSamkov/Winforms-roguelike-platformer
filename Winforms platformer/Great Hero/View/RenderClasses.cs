@@ -175,6 +175,8 @@ namespace Winforms_platformer.View
                         resources = Resources.Sticker;
                     if (enemy is Clone)
                         resources = Resources.Clone;
+                    if (enemy is Chameleon)
+                        resources = Resources.Chameleon;
 
                     render = new EntityRender(enemy, resources, ticksPerFrame);
                     enemies.Add(render);

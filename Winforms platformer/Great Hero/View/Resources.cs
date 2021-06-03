@@ -27,6 +27,7 @@ namespace Winforms_platformer
         public static readonly StickerRes Sticker = new StickerRes();
         public static readonly StickerAttackRes StickerAttack = new StickerAttackRes();
         public static readonly CloneRes Clone = new CloneRes();
+        public static readonly ChameleonRes Chameleon = new ChameleonRes();
         #endregion
         public static readonly RoomRes Room = new RoomRes();
         public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
@@ -245,6 +246,25 @@ namespace Winforms_platformer
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\CloneWalk.png");
             IdleSize = new Size(27, 54);
             MoveSize = new Size(27, 54);
+        }
+    }
+
+    public class ChameleonRes : EntityResource
+    {
+        public ChameleonRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyWalk.png");
+            IdleSize = new Size(60, 39);
+            MoveSize = new Size(60, 39);
+        }
+
+        public void Swap(EntityResource resource)
+        {
+            Idle = resource.Idle;
+            Move = resource.Move;
+            IdleSize = resource.IdleSize;
+            MoveSize = resource.MoveSize;
         }
     }
     #endregion

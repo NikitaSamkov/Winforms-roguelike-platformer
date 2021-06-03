@@ -120,6 +120,9 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.D4] = () => Map.CurrentRoom().LootList.Add(
                 new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
 
+            KeyBindings[Keys.D5] = () => Map.CurrentRoom().EnemyList.Add(
+                new Chameleon(Player.x - 50, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
+
             KeyBindings[Keys.Z] = () =>
             {
                 if (DeveloperToolsON)

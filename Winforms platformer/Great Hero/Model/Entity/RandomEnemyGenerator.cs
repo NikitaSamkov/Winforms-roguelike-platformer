@@ -8,7 +8,7 @@ namespace Winforms_platformer.Model
 {
     public static class RandomEnemyGenerator
     {
-        private static List<EnemyType> enemyTypes = new List<EnemyType>();
+        public static List<EnemyType> enemyTypes = new List<EnemyType>();
         private static Random random = new Random();
 
         public static void Start()
@@ -27,6 +27,7 @@ namespace Winforms_platformer.Model
             enemyTypes.Add(EnemyType.Turret);
             enemyTypes.Add(EnemyType.Sticker);
             enemyTypes.Add(EnemyType.Clone);
+            enemyTypes.Add(EnemyType.Chameleon);
         }
 
         public static void AddToGenerator(EnemyType type)
@@ -79,8 +80,12 @@ namespace Winforms_platformer.Model
                     return new Sticker(x, y, new Collider(Resources.Sticker.IdleSize), currentRoom, player);
                 case EnemyType.Clone:
                     return new Clone(x, y, new Collider(Resources.Clone.IdleSize), currentRoom, player);
+                case EnemyType.Chameleon:
+                    return new Chameleon(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom, player);
             }
             return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize),currentRoom, player);
         }
+
+        public static EnemyType GetRandomEnemyType() => enemyTypes[random.Next(enemyTypes.Count)];
     }
 }

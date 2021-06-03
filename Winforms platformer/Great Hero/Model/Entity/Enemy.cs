@@ -548,7 +548,7 @@ namespace Winforms_platformer
             if (timer == 0)
             {
                 var clones = CurrentRoom().EnemyList.Where(e => e is Clone).Count() + CurrentRoom().AdditionalEnemies.Where(e => e is Clone).Count();
-                timer = cloneCooldown + clones;
+                timer = cloneCooldown + clones + 1;
                 if (clones < maxClones)
                     CreateNewClone();
             }
@@ -580,7 +580,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 0;
-            difficulty = 5;
+            difficulty = 4;
             status = Status.Move;
             SetDropChances(10, 20, 0);
         }
@@ -590,6 +590,102 @@ namespace Winforms_platformer
             damage++;
             xSpeed++;
             direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
+        }
+    }
+
+    public class Chameleon : Enemy
+    {
+        private int swapCooldown = 50;
+        private int timer = 0;
+
+        public Chameleon(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 30;
+            MaxHP = HP;
+            damage = 10;
+            minSpeed = 10;
+            maxSpeed = 10;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 50;
+            difficulty = 3;
+            SetDropChances(13, 37, 0);
+        }
+
+        public override void Update()
+        {
+            if (timer == 0)
+            {
+                Swap();
+                timer = swapCooldown + 1;
+            }
+            base.Update();
+            timer--;
+        }
+
+        private void Swap()
+        {
+            switch (RandomEnemyGenerator.GetRandomEnemyType())
+            {
+                case EnemyType.Slime:
+                    Resources.Chameleon.Swap(Resources.Slime);
+                    collider = new Collider(Resources.Slime.IdleSize);
+                    break;
+                case EnemyType.Roller:
+                    Resources.Chameleon.Swap(Resources.Roller);
+                    collider = new Collider(Resources.Roller.IdleSize);
+                    break;
+                case EnemyType.SuperRoller:
+                    Resources.Chameleon.Swap(Resources.SuperRoller);
+                    collider = new Collider(Resources.SuperRoller.IdleSize);
+                    break;
+                case EnemyType.Swordsman:
+                    Resources.Chameleon.Swap(Resources.Swordsman);
+                    collider = new Collider(Resources.Swordsman.IdleSize);
+                    break;
+                case EnemyType.Archer:
+                    Resources.Chameleon.Swap(Resources.Archer);
+                    collider = new Collider(Resources.Archer.IdleSize);
+                    break;
+                case EnemyType.Magician:
+                    Resources.Chameleon.Swap(Resources.Magician);
+                    collider = new Collider(Resources.Magician.IdleSize);
+                    break;
+                case EnemyType.SuperMagician:
+                    Resources.Chameleon.Swap(Resources.SuperMagician);
+                    collider = new Collider(Resources.SuperMagician.IdleSize);
+                    break;
+                case EnemyType.BigCow:
+                    Resources.Chameleon.Swap(Resources.BigCow);
+                    collider = new Collider(Resources.BigCow.IdleSize);
+                    break;
+                case EnemyType.Ghost:
+                    Resources.Chameleon.Swap(Resources.Ghost);
+                    collider = new Collider(Resources.Ghost.IdleSize);
+                    break;
+                case EnemyType.InvisibleMan:
+                    Resources.Chameleon.Swap(Resources.InvisibleMan);
+                    collider = new Collider(Resources.InvisibleMan.IdleSize);
+                    break;
+                case EnemyType.Turret:
+                    Resources.Chameleon.Swap(Resources.Turret);
+                    collider = new Collider(Resources.Turret.IdleSize);
+                    break;
+                case EnemyType.Sticker:
+                    Resources.Chameleon.Swap(Resources.Sticker);
+                    collider = new Collider(Resources.Sticker.IdleSize);
+                    break;
+                case EnemyType.Clone:
+                    Resources.Chameleon.Swap(Resources.Clone);
+                    collider = new Collider(Resources.Clone.IdleSize);
+                    break;
+                case EnemyType.Dummy:
+                case EnemyType.Chameleon:
+                    Resources.Chameleon.Swap(Resources.Dummy);
+                    collider = new Collider(Resources.Dummy.IdleSize);
+                    break;
+            }
         }
     }
 }

@@ -57,6 +57,7 @@ namespace Winforms_platformer
         Turret,
         Sticker,
         Clone,
-        SuperRoller
+        SuperRoller,
+        Chameleon
     }
 }
