@@ -371,7 +371,9 @@ namespace Winforms_platformer
 
     public class BossRes
     {
-        public Size ZoneSize = new Size(265, 600);
+        public Size LeftZoneSize = new Size(200, 600);
+        public Size CenterZoneSize = new Size(400, 600);
+        public Size RightZoneSize = new Size(200, 600);
         public Size PalmSize = new Size(200, 159);
         public Size FistSize = new Size(155, 159);
         public Size BodySize = new Size(491, 482);

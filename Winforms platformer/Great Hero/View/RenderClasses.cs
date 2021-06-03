@@ -364,6 +364,15 @@ namespace Winforms_platformer.View
                         sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Resources.Boss.LeftFist : Resources.Boss.RightFist;
                     g.DrawImage(sprite, hand.x, hand.y);
                 }
+                if (Game.DeveloperToolsON)
+                {
+                    g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(Game.Boss.x, Game.Boss.y), Game.Boss.collider.field));
+                    g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(Game.Boss.Hands[0].x, Game.Boss.Hands[0].y), Game.Boss.Hands[0].collider.field));
+                    g.DrawRectangle(new Pen(Color.Green), new Rectangle(new Point(Game.Boss.Hands[1].x, Game.Boss.Hands[1].y), Game.Boss.Hands[1].collider.field));
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.White)), BossZones.GetRectangle(Zone.Left));
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Blue)), BossZones.GetRectangle(Zone.CenterLeft));
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.Red)), BossZones.GetRectangle(Zone.Right));
+                }
             }
         }
     }

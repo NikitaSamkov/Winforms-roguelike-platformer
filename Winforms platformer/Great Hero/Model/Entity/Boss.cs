@@ -16,8 +16,8 @@ namespace Winforms_platformer.Model
 
         public Boss(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
         {
-            HP = 500;
-            MaxHP = HP;
+            MaxHP = 500;
+            HP = 100;
             damage = 33;
 
             attackCooldown = 50;
@@ -45,8 +45,8 @@ namespace Winforms_platformer.Model
             {
                 Hit();
                 attackCooldown = 50 * HP / MaxHP;
-                if (attackCooldown < 15)
-                    attackCooldown = 15;
+                if (attackCooldown < 25)
+                    attackCooldown = 25;
                 attackTimer = attackCooldown + 1;
             }
             foreach (var hand in Hands)
@@ -153,10 +153,10 @@ namespace Winforms_platformer.Model
 
         public static void Create()
         {
-            ZoneToRectangle[(int)Zone.Left] = new Rectangle(new Point(0, 0), Resources.Boss.ZoneSize);
-            ZoneToRectangle[(int)Zone.CenterLeft] = new Rectangle(new Point(Resources.Boss.ZoneSize.Width, 0), Resources.Boss.ZoneSize);
-            ZoneToRectangle[(int)Zone.CenterRight] = new Rectangle(new Point(Resources.Boss.ZoneSize.Width, 0), Resources.Boss.ZoneSize);
-            ZoneToRectangle[(int)Zone.Right] = new Rectangle(new Point(Resources.Boss.ZoneSize.Width * 2, 0), Resources.Boss.ZoneSize);
+            ZoneToRectangle[(int)Zone.Left] = new Rectangle(new Point(0, 0), Resources.Boss.LeftZoneSize);
+            ZoneToRectangle[(int)Zone.CenterLeft] = new Rectangle(new Point(Resources.Boss.LeftZoneSize.Width, 0), Resources.Boss.CenterZoneSize);
+            ZoneToRectangle[(int)Zone.CenterRight] = new Rectangle(new Point(Resources.Boss.LeftZoneSize.Width, 0), Resources.Boss.CenterZoneSize);
+            ZoneToRectangle[(int)Zone.Right] = new Rectangle(new Point(Resources.Boss.LeftZoneSize.Width + Resources.Boss.CenterZoneSize.Width, 0), Resources.Boss.RightZoneSize);
 
             var left = 0;
             var leftc = 200;
