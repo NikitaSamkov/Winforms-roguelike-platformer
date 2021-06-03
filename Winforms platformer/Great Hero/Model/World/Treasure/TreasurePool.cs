@@ -28,7 +28,8 @@ namespace Winforms_platformer
             new BetterHearts(),
             new BetterAmmo(),
             new BestFriend(),
-            new GiantRuby()
+            new GiantRuby(),
+            new StrongShield()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -431,6 +432,25 @@ namespace Winforms_platformer
         public void Enable()
         {
             Game.Win = true;
+        }
+    }
+
+    public class StrongShield : ITreasure
+    {
+        private double power = 0.75;
+
+        int ITreasure.ID { get => 16; }
+
+        int ITreasure.Price { get => 7; }
+
+        public void Disable()
+        {
+            Game.Player.hurtMultiplier /= power;
+        }
+
+        public void Enable()
+        {
+            Game.Player.hurtMultiplier *= power;
         }
     }
 }

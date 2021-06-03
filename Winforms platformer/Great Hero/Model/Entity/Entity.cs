@@ -12,6 +12,7 @@ namespace Winforms_platformer
         protected int ySpeed;
         public int xSpeed = 5;
         public int damageInvincibility;
+        public double hurtMultiplier = 1;
         public int x { get; protected set; }
         public int y { get; protected set; }
         public Direction direction { get; protected set; }
@@ -64,7 +65,7 @@ namespace Winforms_platformer
             {
                 if (damage > 0)
                     invincibility = damageInvincibility;
-                HP -= damage;
+                HP -= (int)(damage * hurtMultiplier);
             }
         }
 

@@ -109,7 +109,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Q] = () => Player.Shoot();
 
-            var treasureID = 6;
+            var treasureID = 16;
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));

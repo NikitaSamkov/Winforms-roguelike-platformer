@@ -147,11 +147,11 @@ namespace Winforms_platformer
             minSpeed = 15;
             maxSpeed = 99;
             xSpeed = minSpeed;
-            treasureDropID = -1;
+            treasureDropID = 10;
             range = 1000;
             jumpStrength = 0;
             difficulty = 2;
-            SetDropChances(5, 10, 0);
+            SetDropChances(5, 10, 1);
         }
     }
 
