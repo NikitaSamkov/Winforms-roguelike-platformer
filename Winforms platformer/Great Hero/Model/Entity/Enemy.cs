@@ -177,6 +177,8 @@ namespace Winforms_platformer
             if (HitsAnybodyWithAttack(out var entities) && entities.Contains(player))
                 status = Status.AttackMove;
 
+            MoveToPlayer();
+
             if (status != Status.Idle && status != Status.Attack)
                 switch (direction)
                 {
@@ -698,8 +700,7 @@ namespace Winforms_platformer
                     break;
                 case EnemyType.Dummy:
                 case EnemyType.Chameleon:
-                    Resources.Chameleon.Swap(Resources.Dummy);
-                    collider = new Collider(Resources.Dummy.IdleSize);
+                    Swap();
                     break;
             }
         }

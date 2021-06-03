@@ -27,7 +27,8 @@ namespace Winforms_platformer
             new Hammer(),
             new BetterHearts(),
             new BetterAmmo(),
-            new BestFriend()
+            new BestFriend(),
+            new GiantRuby()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -87,7 +88,12 @@ namespace Winforms_platformer
         {
             var items = new List<ITreasure>();
             for (var i = 0; i < count; i++)
-                items.Add(GetRandomItem(GetPrice()));
+            {
+                var item = GetRandomItem(GetPrice());
+                if (item is GiantRuby)
+                    item = TreasurePool.GetTreasureByID(0);
+                items.Add(item);
+            }
             return items;
         }
     }
@@ -408,6 +414,23 @@ namespace Winforms_platformer
         {
             Game.Player.MaxHP += hpBuff;
             Game.Player.damage += damageBuff;
+        }
+    }
+
+    public class GiantRuby : ITreasure
+    {
+        int ITreasure.ID { get => 15; }
+
+        int ITreasure.Price { get => 5; }
+
+        public void Disable()
+        {
+            Game.Death = true;
+        }
+
+        public void Enable()
+        {
+            Game.Win = true;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Winforms_platformer.View
         public Entity Entity;
         public EntityResource Resource;
         private Bitmap CurrentSheet;
+        private int maxFrames = 1;
         private int frame => (currentFrame / framePause) % maxFrames;
-        private int maxFrames;
         private int currentFrame;
         private Size currentFrameSize;
         private int framePause;
@@ -352,7 +352,7 @@ namespace Winforms_platformer.View
 
         public void Paint(Graphics g)
         {
-            if (CurrentRoom().Type == RoomType.BossRoom)
+            if (CurrentRoom().Type == RoomType.BossRoom && Game.Boss.HP > 0)
             {
                 if (Game.Boss.Status == BossStatus.SummonEnemies)
                 {

@@ -155,9 +155,12 @@ namespace Winforms_platformer.Model
 
         public void Update()
         {
+            if (Game.Boss.HP <= 0 && CurrentRoom().LootList.Where(t => t.ID == 15).Count() == 0)
+                CurrentRoom().LootList.Add(Game.Boss.GetDrop());
+
             ChangeRoom();
 
-            if (CurrentRoom().Type == RoomType.BossRoom)
+            if (CurrentRoom().Type == RoomType.BossRoom && Game.Boss.HP > 0) 
                 Game.Boss.Update();
 
             foreach (var enemy in CurrentRoom().EnemyList)

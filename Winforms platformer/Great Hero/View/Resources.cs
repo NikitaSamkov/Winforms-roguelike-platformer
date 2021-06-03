@@ -256,8 +256,8 @@ namespace Winforms_platformer
         {
             Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyIdle.png");
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\DummyWalk.png");
-            IdleSize = new Size(60, 39);
-            MoveSize = new Size(60, 39);
+            IdleSize = new Size(40, 96);
+            MoveSize = new Size(40, 96);
         }
 
         public void Swap(EntityResource resource)
@@ -353,6 +353,7 @@ namespace Winforms_platformer
         public readonly Bitmap id12 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id12.png");
         public readonly Bitmap id13 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id13.png");
         public readonly Bitmap id14 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id14.png");
+        public readonly Bitmap id15 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id15.png");
     }
 
     public class LootRes : LootResource

@@ -16,7 +16,8 @@ namespace Winforms_platformer.Model
         public static Size WindowSize = new Size();
         public static Dictionary<Keys, Action> KeyBindings = new Dictionary<Keys, Action>();
         public static Keys lastKey;
-        public static bool GameOver = false;
+        public static bool Death = false;
+        public static bool Win = false;
         public static bool DeveloperToolsON = false;
         private static int superSecret;
 
@@ -37,10 +38,10 @@ namespace Winforms_platformer.Model
 
         public static void Update()
         {
-            if (!GameOver)
+            if (!(Death || Win))
             {
                 if (Player.HP <= 0)
-                    GameOver = true;
+                    Death = true;
                 Player.Update();
 
                 Map.Update();
@@ -108,7 +109,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Q] = () => Player.Shoot();
 
-            var treasureID = 0;
+            var treasureID = 6;
 
             KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
                 new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));
@@ -122,7 +123,9 @@ namespace Winforms_platformer.Model
                 new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
 
             KeyBindings[Keys.D5] = () => Map.CurrentRoom().EnemyList.Add(
-                new Chameleon(Player.x - 50, Player.y, new Collider(Resources.Dummy.IdleSize), Map.CurrentRoom, Player));
+                new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
+                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
+                Map.CurrentRoom, Player));
 
             KeyBindings[Keys.Z] = () =>
             {

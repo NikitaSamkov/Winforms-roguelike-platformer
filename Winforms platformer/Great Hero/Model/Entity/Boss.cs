@@ -12,6 +12,7 @@ namespace Winforms_platformer.Model
         public List<BossHand> Hands;
         public BossStatus Status;
         public int summonTimer { get; private set; }
+        public bool Dead;
 
         private int attackCooldown;
         private int attackTimer;
@@ -38,12 +39,15 @@ namespace Winforms_platformer.Model
             };
 
 
-            treasureDropID = -1;
-            SetDropChances(0, 0, 0);
+            treasureDropID = 15;
+            SetDropChances(0, 0, 200);
         }
 
         public override void Update()
         {
+            if (HP <= 0)
+                Dead = true;
+
             if (attackTimer == attackCooldown / 2)
                 RaiseHands();
             if (attackTimer == 0)
@@ -62,7 +66,7 @@ namespace Winforms_platformer.Model
             if (summonTimer == 0)
             {
                 CurrentRoom().AdditionalEnemies.Add(RandomEnemyGenerator.GetRandomEnemy(0, 0));
-                CurrentRoom().AdditionalEnemies.Add(RandomEnemyGenerator.GetRandomEnemy(800, 0));
+                CurrentRoom().AdditionalEnemies.Add(RandomEnemyGenerator.GetRandomEnemy(600, 0));
                 summonCooldown = 80 * HP / MaxHP;
                 if (summonCooldown < 125)
                     summonCooldown = 125;
