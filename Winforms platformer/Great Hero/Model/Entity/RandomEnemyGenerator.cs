@@ -17,6 +17,7 @@ namespace Winforms_platformer.Model
 
             enemyTypes.Add(EnemyType.Slime);
             enemyTypes.Add(EnemyType.Roller);
+            enemyTypes.Add(EnemyType.SuperRoller);
             enemyTypes.Add(EnemyType.Swordsman);
             enemyTypes.Add(EnemyType.Archer);
             enemyTypes.Add(EnemyType.Magician);
@@ -54,6 +55,8 @@ namespace Winforms_platformer.Model
                     return new Slime(x, y, new Collider(Resources.Slime.IdleSize), currentRoom, player);
                 case EnemyType.Roller:
                     return new Roller(x, y, new Collider(Resources.Roller.IdleSize), currentRoom, player);
+                case EnemyType.SuperRoller:
+                    return new SuperRoller(x, y, new Collider(Resources.SuperRoller.IdleSize), currentRoom, player);
                 case EnemyType.Swordsman:
                     return new Swordsman(x, y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
                 new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)), 

@@ -56,6 +56,7 @@ namespace Winforms_platformer
         InvisibleMan,
         Turret,
         Sticker,
-        Clone
+        Clone,
+        SuperRoller
     }
 }

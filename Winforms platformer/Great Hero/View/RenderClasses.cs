@@ -150,6 +150,8 @@ namespace Winforms_platformer.View
                         resources = Resources.Slime;
                     if (enemy is Roller)
                         resources = Resources.Roller;
+                    if (enemy is SuperRoller)
+                        resources = Resources.SuperRoller;
                     if (enemy is Swordsman)
                         resources = Resources.Swordsman;
                     if (enemy is Archer)

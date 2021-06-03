@@ -150,7 +150,7 @@ namespace Winforms_platformer
             treasureDropID = -1;
             range = 1000;
             jumpStrength = 0;
-            difficulty = 3;
+            difficulty = 2;
             SetDropChances(5, 10, 0);
         }
     }
@@ -564,6 +564,32 @@ namespace Winforms_platformer
             Clone clone = (Clone)this.MemberwiseClone();
             clone.x = x + collider.field.Width + collider.x;
             CurrentRoom().AdditionalEnemies.Add(clone);
+        }
+    }
+
+    public class SuperRoller : Enemy
+    {
+        public SuperRoller(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        {
+            HP = 2;
+            MaxHP = 2;
+            minSpeed = 20;
+            damage = minSpeed;
+            maxSpeed = 99;
+            xSpeed = minSpeed;
+            treasureDropID = -1;
+            range = 1000;
+            jumpStrength = 0;
+            difficulty = 5;
+            status = Status.Move;
+            SetDropChances(10, 20, 0);
+        }
+
+        protected override void MoveToPlayer()
+        {
+            damage++;
+            xSpeed++;
+            direction = (x - player.x >= 0) ? Direction.Left : Direction.Right;
         }
     }
 }

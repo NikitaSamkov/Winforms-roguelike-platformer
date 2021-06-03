@@ -15,6 +15,7 @@ namespace Winforms_platformer
         public static readonly DummyRes Dummy = new DummyRes();
         public static readonly SlimeRes Slime = new SlimeRes();
         public static readonly RollerRes Roller = new RollerRes();
+        public static readonly SuperRollerRes SuperRoller = new SuperRollerRes();
         public static readonly SwordsmanRes Swordsman = new SwordsmanRes();
         public static readonly ArcherRes Archer = new ArcherRes();
         public static readonly MagicianRes Magician = new MagicianRes();
@@ -103,6 +104,17 @@ namespace Winforms_platformer
         {
             Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\RollerIdle.png");
             Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\RollerWalk.png");
+            IdleSize = new Size(60, 60);
+            MoveSize = new Size(60, 60);
+        }
+    }
+    
+    public class SuperRollerRes : EntityResource
+    {
+        public SuperRollerRes()
+        {
+            Idle = new Bitmap(@"..\..\..\..\Sprites\Enemy\SuperRollerIdle.png");
+            Move = new Bitmap(@"..\..\..\..\Sprites\Enemy\SuperRollerWalk.png");
             IdleSize = new Size(60, 60);
             MoveSize = new Size(60, 60);
         }
