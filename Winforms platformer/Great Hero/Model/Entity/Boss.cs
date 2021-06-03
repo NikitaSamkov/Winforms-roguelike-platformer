@@ -25,7 +25,7 @@ namespace Winforms_platformer.Model
 
             attackCooldown = 50;
             attackTimer = attackCooldown;
-            summonCooldown = 125;
+            summonCooldown = 325;
             summonTimer = summonCooldown;
 
             Hands = new List<BossHand>()
@@ -61,10 +61,12 @@ namespace Winforms_platformer.Model
             }
             if (summonTimer == 0)
             {
-                Status = BossStatus.Attack;
+                CurrentRoom().AdditionalEnemies.Add(RandomEnemyGenerator.GetRandomEnemy(0, 0));
+                CurrentRoom().AdditionalEnemies.Add(RandomEnemyGenerator.GetRandomEnemy(800, 0));
                 summonCooldown = 80 * HP / MaxHP;
-                if (summonCooldown < 50)
-                    summonCooldown = 50;
+                if (summonCooldown < 125)
+                    summonCooldown = 125;
+                Status = BossStatus.Attack;
                 summonTimer = summonCooldown + 1;
             }    
             foreach (var hand in Hands)
