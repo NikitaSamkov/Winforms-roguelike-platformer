@@ -32,7 +32,8 @@ namespace Winforms_platformer
             new StrongShield(),
             new MindPower(),
             new PlasmaBall(),
-            new GhostForm()
+            new GhostForm(),
+            new SlimeLayer()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -258,7 +259,7 @@ namespace Winforms_platformer
 
     public class Meat : ITreasure
     {
-        private int buff = 10;
+        private int power = 10;
 
         int ITreasure.ID { get => 6; }
 
@@ -266,18 +267,18 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            Game.Player.damage -= buff;
+            Game.Player.damage -= power;
         }
 
         public void Enable()
         {
-            Game.Player.damage += buff;
+            Game.Player.damage += power;
         }
     }
 
     public class Essentuki : ITreasure
     {
-        private int buff = 20;
+        private int power = 20;
 
         int ITreasure.ID { get => 7; }
 
@@ -285,14 +286,14 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            Game.Player.MaxHP -= buff;
+            Game.Player.MaxHP -= power;
             if (Game.Player.HP > Game.Player.MaxHP)
                 Game.Player.HP = Game.Player.MaxHP;
         }
 
         public void Enable()
         {
-            Game.Player.MaxHP += buff;
+            Game.Player.MaxHP += power;
             Game.Player.HP = Game.Player.MaxHP;
         }
     }
@@ -525,6 +526,27 @@ namespace Winforms_platformer
             ID = 19;
             Price = 8;
             reloadTime = 45;
+        }
+    }
+
+    public class SlimeLayer : ITreasure
+    {
+        private int power = 30;
+
+        int ITreasure.ID { get => 20; }
+
+        int ITreasure.Price { get => 7; }
+
+        public void Disable()
+        {
+            Game.Player.MaxHP -= power;
+            if (Game.Player.HP > Game.Player.MaxHP)
+                Game.Player.HP = Game.Player.MaxHP;
+        }
+
+        public void Enable()
+        {
+            Game.Player.MaxHP += power;
         }
     }
 }
