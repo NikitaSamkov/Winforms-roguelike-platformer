@@ -46,8 +46,12 @@ namespace Winforms_platformer.Model
             var type = enemyTypes[random.Next(enemyTypes.Count)];
             if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(10)) && type != EnemyType.BigCow)
                 type = EnemyType.Roller;
+            return GetEnemy(x, y, type);
+        }
+
+        public static Enemy GetEnemy(int x, int y, EnemyType type)
+        {
             Func<Room> currentRoom = Game.Map.CurrentRoom;
-            var player = Game.Player;
             switch (type)
             {
                 case EnemyType.Dummy:
@@ -60,7 +64,7 @@ namespace Winforms_platformer.Model
                     return new SuperRoller(x, y, new Collider(Resources.SuperRoller.IdleSize), currentRoom);
                 case EnemyType.Swordsman:
                     return new Swordsman(x, y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
-                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)), 
+                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
                 currentRoom);
                 case EnemyType.Archer:
                     return new Archer(x, y, new Collider(Resources.Archer.IdleSize), currentRoom);
@@ -83,7 +87,7 @@ namespace Winforms_platformer.Model
                 case EnemyType.Chameleon:
                     return new Chameleon(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom);
             }
-            return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize),currentRoom);
+            return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom);
         }
 
         public static EnemyType GetRandomEnemyType() => enemyTypes[random.Next(enemyTypes.Count)];

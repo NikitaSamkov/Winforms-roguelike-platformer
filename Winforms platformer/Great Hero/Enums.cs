@@ -25,7 +25,6 @@ namespace Winforms_platformer
         StartingRoom,
         RegularRoom,
         TreasureRoom,
-        Shop,
         BossRoom
     }
 
