@@ -263,18 +263,18 @@ namespace Winforms_platformer.Model
             var treasures = TreasurePool.GenerateItems(roomsCount / 3);
             currentRoom = 0;
             rooms = new List<Room>();
-            rooms.Add(new Room(RoomType.StartingRoom, player));
+            rooms.Add(new Room(RoomType.StartingRoom));
             roomsCount = Math.Min(roomsCount - 1, roomTemplates.Count + roomTemplates.Count / 2);
             if (roomTemplates.Count != 0)
                 for (var i = 0; i < roomsCount; i++)
                 {
                     if (i == roomsCount - 1)
                     {
-                        rooms.Add(new Room(RoomType.BossRoom, player, new List<Platform> { new Platform(0, 200, 350), new Platform(600, 800, 350) }));
+                        rooms.Add(new Room(RoomType.BossRoom, new List<Platform> { new Platform(0, 200, 350), new Platform(600, 800, 350) }));
                         break;
                     }
                     if ((i - 1) % 3 == 0)
-                        rooms.Add(new Room(RoomType.TreasureRoom, player, new List<Platform>()
+                        rooms.Add(new Room(RoomType.TreasureRoom, new List<Platform>()
                         { new Platform(350, 450, 350) }, new List<Loot>
                         { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,
                         treasures[(i - 1) / 3].ID)}));

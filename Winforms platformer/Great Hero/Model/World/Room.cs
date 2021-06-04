@@ -21,7 +21,7 @@ namespace Winforms_platformer
         public List<Loot> LootList;
         public List<Point> EnemySpots;
 
-        public Room(RoomType type, Player player, List<Platform> platforms = null, List<Loot> lootList = null,
+        public Room(RoomType type, List<Platform> platforms = null, List<Loot> lootList = null,
             List<Point> enemies = null, int gravitationForce = 7, int groundLevel = 486)
         {
             Platforms = platforms;
@@ -38,7 +38,7 @@ namespace Winforms_platformer
             gForce = gravitationForce;
             GroundLevel = groundLevel;
             Type = type;
-            this.player = player;
+            player = Game.Player;
         }
 
         public int GetYSpeed(int x, int y, int width, int speed)

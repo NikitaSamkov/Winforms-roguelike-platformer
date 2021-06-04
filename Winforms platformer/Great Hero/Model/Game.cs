@@ -32,7 +32,7 @@ namespace Winforms_platformer.Model
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             BossZones.Create();
-            Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, Player, 500);
+            Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, 500);
             SetKeyBindings();
         }
 
@@ -154,7 +154,7 @@ namespace Winforms_platformer.Model
                     Map.CurrentRoom().EnemyList.Add(
                 new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
                 new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
-                Map.CurrentRoom, Player));
+                Map.CurrentRoom));
             };
 
             KeyBindings[Keys.T] = () =>

@@ -19,11 +19,10 @@ namespace Winforms_platformer
         protected int minSpeed = 10;
 
 
-        public Enemy(int x, int y, Collider collider, Func<Room> room,
-            Player player)
+        public Enemy(int x, int y, Collider collider, Func<Room> room)
             : base(x, y, collider, room)
         {
-            this.player = player;
+            player = Game.Player;
             HP = 20;
             MaxHP = 20;
             damage = 0;
@@ -121,7 +120,7 @@ namespace Winforms_platformer
 
     public class Slime : Enemy
     {
-        public Slime(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Slime(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 10;
             MaxHP = HP;
@@ -139,7 +138,7 @@ namespace Winforms_platformer
 
     public class Roller : Enemy
     {
-        public Roller(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Roller(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 1;
             MaxHP = 1;
@@ -157,7 +156,7 @@ namespace Winforms_platformer
 
     public class Swordsman : Enemy
     {
-        public Swordsman(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Swordsman(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 50;
             MaxHP = HP;
@@ -209,7 +208,7 @@ namespace Winforms_platformer
         private int reload;
         private Direction lastSafeDirection;
         private bool safe;
-        public Archer(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Archer(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 5;
             MaxHP = HP;
@@ -297,7 +296,7 @@ namespace Winforms_platformer
     {
         private int power;
         private int lastPlayerY;
-        public Magician(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Magician(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 10;
             MaxHP = HP;
@@ -336,7 +335,7 @@ namespace Winforms_platformer
     public class SuperMagician : Enemy
     {
         private int cooldown;
-        public SuperMagician(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public SuperMagician(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             var random = Game.Map.Random;
             HP = random.Next(1, 26);
@@ -368,7 +367,7 @@ namespace Winforms_platformer
     public class BigCow : Enemy
     {
         private int timer;
-        public BigCow(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public BigCow(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 100;
             MaxHP = HP;
@@ -406,7 +405,7 @@ namespace Winforms_platformer
 
     public class Ghost : Enemy
     {
-        public Ghost(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Ghost(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 50;
             MaxHP = HP;
@@ -443,7 +442,7 @@ namespace Winforms_platformer
 
     public class InvisibleMan : Enemy
     {
-        public InvisibleMan(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public InvisibleMan(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 20;
             MaxHP = HP;
@@ -464,7 +463,7 @@ namespace Winforms_platformer
         private int reloadTime = 15;
         private int timer = 0;
 
-        public Turret(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Turret(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 1;
             MaxHP = HP;
@@ -508,7 +507,7 @@ namespace Winforms_platformer
     {
         public Status stickerStatus { get; private set; }
 
-        public Sticker(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Sticker(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 60;
             MaxHP = HP;
@@ -545,7 +544,7 @@ namespace Winforms_platformer
         private int timer;
         private int maxClones = 15;
 
-        public Clone(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Clone(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 20;
             MaxHP = HP;
@@ -587,7 +586,7 @@ namespace Winforms_platformer
 
     public class SuperRoller : Enemy
     {
-        public SuperRoller(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public SuperRoller(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 2;
             MaxHP = 2;
@@ -616,7 +615,7 @@ namespace Winforms_platformer
         private int swapCooldown = 50;
         private int timer = 0;
 
-        public Chameleon(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Chameleon(int x, int y, Collider collider, Func<Room> room) : base(x, y, collider, room)
         {
             HP = 30;
             MaxHP = HP;
