@@ -354,6 +354,7 @@ namespace Winforms_platformer
         public readonly Bitmap id16 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id16.png");
         public readonly Bitmap id17 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id17.png");
         public readonly Bitmap id18 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id18.png");
+        public readonly Bitmap id19 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id19.png");
     }
 
     public class LootRes : LootResource
@@ -385,9 +386,12 @@ namespace Winforms_platformer
         public readonly Bitmap EternalAmmoReloading = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmoReloading.png");
         public readonly Bitmap PlasmaAmmo = new Bitmap(@"..\..\..\..\Sprites\UI\plasmaAmmo.png");
         public readonly Bitmap PlasmaAmmoReloading = new Bitmap(@"..\..\..\..\Sprites\UI\plasmaAmmoReloading.png");
+        public readonly Bitmap GhostForm = new Bitmap(@"..\..\..\..\Sprites\UI\ghostForm.png");
+        public readonly Bitmap GhostFormReloading = new Bitmap(@"..\..\..\..\Sprites\UI\ghostFormReloading.png");
         public readonly Size AmmoSize = new Size(12, 52);
         public readonly Size EternalAmmoSize = new Size(12, 52);
         public readonly Size PlasmaAmmoSize = new Size(25, 25);
+        public readonly Size GhostFormSize = new Size(46, 47);
     }
 
 

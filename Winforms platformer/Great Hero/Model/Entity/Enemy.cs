@@ -413,7 +413,7 @@ namespace Winforms_platformer
             minSpeed = 0;
             maxSpeed = 0;
             xSpeed = minSpeed;
-            treasureDropID = 9;
+            treasureDropID = 19;
             range = 300;
             jumpStrength = 0;
             flying = true;

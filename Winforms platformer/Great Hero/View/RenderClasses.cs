@@ -315,7 +315,14 @@ namespace Winforms_platformer.View
                 Bitmap ammo = Resources.UI.EternalAmmo;
                 Bitmap ammoReloading = Resources.UI.EternalAmmoReloading;
                 Size ammoSize = Resources.UI.EternalAmmoSize;
-                if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(18)))
+                if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(19)))
+                {
+                    weapon = TreasurePool.GetTreasureByID(19) as GhostForm;
+                    ammo = Resources.UI.GhostForm;
+                    ammoReloading = Resources.UI.GhostFormReloading;
+                    ammoSize = Resources.UI.GhostFormSize;
+                }
+                else if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(18)))
                 {
                     weapon = TreasurePool.GetTreasureByID(18) as PlasmaBall;
                     ammo = Resources.UI.PlasmaAmmo;

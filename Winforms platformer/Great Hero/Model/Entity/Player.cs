@@ -26,7 +26,9 @@ namespace Winforms_platformer
 
         public override void Update()
         {
-            if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
+            if (treasures.Contains(TreasurePool.GetTreasureByID(19)))
+                (TreasurePool.GetTreasureByID(19) as GhostForm).UpdateTimer();
+            else if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
                 (TreasurePool.GetTreasureByID(18) as EternalBow).UpdateTimer();
             else if (treasures.Contains(TreasurePool.GetTreasureByID(1)))
                 (TreasurePool.GetTreasureByID(1) as EternalBow).UpdateTimer();
@@ -43,6 +45,15 @@ namespace Winforms_platformer
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);
                 Ammo--;
+            }
+            else if (treasures.Contains(TreasurePool.GetTreasureByID(19)))
+            {
+                var ghost = TreasurePool.GetTreasureByID(19) as GhostForm;
+                if (ghost.timer == 0)
+                {
+                    invincibility = ghost.Power;
+                    ghost.SetTimer();
+                }
             }
             else if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
             {

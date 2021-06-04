@@ -31,7 +31,8 @@ namespace Winforms_platformer
             new GiantRuby(),
             new StrongShield(),
             new MindPower(),
-            new PlasmaBall()
+            new PlasmaBall(),
+            new GhostForm()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -158,7 +159,7 @@ namespace Winforms_platformer
                 Game.Player.Ammo = playerAmmo;
         }
 
-        public virtual void Enable()
+        public void Enable()
         {
             if (Game.Player.Ammo >= 0)
                 playerAmmo = Game.Player.Ammo;
@@ -500,13 +501,6 @@ namespace Winforms_platformer
             reloadTime = maxReload;
         }
 
-        public override void Enable()
-        {
-            if (Game.Player.Ammo >= 0)
-                playerAmmo = Game.Player.Ammo;
-            Game.Player.Ammo = -2;
-        }
-
         public override void SetTimer()
         {
             if (Game.Map.CurrentRoom() != lastRoom)
@@ -519,6 +513,18 @@ namespace Winforms_platformer
             if (reloadTime < 0)
                 reloadTime = 0;
             base.SetTimer();
+        }
+    }
+
+    public class GhostForm : EternalBow
+    {
+        public int Power = 10;
+
+        public GhostForm()
+        {
+            ID = 19;
+            Price = 8;
+            reloadTime = 45;
         }
     }
 }
