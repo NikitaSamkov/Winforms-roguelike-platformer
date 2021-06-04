@@ -118,7 +118,7 @@ namespace Winforms_platformer.Model
                     DeveloperToolsON = true;
             };
 
-            var treasureID = 17;
+            var treasureID = 18;
 
             KeyBindings[Keys.D1] = () =>
             {
@@ -152,9 +152,7 @@ namespace Winforms_platformer.Model
             {
                 if (DeveloperToolsON)
                     Map.CurrentRoom().EnemyList.Add(
-                new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
-                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
-                Map.CurrentRoom));
+                new Turret(Player.x - 50, Player.y, new Collider(Resources.Turret.IdleSize), Map.CurrentRoom));
             };
 
             KeyBindings[Keys.T] = () =>

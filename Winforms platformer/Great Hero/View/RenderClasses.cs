@@ -309,15 +309,25 @@ namespace Winforms_platformer.View
             {
                 g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
             }
-            if (Game.Player.Ammo == -1)
+            if (Game.Player.Ammo < 0)
             {
-                var bow = TreasurePool.GetTreasureByID(1) as EternalBow;
-                if (bow.timer == 0)
-                    g.DrawImage(Resources.UI.EternalAmmo, 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
+                EternalBow weapon = TreasurePool.GetTreasureByID(1) as EternalBow;
+                Bitmap ammo = Resources.UI.EternalAmmo;
+                Bitmap ammoReloading = Resources.UI.EternalAmmoReloading;
+                Size ammoSize = Resources.UI.EternalAmmoSize;
+                if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(18)))
+                {
+                    weapon = TreasurePool.GetTreasureByID(18) as PlasmaBall;
+                    ammo = Resources.UI.PlasmaAmmo;
+                    ammoReloading = Resources.UI.PlasmaAmmoReloading;
+                    ammoSize = Resources.UI.PlasmaAmmoSize;
+                }
+                if (weapon.timer == 0)
+                    g.DrawImage(ammo, 50, 100, ammoSize.Width, ammoSize.Height);
                 else
-                    g.DrawImage(Resources.UI.EternalAmmoReloading, 50, 100,
-                        new Rectangle(0, 0, Resources.UI.AmmoSize.Width,
-                        Resources.UI.AmmoSize.Height * (bow.reloadTime - bow.timer) / bow.reloadTime), GraphicsUnit.Pixel);
+                    g.DrawImage(ammoReloading, 50, 100,
+                        new Rectangle(0, 0, ammoSize.Width,
+                        ammoSize.Height * (weapon.reloadTime - weapon.timer) / weapon.reloadTime), GraphicsUnit.Pixel);
             }
             #endregion
             #region Treasures

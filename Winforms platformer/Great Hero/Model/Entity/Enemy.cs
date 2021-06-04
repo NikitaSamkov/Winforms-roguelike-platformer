@@ -471,12 +471,12 @@ namespace Winforms_platformer
             minSpeed = 0;
             maxSpeed = 0;
             xSpeed = minSpeed;
-            treasureDropID = 13;
+            treasureDropID = 18;
             range = 1000;
             jumpStrength = 0;
             ShootingPower = 20;
             difficulty = 5;
-            SetDropChances(0, 50, 5);
+            SetDropChances(0, 50, 20);
         }
 
         protected override void MoveToPlayer()

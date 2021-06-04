@@ -30,7 +30,8 @@ namespace Winforms_platformer
             new BestFriend(),
             new GiantRuby(),
             new StrongShield(),
-            new MindPower()
+            new MindPower(),
+            new PlasmaBall()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -136,13 +137,20 @@ namespace Winforms_platformer
 
     public class EternalBow : ITreasure
     {
-        private int playerAmmo;
-        public int reloadTime { get => 25; }
+        protected int playerAmmo;
+        public int reloadTime { get; protected set; }
         public int timer { get; protected set; }
 
-        int ITreasure.ID { get => 1; }
+        public int ID { get; protected set; }
 
-        int ITreasure.Price { get => 9; }
+        public int Price { get; protected set; }
+
+        public EternalBow()
+        {
+            reloadTime = 25;
+            ID = 1;
+            Price = 9;
+        }
 
         public void Disable()
         {
@@ -150,9 +158,9 @@ namespace Winforms_platformer
                 Game.Player.Ammo = playerAmmo;
         }
 
-        public void Enable()
+        public virtual void Enable()
         {
-            if (Game.Player.Ammo != -1)
+            if (Game.Player.Ammo >= 0)
                 playerAmmo = Game.Player.Ammo;
             Game.Player.Ammo = -1;
         }
@@ -163,7 +171,10 @@ namespace Winforms_platformer
                 timer--;
         }
 
-        public void SetTimer() => timer = reloadTime;
+        public virtual void SetTimer()
+        {
+            timer = reloadTime; 
+        }
     }
 
     public class GravityFeather : ITreasure
@@ -472,6 +483,31 @@ namespace Winforms_platformer
         public void Enable()
         {
 
+        }
+    }
+
+    public class PlasmaBall : EternalBow
+    {
+        public int PlasmaSpeed = 10;
+        public PlasmaBall()
+        {
+            ID = 18;
+            Price = 8;
+            reloadTime = 50;
+        }
+
+        public override void Enable()
+        {
+            if (Game.Player.Ammo >= 0)
+                playerAmmo = Game.Player.Ammo;
+            Game.Player.Ammo = -2;
+        }
+
+        public override void SetTimer()
+        {
+            if (reloadTime > 15)
+                reloadTime -= 5;
+            base.SetTimer();
         }
     }
 }

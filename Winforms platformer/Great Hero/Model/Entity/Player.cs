@@ -26,7 +26,9 @@ namespace Winforms_platformer
 
         public override void Update()
         {
-            if (Ammo == -1)
+            if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
+                (TreasurePool.GetTreasureByID(18) as EternalBow).UpdateTimer();
+            else if (treasures.Contains(TreasurePool.GetTreasureByID(1)))
                 (TreasurePool.GetTreasureByID(1) as EternalBow).UpdateTimer();
             base.Update();
         }
@@ -42,13 +44,25 @@ namespace Winforms_platformer
                 CurrentRoom().ProjectilesList.Add(arrow);
                 Ammo--;
             }
-            else if (Ammo == -1)
+            else if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
+            {
+                var ball = TreasurePool.GetTreasureByID(18) as PlasmaBall;
+                if (ball.timer == 0)
+                {
+                    var plasma = new Plasma(x, y + collider.field.Height / 2,
+                        new Collider(Resources.Plasma.IdleSize), CurrentRoom, (direction == Direction.Right) ? 0 : 180, ball.PlasmaSpeed, ProjectileType.Ally, this);
+                    plasma.status = Status.Move;
+                    CurrentRoom().ProjectilesList.Add(plasma);
+                    ball.SetTimer();
+                }
+            }
+            else if (treasures.Contains(TreasurePool.GetTreasureByID(1)))
             {
                 var bow = TreasurePool.GetTreasureByID(1) as EternalBow;
                 if (bow.timer == 0)
                 {
                     var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, 15, ShootingPower, ProjectileType.Ally, this);
+                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
                     arrow.MoveTo(direction);
                     arrow.status = Status.Move;
                     CurrentRoom().ProjectilesList.Add(arrow);
