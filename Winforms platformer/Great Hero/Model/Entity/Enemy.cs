@@ -304,13 +304,13 @@ namespace Winforms_platformer
             minSpeed = 0;
             maxSpeed = 0;
             xSpeed = minSpeed;
-            treasureDropID = -1;
+            treasureDropID = 17;
             range = 1000;
             jumpStrength = 0;
             power = 3;
             lastPlayerY = -1;
             difficulty = 1;
-            SetDropChances(20, 20, 0);
+            SetDropChances(20, 20, 5);
         }
 
         protected override void MoveToPlayer()
@@ -344,12 +344,12 @@ namespace Winforms_platformer
             minSpeed = 0;
             maxSpeed = 0;
             xSpeed = minSpeed;
-            treasureDropID = 9;
+            treasureDropID = 17;
             range = 1000;
             jumpStrength = 0;
             difficulty = 3;
             cooldown = random.Next(75, 100);
-            SetDropChances(random.Next(0, 101), random.Next(0, 101), random.Next(0, 16));
+            SetDropChances(random.Next(0, 101), random.Next(0, 101), random.Next(0, 20));
         }
 
         protected override void MoveToPlayer()

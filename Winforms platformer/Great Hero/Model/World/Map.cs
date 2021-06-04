@@ -176,6 +176,17 @@ namespace Winforms_platformer.Model
                 if (enemy.HitsPlayer())
                     player.Hurt(enemy.damage);
                 enemy.Update();
+
+                if (player.treasures.Contains(TreasurePool.GetTreasureByID(17)))
+                {
+                    var treasure = TreasurePool.GetTreasureByID(17) as MindPower;
+                    var dx = (enemy.x > player.x) ? 1 : -1;
+                    var dy = (enemy.y + enemy.collider.field.Height > player.y + player.collider.field.Height) ? 1 : -1;
+                    for (var i = 0; i < treasure.Power; i++)
+                        if (enemy.GetShotestDistanceToPlayer() < treasure.Range * (treasure.Power - i) / treasure.Power)
+                            enemy.TeleportTo(enemy.x + dx, enemy.y + dy);
+                }    
+
                 if (enemy.x + enemy.collider.field.Width > Game.WindowSize.Width)
                 {
                     enemy.TeleportTo(Game.WindowSize.Width - enemy.collider.field.Width);

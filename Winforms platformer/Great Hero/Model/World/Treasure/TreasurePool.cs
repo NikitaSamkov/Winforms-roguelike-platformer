@@ -29,7 +29,8 @@ namespace Winforms_platformer
             new BetterAmmo(),
             new BestFriend(),
             new GiantRuby(),
-            new StrongShield()
+            new StrongShield(),
+            new MindPower()
         };
 
         public static void GiveToPlayer(int treasureID)
@@ -451,6 +452,26 @@ namespace Winforms_platformer
         public void Enable()
         {
             Game.Player.hurtMultiplier *= power;
+        }
+    }
+
+    public class MindPower : ITreasure
+    {
+        public int Range = 300;
+        public int Power = 3;
+
+        int ITreasure.ID { get => 17; }
+
+        int ITreasure.Price { get => 4; }
+
+        public void Disable()
+        {
+
+        }
+
+        public void Enable()
+        {
+
         }
     }
 }

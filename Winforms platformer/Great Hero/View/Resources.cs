@@ -271,6 +271,7 @@ namespace Winforms_platformer
     }
     #endregion
 
+    #region ROOMS
     public class RoomRes
     {
         public Bitmap Wall { get; protected set; }
@@ -293,7 +294,9 @@ namespace Winforms_platformer
             Ground = new Bitmap(@"..\..\..\..\Sprites\Room\TreasureGround.png");
         }
     }
+    #endregion
 
+    #region PROJECTILES
     public class PlasmaRes : EntityResource
     {
         public PlasmaRes()
@@ -315,22 +318,9 @@ namespace Winforms_platformer
             MoveSize = new Size(50, 10);
         }
     }
+    #endregion
 
-    public class UIRes
-    {
-        public readonly Bitmap HPBar = new Bitmap(@"..\..\..\..\Sprites\UI\hp.png");
-        public readonly Bitmap HPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\frame.png");
-        public readonly Bitmap BossHPBar = new Bitmap(@"..\..\..\..\Sprites\UI\bossHP.png");
-        public readonly Bitmap BossHPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\bossFrame.png");
-        public readonly Size HPSize = new Size(778, 38);
-        public readonly Size HPSize100 = new Size(275, 38);
-        public readonly Size BossHPSize = new Size(392, 38);
-        public readonly Bitmap Ammo = new Bitmap(@"..\..\..\..\Sprites\UI\ammo.png");
-        public readonly Bitmap EternalAmmo = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmo.png");
-        public readonly Bitmap EternalAmmoReloading = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmoReloading.png");
-        public readonly Size AmmoSize = new Size(12, 52);
-    }
-
+    #region LOOT
     public class LootResource
     {
         public Bitmap idNotFound;
@@ -362,6 +352,7 @@ namespace Winforms_platformer
         public readonly Bitmap id14 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id14.png");
         public readonly Bitmap id15 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id15.png");
         public readonly Bitmap id16 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id16.png");
+        public readonly Bitmap id17 = new Bitmap(@"..\..\..\..\Sprites\Treasures\id17.png");
     }
 
     public class LootRes : LootResource
@@ -377,6 +368,23 @@ namespace Winforms_platformer
         public readonly Bitmap id0alt = new Bitmap(@"..\..\..\..\Sprites\Loot\HeartAngry.png");
         public readonly Bitmap id1 = new Bitmap(@"..\..\..\..\Sprites\Loot\Ammo.png");
     }
+    #endregion
+
+    public class UIRes
+    {
+        public readonly Bitmap HPBar = new Bitmap(@"..\..\..\..\Sprites\UI\hp.png");
+        public readonly Bitmap HPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\frame.png");
+        public readonly Bitmap BossHPBar = new Bitmap(@"..\..\..\..\Sprites\UI\bossHP.png");
+        public readonly Bitmap BossHPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\bossFrame.png");
+        public readonly Size HPSize = new Size(778, 38);
+        public readonly Size HPSize100 = new Size(275, 38);
+        public readonly Size BossHPSize = new Size(392, 38);
+        public readonly Bitmap Ammo = new Bitmap(@"..\..\..\..\Sprites\UI\ammo.png");
+        public readonly Bitmap EternalAmmo = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmo.png");
+        public readonly Bitmap EternalAmmoReloading = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmoReloading.png");
+        public readonly Size AmmoSize = new Size(12, 52);
+    }
+
 
     public class BossRes
     {
