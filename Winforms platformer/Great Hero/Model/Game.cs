@@ -118,7 +118,7 @@ namespace Winforms_platformer.Model
                     DeveloperToolsON = true;
             };
 
-            var treasureID = 18;
+            var treasureID = 17;
 
             KeyBindings[Keys.D1] = () =>
             {

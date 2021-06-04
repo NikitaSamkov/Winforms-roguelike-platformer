@@ -206,7 +206,7 @@ namespace Winforms_platformer.Model
 
             foreach (var projectile in CurrentRoom().ProjectilesList)
             {
-                if (projectile.y + projectile.collider.field.Height >= CurrentRoom().GroundLevel)
+                if (projectile.y + projectile.collider.field.Height >= CurrentRoom().GroundLevel || projectile.x > Game.WindowSize.Width || projectile.x < 0)
                 {
                     CurrentRoom().ProjectilesList.Remove(projectile);
                     break;

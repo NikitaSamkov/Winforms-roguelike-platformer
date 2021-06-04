@@ -489,11 +489,15 @@ namespace Winforms_platformer
     public class PlasmaBall : EternalBow
     {
         public int PlasmaSpeed = 10;
+        private int minReload = 5;
+        private int maxReload = 50;
+        private Room lastRoom = null;
+
         public PlasmaBall()
         {
             ID = 18;
             Price = 8;
-            reloadTime = 50;
+            reloadTime = maxReload;
         }
 
         public override void Enable()
@@ -505,8 +509,15 @@ namespace Winforms_platformer
 
         public override void SetTimer()
         {
-            if (reloadTime > 15)
+            if (Game.Map.CurrentRoom() != lastRoom)
+            {
+                lastRoom = Game.Map.CurrentRoom();
+                reloadTime = maxReload;
+            }
+            if (reloadTime > minReload)
                 reloadTime -= 5;
+            if (reloadTime < 0)
+                reloadTime = 0;
             base.SetTimer();
         }
     }
