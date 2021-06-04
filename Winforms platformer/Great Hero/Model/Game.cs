@@ -109,41 +109,64 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Q] = () => Player.Shoot();
 
-            var treasureID = 16;
-            if (DeveloperToolsON)
+
+            KeyBindings[Keys.Z] = () =>
             {
-                KeyBindings[Keys.D1] = () => Map.CurrentRoom().LootList.Add(
+                if (DeveloperToolsON)
+                    DeveloperToolsON = false;
+                else
+                    DeveloperToolsON = true;
+            };
+
+            var treasureID = 6;
+
+            KeyBindings[Keys.D1] = () =>
+            {
+                if (DeveloperToolsON)
+                    Map.CurrentRoom().LootList.Add(
                     new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));
+            };
 
-                KeyBindings[Keys.D2] = () => TreasurePool.RemoveFromPlayer(treasureID);
 
-                KeyBindings[Keys.D3] = () => Map.CurrentRoom().LootList.Add(
-                    new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+            KeyBindings[Keys.D2] = () =>
+            {
+                if (DeveloperToolsON)
+                    TreasurePool.RemoveFromPlayer(treasureID);
+            };
 
-                KeyBindings[Keys.D4] = () => Map.CurrentRoom().LootList.Add(
-                    new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+            KeyBindings[Keys.D3] = () =>
+            {
+                if (DeveloperToolsON)
+                    Map.CurrentRoom().LootList.Add(
+                new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+            };
 
-                KeyBindings[Keys.D5] = () => Map.CurrentRoom().EnemyList.Add(
-                    new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
-                    new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
-                    Map.CurrentRoom, Player));
+            KeyBindings[Keys.D4] = () =>
+            {
+                if (DeveloperToolsON)
+                    Map.CurrentRoom().LootList.Add(
+                new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+            };
 
-                KeyBindings[Keys.Z] = () =>
-                {
-                    if (DeveloperToolsON)
-                        DeveloperToolsON = false;
-                    else
-                        DeveloperToolsON = true;
-                };
+            KeyBindings[Keys.D5] = () =>
+            {
+                if (DeveloperToolsON)
+                    Map.CurrentRoom().EnemyList.Add(
+                new Swordsman(Player.x, Player.y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
+                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
+                Map.CurrentRoom, Player));
+            };
 
-                KeyBindings[Keys.T] = () =>
+            KeyBindings[Keys.T] = () =>
+            {
+                if (DeveloperToolsON)
                 {
                     foreach (var treasureRoom in Map.rooms.Where(r => r.LootList.Count != 0))
                         foreach (var loot in treasureRoom.LootList.Where(l => l is TreasureItem))
                             Console.Write(loot.ID + "(" + (loot as TreasureItem).Treasure.Price + ")" + " ");
                     Console.WriteLine();
-                };
-            }
+                }
+            };
 
             KeyBindings[Keys.O] = () =>
             {

@@ -58,7 +58,8 @@ namespace Winforms_platformer
 
     public class SystemRes
     {
-        public readonly Bitmap Death = new Bitmap(@"..\..\..\..\Sprites\Room\Death.png");
+        public readonly Bitmap Death = new Bitmap(@"..\..\..\..\Sprites\UI\death.png");
+        public readonly Bitmap Win = new Bitmap(@"..\..\..\..\Sprites\UI\win.png");
     }
 
     public class PlayerRes : AttackingEntityResource

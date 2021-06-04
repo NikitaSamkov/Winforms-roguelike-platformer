@@ -64,18 +64,6 @@ namespace Winforms_platformer
             return false;
         }
 
-        //public List<Enemy> GetIntersectedEnemies(Collider collider, int colliderX, int colliderY)
-        //{
-        //    var result = new List<Enemy>();
-        //    foreach (var enemy in EnemyList)
-        //        if (new Rectangle(new Point(colliderX, colliderY), collider.field)
-        //            .IntersectsWith(
-        //            new Rectangle(new Point(enemy.collider.x + enemy.x, enemy.collider.y + enemy.y),
-        //            enemy.collider.field)))
-        //            result.Add(enemy);
-        //    return result;
-        //}
-
         public List<Entity> GetIntersectedEntities(Collider collider, int colliderX, int colliderY)
         {
             var result = new List<Entity>();
@@ -90,7 +78,7 @@ namespace Winforms_platformer
                     new Rectangle(new Point(player.collider.x + player.x, player.collider.y + player.y),
                     player.collider.field)))
                 result.Add(player);
-            if (new Rectangle(new Point(colliderX, colliderY), collider.field)
+            if (Type == RoomType.BossRoom && new Rectangle(new Point(colliderX, colliderY), collider.field)
                     .IntersectsWith(
                     new Rectangle(new Point(Game.Boss.collider.x + Game.Boss.x, Game.Boss.collider.y + Game.Boss.y),
                     Game.Boss.collider.field)))
