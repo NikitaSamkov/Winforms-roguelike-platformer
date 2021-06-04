@@ -187,7 +187,7 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.G] = () =>
             {
                 if (superSecret == 2 && Map.CurrentRoom().Type != RoomType.BossRoom)
-                    Resources.Boss.Body = new Bitmap(@"..\..\..\..\Sprites\Room\SuperSecret.png");
+                    Resources.Boss.Body = new Bitmap(@"..\..\..\..\Sprites\Room\SuperSecret.txt");
                 else
                     superSecret = 0;
             };

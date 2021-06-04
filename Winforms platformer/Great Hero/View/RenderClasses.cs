@@ -239,7 +239,12 @@ namespace Winforms_platformer.View
             GetResource();
             g.DrawImage(Resource.Wall, 0, 0, Game.WindowSize.Width, Game.WindowSize.Height);
             foreach (var platform in CurrentRoom().Platforms)
-                g.DrawLine(new Pen(Color.Red, 5), platform.leftBorder, platform.level, platform.rightBorder, platform.level);
+            {
+                g.DrawImage(Resource.Platform, platform.leftBorder, platform.level, new Rectangle(0, 0, (platform.rightBorder - platform.leftBorder) / 2, Resource.PlatformSize.Height), GraphicsUnit.Pixel);
+                g.DrawImage(Resource.Platform, platform.leftBorder + (platform.rightBorder - platform.leftBorder) / 2, platform.level, 
+                    new Rectangle(Resource.PlatformSize.Width - (platform.rightBorder - platform.leftBorder) / 2, 0,
+                    (platform.rightBorder - platform.leftBorder) / 2, Resource.PlatformSize.Height), GraphicsUnit.Pixel);
+            }
             g.DrawImage(Resource.Ground,
                 Resource.Wall.Width - Resource.Ground.Width,
                 CurrentRoom().GroundLevel,
@@ -368,7 +373,7 @@ namespace Winforms_platformer.View
                 if (Game.Boss.Status == BossStatus.SummonEnemies)
                 {
                     g.DrawImage(Resources.Boss.Summon, Game.Boss.x, Game.Boss.y,
-                        new Rectangle(((5 - Game.Boss.summonTimer / 3 == 5) ? 4 : (5 - Game.Boss.summonTimer / 3)) * Resources.Boss.BodySize.Width, 0, Resources.Boss.BodySize.Width, 
+                        new Rectangle(((5 - Game.Boss.summonTimer / 3 == 5) ? 4 : (5 - Game.Boss.summonTimer / 3)) * Resources.Boss.BodySize.Width, 0, Resources.Boss.BodySize.Width,
                         Resources.Boss.BodySize.Height), GraphicsUnit.Pixel);
                 }
                 else

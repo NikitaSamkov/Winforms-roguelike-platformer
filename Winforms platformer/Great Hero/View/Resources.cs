@@ -275,6 +275,9 @@ namespace Winforms_platformer
     {
         public Bitmap Wall { get; protected set; }
         public Bitmap Ground { get; protected set; }
+        public readonly Bitmap Platform = new Bitmap(@"..\..\..\..\Sprites\Room\Platform.png");
+        public readonly Size PlatformSize = new Size(800, 27);
+
         public RoomRes()
         {
             Wall = new Bitmap(@"..\..\..\..\Sprites\Room\Wall.png");
