@@ -18,9 +18,9 @@ namespace Winforms_platformer.Model
         private int attackTimer;
         private int summonCooldown;
 
-        public Boss(int x, int y, Collider collider, Func<Room> room, Player player) : base(x, y, collider, room, player)
+        public Boss(int x, int y, Collider collider, Func<Room> room, Player player, int maxHP) : base(x, y, collider, room, player)
         {
-            MaxHP = 500;
+            MaxHP = maxHP;
             HP = MaxHP;
             damage = 33;
 

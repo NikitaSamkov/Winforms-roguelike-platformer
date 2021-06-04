@@ -32,7 +32,7 @@ namespace Winforms_platformer.Model
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             BossZones.Create();
-            Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, Player);
+            Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, Player, 500);
             SetKeyBindings();
         }
 
