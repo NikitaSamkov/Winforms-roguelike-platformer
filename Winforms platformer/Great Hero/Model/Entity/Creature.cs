@@ -76,21 +76,5 @@ namespace Winforms_platformer
                 ySpeed -= jumpStrength;
             }
         }
-
-        //public IEnumerable<Point> GetJumpTrajectory()
-        //{
-        //    var trajectoryXSpeed = (currentDirection == Direction.Right) ? xSpeed : -xSpeed;
-        //    var trajectoryYSpeed = ySpeed - jumpStrength;
-        //    var trajectoryX = x + trajectoryXSpeed;
-        //    var trajectoryY = y + trajectoryYSpeed;
-        //    trajectoryYSpeed = getYSpeed(trajectoryX, trajectoryY, width, trajectoryYSpeed);
-        //    while (!canJump(trajectoryX, trajectoryY, width))
-        //    {
-        //        yield return new Point(trajectoryX, trajectoryY);
-        //        trajectoryYSpeed = getYSpeed(trajectoryX, trajectoryY, width, trajectoryYSpeed);
-        //        trajectoryX += trajectoryXSpeed;
-        //        trajectoryY += trajectoryYSpeed;
-        //    }
-        //}
     }
 }
