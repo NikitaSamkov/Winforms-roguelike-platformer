@@ -330,6 +330,17 @@ namespace Winforms_platformer.View
                 }
             }
             #endregion
+            #region BOSS HP
+            if (Game.Map.CurrentRoom().Type == RoomType.BossRoom)
+            {
+                g.DrawImage(Resources.UI.BossHPBar, Game.WindowSize.Width / 2 - Resources.UI.BossHPSize.Width / 2,
+                    Game.Map.CurrentRoom().GroundLevel + (Game.WindowSize.Height - Game.Map.CurrentRoom().GroundLevel) / 2 - Resources.UI.BossHPSize.Height / 2,
+                    new Rectangle(0, 0, Resources.UI.BossHPSize.Width * Game.Boss.HP / Game.Boss.MaxHP, hpSize.Height),
+                    GraphicsUnit.Pixel);
+                g.DrawImage(Resources.UI.BossHPFrame, Game.WindowSize.Width / 2 - Resources.UI.BossHPSize.Width / 2,
+                    Game.Map.CurrentRoom().GroundLevel + (Game.WindowSize.Height - Game.Map.CurrentRoom().GroundLevel) / 2 - Resources.UI.BossHPSize.Height / 2);
+            }
+            #endregion
         }
 
         public Bitmap GetTreasureSprite(int treasureID)

@@ -317,8 +317,11 @@ namespace Winforms_platformer
     {
         public readonly Bitmap HPBar = new Bitmap(@"..\..\..\..\Sprites\UI\hp.png");
         public readonly Bitmap HPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\frame.png");
-        public readonly Size HPSize100 = new Size(275, 38);
+        public readonly Bitmap BossHPBar = new Bitmap(@"..\..\..\..\Sprites\UI\bossHP.png");
+        public readonly Bitmap BossHPFrame = new Bitmap(@"..\..\..\..\Sprites\UI\bossFrame.png");
         public readonly Size HPSize = new Size(778, 38);
+        public readonly Size HPSize100 = new Size(275, 38);
+        public readonly Size BossHPSize = new Size(392, 38);
         public readonly Bitmap Ammo = new Bitmap(@"..\..\..\..\Sprites\UI\ammo.png");
         public readonly Bitmap EternalAmmo = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmo.png");
         public readonly Bitmap EternalAmmoReloading = new Bitmap(@"..\..\..\..\Sprites\UI\eternalAmmoReloading.png");
