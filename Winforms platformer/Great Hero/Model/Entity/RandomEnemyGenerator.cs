@@ -8,12 +8,13 @@ namespace Winforms_platformer.Model
 {
     public static class RandomEnemyGenerator
     {
-        public static List<EnemyType> enemyTypes = new List<EnemyType>();
-        private static Random random = new Random();
+        public static List<EnemyType> enemyTypes;
+        private static Random random;
 
         public static void Start()
         {
             random = Game.Map.Random;
+            enemyTypes = new List<EnemyType>();
 
             enemyTypes.Add(EnemyType.Slime);
             enemyTypes.Add(EnemyType.Roller);

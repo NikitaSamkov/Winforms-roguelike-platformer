@@ -14,6 +14,11 @@ namespace Winforms_platformer.View
 
         static GameRender()
         {
+            Create();
+        }
+
+        public static void Create()
+        {
             Renders = new List<IRenderable>();
             Renders.Add(new RoomRender(Game.Map.CurrentRoom));
             Renders.Add(new BossRender(Game.Map.CurrentRoom));

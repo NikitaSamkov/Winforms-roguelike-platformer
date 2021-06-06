@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Winforms_platformer.View;
 
 namespace Winforms_platformer.Model
 {
@@ -16,12 +17,18 @@ namespace Winforms_platformer.Model
         public static Size WindowSize = new Size();
         public static Dictionary<Keys, Action> KeyBindings = new Dictionary<Keys, Action>();
         public static Keys lastKey;
-        public static bool Death = false;
-        public static bool Win = false;
+        public static bool Death;
+        public static bool Win;
         public static bool DeveloperToolsON = false;
         private static int superSecret;
 
         static Game()
+        {
+            Create();
+            SetKeyBindings();
+        }
+
+        public static void Create()
         {
             Player = new Player(150, 150, new Collider(Resources.Player.IdleSize, 0, 0,
                 new Collider(Resources.Player.AttackRange, -10, 0)), null);
@@ -33,7 +40,8 @@ namespace Winforms_platformer.Model
             TreasurePool.SortPool();
             BossZones.Create();
             Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, 500);
-            SetKeyBindings();
+            Death = false;
+            Win = false;
         }
 
         public static void Update()
@@ -133,6 +141,11 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Q] = () => Player.Shoot();
 
+            KeyBindings[Keys.D0] = () =>
+            {
+                Create();
+                GameRender.Create();
+            };
 
             KeyBindings[Keys.Z] = () =>
             {
