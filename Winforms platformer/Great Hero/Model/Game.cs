@@ -54,6 +54,30 @@ namespace Winforms_platformer.Model
             WindowSize.Height = height;
         }
 
+        public static void TryThrowTreasure(int mouseX, int mouseY)
+        {
+            if (TryGetTreasureIndex(mouseX, mouseY, out var i))
+            {
+                var treasure = new TreasureItem(Player.x + Player.collider.field.Width + 1, Player.y,
+                    new Collider(Resources.Treasures.Size), Map.CurrentRoom, Player.treasures[i].ID);
+                TreasurePool.RemoveFromPlayer(i, false);
+                Map.CurrentRoom().LootList.Add(treasure);
+            }
+        }
+
+        private static bool TryGetTreasureIndex(int mouseX, int mouseY, out int index)
+        {
+            index = 0;
+            if (mouseX < WindowSize.Width - 150 || mouseY < 50)
+                return false;
+            var column = (mouseX - WindowSize.Width + 150) / 50;
+            var row = (mouseY - 50) / 50;
+            index = row * 3 + column;
+            if (index < Player.treasures.Count)
+                return true;
+            return false;
+        }
+
         static void SetKeyBindings()
         {
             KeyBindings[Keys.Left] = () =>
@@ -118,13 +142,14 @@ namespace Winforms_platformer.Model
                     DeveloperToolsON = true;
             };
 
-            var treasureID = 16;
+            var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
 
             KeyBindings[Keys.D1] = () =>
             {
                 if (DeveloperToolsON)
                     Map.CurrentRoom().LootList.Add(
                     new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));
+                treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
             };
 
 

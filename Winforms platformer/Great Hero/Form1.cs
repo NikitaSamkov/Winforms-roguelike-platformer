@@ -39,8 +39,15 @@ namespace Winforms_platformer
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            
             if (Game.KeyBindings.ContainsKey(e.KeyCode))
                 Game.KeyBindings[e.KeyCode]();
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                Game.TryThrowTreasure(e.X, e.Y);
         }
 
         protected override void OnKeyUp(KeyEventArgs e)

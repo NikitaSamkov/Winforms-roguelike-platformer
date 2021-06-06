@@ -45,15 +45,23 @@ namespace Winforms_platformer
             }
         }
 
-        public static void RemoveFromPlayer(int treasureID)
+        public static void RemoveFromPlayer(int index, bool treasureID = true)
         {
-            for (var i = 0; i < Game.Player.treasures.Count; i++)
-                if (Game.Player.treasures[i].ID == treasureID)
-                {
-                    Game.Player.treasures.RemoveAt(i);
-                    treasures[treasureID].Disable();
-                    break;
-                }
+            if (treasureID)
+            {
+                for (var i = 0; i < Game.Player.treasures.Count; i++)
+                    if (Game.Player.treasures[i].ID == index)
+                    {
+                        Game.Player.treasures.RemoveAt(i);
+                        treasures[index].Disable();
+                        break;
+                    }
+            }
+            else
+            {
+                treasures[Game.Player.treasures[index].ID].Disable();
+                Game.Player.treasures.RemoveAt(index);
+            }
         }
 
         public static ITreasure GetTreasureByID(int treasureID)
@@ -65,7 +73,7 @@ namespace Winforms_platformer
 
         public static void SortPool() => treasures.OrderBy(treasure => treasure.ID);
 
-        private static int GetPrice()
+        public static int GetPrice()
         {
             var treasuresPrices = treasures.Select(e => e.Price).ToList();
             var sum = 0.00;
@@ -81,7 +89,7 @@ namespace Winforms_platformer
             return 0;
         }
 
-        private static ITreasure GetRandomItem(int price)
+        public static ITreasure GetRandomItem(int price)
         {
             var items = treasures.Where(e => e.Price == price).ToList();
             if (items.Count == 0)
@@ -175,7 +183,7 @@ namespace Winforms_platformer
 
         public virtual void SetTimer()
         {
-            timer = reloadTime; 
+            timer = reloadTime;
         }
     }
 
