@@ -167,12 +167,14 @@ namespace Winforms_platformer
         {
             if (Game.Player.Treasures.Where(t => t == this).Count() == 0)
                 Game.Player.SecondaryWeapons.Remove(type);
+            Game.Player.CurrentSecondaryWeapon = Game.Player.SecondaryWeapons.Count - 1;
         }
 
         public void Enable()
         {
             if (Game.Player.Treasures.Where(t => t == this).Count() == 0)
                 Game.Player.SecondaryWeapons.Add(type);
+            Game.Player.CurrentSecondaryWeapon = Game.Player.SecondaryWeapons.Count - 1;
         }
 
         public void UpdateTimer()
