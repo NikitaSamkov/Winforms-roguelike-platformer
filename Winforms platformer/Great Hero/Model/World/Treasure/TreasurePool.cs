@@ -41,7 +41,7 @@ namespace Winforms_platformer
             if (treasureID < treasures.Count && treasureID >= 0)
             {
                 treasures[treasureID].Enable();
-                Game.Player.treasures.Add(treasures[treasureID]);
+                Game.Player.Treasures.Add(treasures[treasureID]);
             }
         }
 
@@ -49,18 +49,18 @@ namespace Winforms_platformer
         {
             if (treasureID)
             {
-                for (var i = 0; i < Game.Player.treasures.Count; i++)
-                    if (Game.Player.treasures[i].ID == index)
+                for (var i = 0; i < Game.Player.Treasures.Count; i++)
+                    if (Game.Player.Treasures[i].ID == index)
                     {
-                        Game.Player.treasures.RemoveAt(i);
+                        Game.Player.Treasures.RemoveAt(i);
                         treasures[index].Disable();
                         break;
                     }
             }
             else
             {
-                treasures[Game.Player.treasures[index].ID].Disable();
-                Game.Player.treasures.RemoveAt(index);
+                treasures[Game.Player.Treasures[index].ID].Disable();
+                Game.Player.Treasures.RemoveAt(index);
             }
         }
 
@@ -147,32 +147,32 @@ namespace Winforms_platformer
 
     public class EternalBow : ITreasure
     {
-        protected int playerAmmo;
         public int reloadTime { get; protected set; }
         public int timer { get; protected set; }
 
         public int ID { get; protected set; }
 
         public int Price { get; protected set; }
+        protected SecondaryWeapon type;
 
         public EternalBow()
         {
             reloadTime = 25;
             ID = 1;
             Price = 9;
+            type = SecondaryWeapon.EternalBow;
         }
 
         public void Disable()
         {
-            if (Game.Player.treasures.Where(t => t == this).Count() == 0)
-                Game.Player.Ammo = playerAmmo;
+            if (Game.Player.Treasures.Where(t => t == this).Count() == 0)
+                Game.Player.SecondaryWeapons.Remove(type);
         }
 
         public void Enable()
         {
-            if (Game.Player.Ammo >= 0)
-                playerAmmo = Game.Player.Ammo;
-            Game.Player.Ammo = -1;
+            if (Game.Player.Treasures.Where(t => t == this).Count() == 0)
+                Game.Player.SecondaryWeapons.Add(type);
         }
 
         public void UpdateTimer()
@@ -216,7 +216,7 @@ namespace Winforms_platformer
 
         public void Disable()
         {
-            if (Game.Player.treasures.Contains(this))
+            if (Game.Player.Treasures.Contains(this))
                 HeartLoot.HealPower /= multiplier;
             else
                 HeartLoot.HealPower /= -multiplier;
@@ -224,7 +224,7 @@ namespace Winforms_platformer
 
         public void Enable()
         {
-            if (Game.Player.treasures.Contains(this))
+            if (Game.Player.Treasures.Contains(this))
                 HeartLoot.HealPower *= multiplier;
             else
                 HeartLoot.HealPower *= -multiplier;
@@ -508,6 +508,7 @@ namespace Winforms_platformer
             ID = 18;
             Price = 8;
             reloadTime = maxReload;
+            type = SecondaryWeapon.PlasmaBall;
         }
 
         public override void SetTimer()
@@ -534,6 +535,7 @@ namespace Winforms_platformer
             ID = 19;
             Price = 8;
             reloadTime = 45;
+            type = SecondaryWeapon.GhostForm;
         }
     }
 

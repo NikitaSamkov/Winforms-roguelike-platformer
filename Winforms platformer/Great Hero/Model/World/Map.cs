@@ -177,7 +177,7 @@ namespace Winforms_platformer.Model
                     player.Hurt(enemy.damage);
                 enemy.Update();
 
-                if (player.treasures.Contains(TreasurePool.GetTreasureByID(17)))
+                if (player.Treasures.Contains(TreasurePool.GetTreasureByID(17)))
                 {
                     var treasure = TreasurePool.GetTreasureByID(17) as MindPower;
                     var dx = (enemy.x > player.x) ? 1 : -1;
@@ -212,7 +212,7 @@ namespace Winforms_platformer.Model
                     break;
                 }
                 var targets = CurrentRoom().GetIntersectedEntities(projectile).Where(t => t != projectile.Sender).ToList();
-                if (projectile.type == ProjectileType.Enemy && !player.treasures.Contains(TreasurePool.GetTreasureByID(5)))
+                if (projectile.type == ProjectileType.Enemy && !player.Treasures.Contains(TreasurePool.GetTreasureByID(5)))
                     targets = targets.Where(target => target == player).ToList();
                 if (targets.Count > 0)
                 {
@@ -238,7 +238,7 @@ namespace Winforms_platformer.Model
             {
                 var entities = CurrentRoom().GetIntersectedEntities(loot);
                 Entity target = null;
-                if (player.treasures.Contains(TreasurePool.GetTreasureByID(3)) && loot is HeartLoot)
+                if (player.Treasures.Contains(TreasurePool.GetTreasureByID(3)) && loot is HeartLoot)
                     target = entities.FirstOrDefault();
                 else if (loot.IntersectsWithBody(player))
                     target = player;
@@ -251,7 +251,7 @@ namespace Winforms_platformer.Model
                 loot.Update();
             }
 
-            if (player.y < 0 && !(player.treasures.Contains(TreasurePool.GetTreasureByID(11))))
+            if (player.y < 0 && !(player.Treasures.Contains(TreasurePool.GetTreasureByID(11))))
             {
                 player.TeleportTo(player.x, 0);
                 player.FreezeInAir();

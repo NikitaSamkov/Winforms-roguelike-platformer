@@ -247,7 +247,7 @@ namespace Winforms_platformer.View
             foreach (var platform in CurrentRoom().Platforms)
             {
                 g.DrawImage(Resource.Platform, platform.leftBorder, platform.level, new Rectangle(0, 0, (platform.rightBorder - platform.leftBorder) / 2, Resource.PlatformSize.Height), GraphicsUnit.Pixel);
-                g.DrawImage(Resource.Platform, platform.leftBorder + (platform.rightBorder - platform.leftBorder) / 2, platform.level, 
+                g.DrawImage(Resource.Platform, platform.leftBorder + (platform.rightBorder - platform.leftBorder) / 2, platform.level,
                     new Rectangle(Resource.PlatformSize.Width - (platform.rightBorder - platform.leftBorder) / 2, 0,
                     (platform.rightBorder - platform.leftBorder) / 2, Resource.PlatformSize.Height), GraphicsUnit.Pixel);
             }
@@ -282,7 +282,7 @@ namespace Winforms_platformer.View
 
         public Bitmap GetSprite(int ID, LootResource resource)
         {
-            if (ID == 0 && resource is LootRes && Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(3)))
+            if (ID == 0 && resource is LootRes && Game.Player.Treasures.Contains(TreasurePool.GetTreasureByID(3)))
                 return (resource as LootRes).id0alt;
             foreach (var field in resource.GetType().GetFields())
                 if (field.Name == "id" + ID)
@@ -311,24 +311,25 @@ namespace Winforms_platformer.View
             }
             #endregion
             #region Ammo
-            for (var i = 0; i < Game.Player.Ammo; i++)
-            {
-                g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
-            }
-            if (Game.Player.Ammo < 0)
+            if (Game.Player.SecondaryWeapons[Game.Player.CurrentSecondaryWeapon] == SecondaryWeapon.Bow)
+                for (var i = 0; i < Game.Player.Ammo; i++)
+                {
+                    g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
+                }
+            else
             {
                 EternalBow weapon = TreasurePool.GetTreasureByID(1) as EternalBow;
                 Bitmap ammo = Resources.UI.EternalAmmo;
                 Bitmap ammoReloading = Resources.UI.EternalAmmoReloading;
                 Size ammoSize = Resources.UI.EternalAmmoSize;
-                if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(19)))
+                if (Game.Player.SecondaryWeapons[Game.Player.CurrentSecondaryWeapon] == SecondaryWeapon.GhostForm)
                 {
                     weapon = TreasurePool.GetTreasureByID(19) as GhostForm;
                     ammo = Resources.UI.GhostForm;
                     ammoReloading = Resources.UI.GhostFormReloading;
                     ammoSize = Resources.UI.GhostFormSize;
                 }
-                else if (Game.Player.treasures.Contains(TreasurePool.GetTreasureByID(18)))
+                if (Game.Player.SecondaryWeapons[Game.Player.CurrentSecondaryWeapon] == SecondaryWeapon.PlasmaBall)
                 {
                     weapon = TreasurePool.GetTreasureByID(18) as PlasmaBall;
                     ammo = Resources.UI.PlasmaAmmo;
@@ -346,7 +347,7 @@ namespace Winforms_platformer.View
             #region Treasures
             var column = 0;
             var row = 0;
-            foreach (var treasure in Game.Player.treasures)
+            foreach (var treasure in Game.Player.Treasures)
             {
                 g.DrawImage(GetTreasureSprite(treasure.ID), Game.WindowSize.Width - 150 + 50 * column, 50 + 50 * row,
                     50, (float)(Resources.Treasures.Size.Height / ((double)Resources.Treasures.Size.Width / 50)));

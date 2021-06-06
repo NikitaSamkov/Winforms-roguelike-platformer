@@ -12,13 +12,16 @@ namespace Winforms_platformer
 {
     public class Player : Creature
     {
-        public List<ITreasure> treasures { get; set; }
+        public List<SecondaryWeapon> SecondaryWeapons;
+        public int CurrentSecondaryWeapon;
+        public List<ITreasure> Treasures { get; set; }
         public Player(int x, int y, Collider collider, Func<Room> room) 
             : base(x, y, collider, room)
         {
             direction = Direction.Right;
             xSpeed = 20;
-            treasures = new List<ITreasure>();
+            Treasures = new List<ITreasure>();
+            SecondaryWeapons = new List<SecondaryWeapon> { SecondaryWeapon.Bow };
             HP = 100;
             MaxHP = HP;
             damage = 10;
@@ -26,18 +29,18 @@ namespace Winforms_platformer
 
         public override void Update()
         {
-            if (treasures.Contains(TreasurePool.GetTreasureByID(19)))
+            if (Treasures.Contains(TreasurePool.GetTreasureByID(19)))
                 (TreasurePool.GetTreasureByID(19) as GhostForm).UpdateTimer();
-            else if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
+            if (Treasures.Contains(TreasurePool.GetTreasureByID(18)))
                 (TreasurePool.GetTreasureByID(18) as EternalBow).UpdateTimer();
-            else if (treasures.Contains(TreasurePool.GetTreasureByID(1)))
+            if (Treasures.Contains(TreasurePool.GetTreasureByID(1)))
                 (TreasurePool.GetTreasureByID(1) as EternalBow).UpdateTimer();
             base.Update();
         }
 
         public override void Shoot(int angle = 15)
         {
-            if (Ammo > 0)
+            if (SecondaryWeapons[CurrentSecondaryWeapon] == SecondaryWeapon.Bow && Ammo > 0)
             {
                 var arrow = new Arrow(x, y + collider.field.Height / 2,
                         new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
@@ -46,7 +49,7 @@ namespace Winforms_platformer
                 CurrentRoom().ProjectilesList.Add(arrow);
                 Ammo--;
             }
-            else if (treasures.Contains(TreasurePool.GetTreasureByID(19)))
+            if (SecondaryWeapons[CurrentSecondaryWeapon] == SecondaryWeapon.GhostForm)
             {
                 var ghost = TreasurePool.GetTreasureByID(19) as GhostForm;
                 if (ghost.timer == 0)
@@ -55,7 +58,7 @@ namespace Winforms_platformer
                     ghost.SetTimer();
                 }
             }
-            else if (treasures.Contains(TreasurePool.GetTreasureByID(18)))
+            if (SecondaryWeapons[CurrentSecondaryWeapon] == SecondaryWeapon.PlasmaBall)
             {
                 var ball = TreasurePool.GetTreasureByID(18) as PlasmaBall;
                 if (ball.timer == 0)
@@ -67,7 +70,7 @@ namespace Winforms_platformer
                     ball.SetTimer();
                 }
             }
-            else if (treasures.Contains(TreasurePool.GetTreasureByID(1)))
+            if (SecondaryWeapons[CurrentSecondaryWeapon] == SecondaryWeapon.EternalBow)
             {
                 var bow = TreasurePool.GetTreasureByID(1) as EternalBow;
                 if (bow.timer == 0)

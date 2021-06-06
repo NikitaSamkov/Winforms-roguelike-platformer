@@ -33,7 +33,7 @@ namespace Winforms_platformer
                         x += xSpeed;
                         break;
                 }
-            if (!(flying || ((this is Player) && (this as Player).treasures.Contains(TreasurePool.GetTreasureByID(0))))) 
+            if (!(flying || ((this is Player) && (this as Player).Treasures.Contains(TreasurePool.GetTreasureByID(0))))) 
                 MoveY();
             if (invincibility > 0)
                 invincibility--;

@@ -67,7 +67,7 @@ namespace Winforms_platformer.Model
             if (TryGetTreasureIndex(mouseX, mouseY, out var i))
             {
                 var treasure = new TreasureItem(Player.x + Player.collider.field.Width + 1, Player.y,
-                    new Collider(Resources.Treasures.Size), Map.CurrentRoom, Player.treasures[i].ID);
+                    new Collider(Resources.Treasures.Size), Map.CurrentRoom, Player.Treasures[i].ID);
                 TreasurePool.RemoveFromPlayer(i, false);
                 Map.CurrentRoom().LootList.Add(treasure);
             }
@@ -81,7 +81,7 @@ namespace Winforms_platformer.Model
             var column = (mouseX - WindowSize.Width + 150) / 50;
             var row = (mouseY - 50) / 50;
             index = row * 3 + column;
-            if (index < Player.treasures.Count)
+            if (index < Player.Treasures.Count)
                 return true;
             return false;
         }
@@ -112,7 +112,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Up] = KeyBindings[Keys.Space] = () =>
             {
-                if (Player.treasures.Contains(TreasurePool.GetTreasureByID(0)))
+                if (Player.Treasures.Contains(TreasurePool.GetTreasureByID(0)))
                     Player.MoveUp();
                 else
                     Player.Jump();
@@ -121,7 +121,7 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.Down] = () =>
             {
-                if (Player.treasures.Contains(TreasurePool.GetTreasureByID(0)))
+                if (Player.Treasures.Contains(TreasurePool.GetTreasureByID(0)))
                     Player.MoveDown();
                 else
                     Player.MoveDown(1);
@@ -147,6 +147,9 @@ namespace Winforms_platformer.Model
                 GameRender.Create();
             };
 
+            KeyBindings[Keys.R] = () =>
+            Player.CurrentSecondaryWeapon = (Player.CurrentSecondaryWeapon + 1) % Player.SecondaryWeapons.Count;
+
             KeyBindings[Keys.Z] = () =>
             {
                 if (DeveloperToolsON)
@@ -155,7 +158,8 @@ namespace Winforms_platformer.Model
                     DeveloperToolsON = true;
             };
 
-            var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
+            //var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
+            var treasureID = 19;
 
             KeyBindings[Keys.D1] = () =>
             {

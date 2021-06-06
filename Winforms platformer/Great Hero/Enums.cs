@@ -79,4 +79,12 @@ namespace Winforms_platformer
         CenterRight,
         Right
     }
+
+    public enum SecondaryWeapon
+    {
+        Bow,
+        EternalBow,
+        PlasmaBall,
+        GhostForm
+    }
 }

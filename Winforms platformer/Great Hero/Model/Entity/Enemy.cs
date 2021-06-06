@@ -650,9 +650,10 @@ namespace Winforms_platformer
                 while (CurrentRoom().EnemyList[target] == this)
                     target = Game.Map.Random.Next(CurrentRoom().EnemyList.Count);
                 original = CurrentRoom().EnemyList[target];
-                collider = original.collider;
             }
             else original = new Chameleon(x, y, new Collider(Resources.Chameleon.IdleSize), CurrentRoom);
+
+            collider = original.collider;
         }
     }
 }
