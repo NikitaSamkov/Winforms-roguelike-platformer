@@ -189,7 +189,7 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.D5] = () =>
             {
                 if (DeveloperToolsON)
-                    Map.CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetEnemy(Player.x - 50, Player.y - 50, EnemyType.SuperRoller));
+                    Map.CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetEnemy(Player.x - 50, Player.y - 50, EnemyType.Chameleon));
             };
 
             KeyBindings[Keys.T] = () =>

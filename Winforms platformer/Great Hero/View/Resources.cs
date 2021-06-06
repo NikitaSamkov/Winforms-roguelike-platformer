@@ -260,14 +260,6 @@ namespace Winforms_platformer
             IdleSize = new Size(40, 96);
             MoveSize = new Size(40, 96);
         }
-
-        public void Swap(EntityResource resource)
-        {
-            Idle = resource.Idle;
-            Move = resource.Move;
-            IdleSize = resource.IdleSize;
-            MoveSize = resource.MoveSize;
-        }
     }
     #endregion
 

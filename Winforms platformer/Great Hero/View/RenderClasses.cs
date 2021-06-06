@@ -135,6 +135,43 @@ namespace Winforms_platformer.View
             this.CurrentRoom = CurrentRoom;
         }
 
+        public EntityResource GetResources(Enemy enemy)
+        {
+            EntityResource resources = Resources.Dummy;
+
+            //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
+            if (enemy is Slime)
+                resources = Resources.Slime;
+            if (enemy is Roller)
+                resources = Resources.Roller;
+            if (enemy is SuperRoller)
+                resources = Resources.SuperRoller;
+            if (enemy is Swordsman)
+                resources = Resources.Swordsman;
+            if (enemy is Archer)
+                resources = Resources.Archer;
+            if (enemy is Magician)
+                resources = Resources.Magician;
+            if (enemy is SuperMagician)
+                resources = Resources.SuperMagician;
+            if (enemy is BigCow)
+                resources = Resources.BigCow;
+            if (enemy is Ghost)
+                resources = Resources.Ghost;
+            if (enemy is InvisibleMan)
+                resources = Resources.InvisibleMan;
+            if (enemy is Turret)
+                resources = Resources.Turret;
+            if (enemy is Sticker)
+                resources = Resources.Sticker;
+            if (enemy is Clone)
+                resources = Resources.Clone;
+            if (enemy is Chameleon)
+                resources = Resources.Chameleon;
+
+            return resources;
+        }
+
         public void Paint(Graphics g)
         {
             foreach (var enemy in CurrentRoom().EnemyList)
@@ -142,47 +179,16 @@ namespace Winforms_platformer.View
                 var render = enemies.Where(e => e.Entity == (Entity)enemy).FirstOrDefault();
                 if (render == null)
                 {
-                    EntityResource resources = Resources.Dummy;
                     var ticksPerFrame = 3;
-
-                    //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
-                    if (enemy is Slime)
-                        resources = Resources.Slime;
-                    if (enemy is Roller)
-                        resources = Resources.Roller;
-                    if (enemy is SuperRoller)
-                        resources = Resources.SuperRoller;
-                    if (enemy is Swordsman)
-                        resources = Resources.Swordsman;
-                    if (enemy is Archer)
-                        resources = Resources.Archer;
-                    if (enemy is Magician)
-                        resources = Resources.Magician;
-                    if (enemy is SuperMagician)
-                        resources = Resources.SuperMagician;
                     if (enemy is BigCow)
-                    {
-                        resources = Resources.BigCow;
                         ticksPerFrame = 2;
-                    }
-                    if (enemy is Ghost)
-                        resources = Resources.Ghost;
-                    if (enemy is InvisibleMan)
-                        resources = Resources.InvisibleMan;
-                    if (enemy is Turret)
-                        resources = Resources.Turret;
-                    if (enemy is Sticker)
-                        resources = Resources.Sticker;
-                    if (enemy is Clone)
-                        resources = Resources.Clone;
-                    if (enemy is Chameleon)
-                        resources = Resources.Chameleon;
-
-                    render = new EntityRender(enemy, resources, ticksPerFrame);
+                    render = new EntityRender(enemy, GetResources(enemy), ticksPerFrame);
                     enemies.Add(render);
                 }
                 if (render.Entity is Sticker && (render.Entity as Sticker).stickerStatus == Status.Attack && render.Resource != Resources.StickerAttack)
                     render.Resource = Resources.StickerAttack;
+                if (render.Entity is Chameleon)
+                    render.Resource = GetResources((render.Entity as Chameleon).original);
                 render.Paint(g);
             }
         }

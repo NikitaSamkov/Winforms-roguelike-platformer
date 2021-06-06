@@ -612,6 +612,7 @@ namespace Winforms_platformer
 
     public class Chameleon : Enemy
     {
+        public Enemy original;
         private int swapCooldown = 50;
         private int timer = 0;
 
@@ -643,65 +644,15 @@ namespace Winforms_platformer
 
         private void Swap()
         {
-            switch (RandomEnemyGenerator.GetRandomEnemyType())
+            if (CurrentRoom().EnemyList.Count > 1)
             {
-                case EnemyType.Slime:
-                    Resources.Chameleon.Swap(Resources.Slime);
-                    collider = new Collider(Resources.Slime.IdleSize);
-                    break;
-                case EnemyType.Roller:
-                    Resources.Chameleon.Swap(Resources.Roller);
-                    collider = new Collider(Resources.Roller.IdleSize);
-                    break;
-                case EnemyType.SuperRoller:
-                    Resources.Chameleon.Swap(Resources.SuperRoller);
-                    collider = new Collider(Resources.SuperRoller.IdleSize);
-                    break;
-                case EnemyType.Swordsman:
-                    Resources.Chameleon.Swap(Resources.Swordsman);
-                    collider = new Collider(Resources.Swordsman.IdleSize);
-                    break;
-                case EnemyType.Archer:
-                    Resources.Chameleon.Swap(Resources.Archer);
-                    collider = new Collider(Resources.Archer.IdleSize);
-                    break;
-                case EnemyType.Magician:
-                    Resources.Chameleon.Swap(Resources.Magician);
-                    collider = new Collider(Resources.Magician.IdleSize);
-                    break;
-                case EnemyType.SuperMagician:
-                    Resources.Chameleon.Swap(Resources.SuperMagician);
-                    collider = new Collider(Resources.SuperMagician.IdleSize);
-                    break;
-                case EnemyType.BigCow:
-                    Resources.Chameleon.Swap(Resources.BigCow);
-                    collider = new Collider(Resources.BigCow.IdleSize);
-                    break;
-                case EnemyType.Ghost:
-                    Resources.Chameleon.Swap(Resources.Ghost);
-                    collider = new Collider(Resources.Ghost.IdleSize);
-                    break;
-                case EnemyType.InvisibleMan:
-                    Resources.Chameleon.Swap(Resources.InvisibleMan);
-                    collider = new Collider(Resources.InvisibleMan.IdleSize);
-                    break;
-                case EnemyType.Turret:
-                    Resources.Chameleon.Swap(Resources.Turret);
-                    collider = new Collider(Resources.Turret.IdleSize);
-                    break;
-                case EnemyType.Sticker:
-                    Resources.Chameleon.Swap(Resources.Sticker);
-                    collider = new Collider(Resources.Sticker.IdleSize);
-                    break;
-                case EnemyType.Clone:
-                    Resources.Chameleon.Swap(Resources.Clone);
-                    collider = new Collider(Resources.Clone.IdleSize);
-                    break;
-                case EnemyType.Dummy:
-                case EnemyType.Chameleon:
-                    Swap();
-                    break;
+                var target = 0;
+                while (CurrentRoom().EnemyList[target] == this)
+                    target = Game.Map.Random.Next(CurrentRoom().EnemyList.Count);
+                original = CurrentRoom().EnemyList[target];
+                collider = original.collider;
             }
+            else original = new Chameleon(x, y, new Collider(Resources.Chameleon.IdleSize), CurrentRoom);
         }
     }
 }
