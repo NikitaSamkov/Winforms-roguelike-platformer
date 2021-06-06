@@ -18,6 +18,7 @@ namespace Winforms_platformer
         {
             InitializeComponent();
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
             var mainTimer = new Timer();
             mainTimer.Interval = 60;
