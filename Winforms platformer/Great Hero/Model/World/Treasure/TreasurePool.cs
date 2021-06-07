@@ -297,14 +297,13 @@ namespace Winforms_platformer
         public void Disable()
         {
             Game.Player.MaxHP -= power;
-            if (Game.Player.HP > Game.Player.MaxHP)
-                Game.Player.HP = Game.Player.MaxHP;
+            Game.Player.HP -= power;
         }
 
         public void Enable()
         {
             Game.Player.MaxHP += power;
-            Game.Player.HP = Game.Player.MaxHP;
+            Game.Player.HP += power;
         }
     }
 
