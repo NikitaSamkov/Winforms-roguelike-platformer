@@ -59,8 +59,9 @@ namespace Winforms_platformer
             }
             else
             {
-                treasures[Game.Player.Treasures[index].ID].Disable();
+                var id = Game.Player.Treasures[index].ID;
                 Game.Player.Treasures.RemoveAt(index);
+                treasures[id].Disable();
             }
         }
 

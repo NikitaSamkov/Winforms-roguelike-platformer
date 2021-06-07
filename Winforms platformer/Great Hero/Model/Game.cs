@@ -143,6 +143,8 @@ namespace Winforms_platformer.Model
 
             KeyBindings[Keys.D0] = () =>
             {
+                for (var i = 0; i < Player.Treasures.Count; i++)
+                    TreasurePool.RemoveFromPlayer(i, false);
                 Create();
                 GameRender.Create();
             };
@@ -159,7 +161,7 @@ namespace Winforms_platformer.Model
             };
 
             //var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
-            var treasureID = 7;
+            var treasureID = 3;
 
             KeyBindings[Keys.D1] = () =>
             {
