@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,18 +97,28 @@ namespace Winforms_platformer.View
 
         public void Paint(Graphics g)
         {
-
+            ColorMatrix m = new ColorMatrix();
+            if (!(Entity is Player) && Entity.invincibility > Entity.damageInvincibility - 3)
+            {
+                m.Matrix00 = 2f;
+                m.Matrix11 = 0.5f;
+                m.Matrix22 = 0.5f;
+                m.Matrix33 = 0.9f;
+            }
+            ImageAttributes a = new ImageAttributes();
+            a.SetColorMatrix(m, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
             GetCurrentSheet();
             StopAttackingIfNeeded();
             currentFrame++;
             if (Entity.invincibility % 2 != 1 || !(Entity is Player))
-                g.DrawImage(CurrentSheet, ((int)Entity.direction == 0) ? Entity.x :
-                        Entity.x + Entity.collider.field.Width - currentFrameSize.Width,
-                    Entity.y, new Rectangle(currentFrameSize.Width * frame,
+                g.DrawImage(CurrentSheet,
+                    new Rectangle(((int)Entity.direction == 0) ? Entity.x : Entity.x + Entity.collider.field.Width - currentFrameSize.Width,
+                    Entity.y, currentFrameSize.Width, currentFrameSize.Height),
+                    currentFrameSize.Width * frame,
                         currentFrameSize.Height * (int)Entity.direction,
                         currentFrameSize.Width,
-                        currentFrameSize.Height),
-                        GraphicsUnit.Pixel);
+                        currentFrameSize.Height,
+                        GraphicsUnit.Pixel, a);
             if (Game.DeveloperToolsON)
             {
                 g.DrawRectangle(new Pen(Color.Green), Entity.x + Entity.collider.x, Entity.y + Entity.collider.y, Entity.collider.field.Width,
