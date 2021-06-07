@@ -5,24 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Winforms_platformer;
+using System.Reflection;
 
-[TestFixture]
-public class Tests
+namespace Winforms_platformer
 {
-    Player player;
-    Room room;
-
-    [SetUp]
-    public void SetUp()
+    [TestFixture]
+    public class PhysicsTests
     {
-        player = new Player(0, 0, new Collider(new Size(40, 112)), () => room);
-        room = new Room(RoomType.RegularRoom);
-    }
+        Player player;
+        Room room;
 
-    [Test]
-    public void RoomTest()
-    {
-        Assert.AreEqual(player.CurrentRoom(), room);
+        [SetUp]
+        public void SetUp()
+        {
+            player = new Player(0, 0, new Collider(new Size(40, 112)), () => room);
+            room = new Room(RoomType.RegularRoom);
+        }
+
+        [Test]
+        public void RoomTest()
+        {
+            Assert.AreEqual(player.CurrentRoom(), room);
+        }
+
+        [TestCase(0, 7)]
+        public void MoveYTest(int startY, int expectedY)
+        {
+            var method = typeof(Entity).GetMethod("MoveY", BindingFlags.NonPublic | BindingFlags.Instance);
+            method.Invoke(player, new object[0]);
+            Assert.AreEqual(expectedY, player.y);
+        }
     }
 }
