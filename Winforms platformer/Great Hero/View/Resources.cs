@@ -9,34 +9,64 @@ namespace Winforms_platformer
 {
     public static class Resources
     {
-        public static readonly SystemRes System = new SystemRes();
-        public static readonly PlayerRes Player = new PlayerRes();
+        public static SystemRes System;
+        public static PlayerRes Player;
         #region ENEMIES
-        public static readonly DummyRes Dummy = new DummyRes();
-        public static readonly SlimeRes Slime = new SlimeRes();
-        public static readonly RollerRes Roller = new RollerRes();
-        public static readonly SuperRollerRes SuperRoller = new SuperRollerRes();
-        public static readonly SwordsmanRes Swordsman = new SwordsmanRes();
-        public static readonly ArcherRes Archer = new ArcherRes();
-        public static readonly MagicianRes Magician = new MagicianRes();
-        public static readonly SuperMagicianRes SuperMagician = new SuperMagicianRes();
-        public static readonly BigCowRes BigCow = new BigCowRes();
-        public static readonly GhostRes Ghost = new GhostRes();
-        public static readonly InvisibleManRes InvisibleMan = new InvisibleManRes();
-        public static readonly TurretRes Turret = new TurretRes();
-        public static readonly StickerRes Sticker = new StickerRes();
-        public static readonly StickerAttackRes StickerAttack = new StickerAttackRes();
-        public static readonly CloneRes Clone = new CloneRes();
-        public static readonly ChameleonRes Chameleon = new ChameleonRes();
+        public static DummyRes Dummy;
+        public static SlimeRes Slime;
+        public static RollerRes Roller;
+        public static SuperRollerRes SuperRoller;
+        public static SwordsmanRes Swordsman;
+        public static ArcherRes Archer;
+        public static MagicianRes Magician;
+        public static SuperMagicianRes SuperMagician;
+        public static BigCowRes BigCow;
+        public static GhostRes Ghost;
+        public static InvisibleManRes InvisibleMan;
+        public static TurretRes Turret;
+        public static StickerRes Sticker;
+        public static StickerAttackRes StickerAttack;
+        public static CloneRes Clone;
+        public static ChameleonRes Chameleon;
         #endregion
-        public static readonly RoomRes Room = new RoomRes();
-        public static readonly TreasureRoomRes TreasureRoom = new TreasureRoomRes();
-        public static readonly TreasuresRes Treasures = new TreasuresRes();
-        public static readonly ArrowRes Arrow = new ArrowRes();
-        public static readonly PlasmaRes Plasma = new PlasmaRes();
-        public static readonly UIRes UI = new UIRes();
-        public static readonly LootRes Loot = new LootRes();
-        public static readonly BossRes Boss = new BossRes();
+        public static RoomRes Room;
+        public static TreasureRoomRes TreasureRoom;
+        public static TreasuresRes Treasures;
+        public static ArrowRes Arrow;
+        public static PlasmaRes Plasma;
+        public static UIRes UI;
+        public static LootRes Loot;
+        public static BossRes Boss;
+
+        public static void Create()
+        {
+            System = new SystemRes();
+            Player = new PlayerRes();
+            Dummy = new DummyRes();
+            Slime = new SlimeRes();
+            Roller = new RollerRes();
+            SuperRoller = new SuperRollerRes();
+            Swordsman = new SwordsmanRes();
+            Archer = new ArcherRes();
+            Magician = new MagicianRes();
+            SuperMagician = new SuperMagicianRes();
+            BigCow = new BigCowRes();
+            Ghost = new GhostRes();
+            InvisibleMan = new InvisibleManRes();
+            Turret = new TurretRes();
+            Sticker = new StickerRes();
+            StickerAttack = new StickerAttackRes();
+            Clone = new CloneRes();
+            Chameleon = new ChameleonRes();
+            Room = new RoomRes();
+            TreasureRoom = new TreasureRoomRes();
+            Treasures = new TreasuresRes();
+            Arrow = new ArrowRes();
+            Plasma = new PlasmaRes();
+            UI = new UIRes();
+            Loot = new LootRes();
+            Boss = new BossRes();
+        }
     }
 
     public class EntityResource

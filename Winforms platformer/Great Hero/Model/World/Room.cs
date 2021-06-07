@@ -41,6 +41,16 @@ namespace Winforms_platformer
             player = Game.Player;
         }
 
+        public Room(Player player, int g = 7, int ground = 486)
+        {
+            Type = RoomType.RegularRoom;
+            Platforms = new List<Platform>();
+            LootList = new List<Loot>();
+            EnemySpots = new List<Point>();
+            GroundLevel = ground;
+            gForce = g;
+        }
+
         public int GetYSpeed(int x, int y, int width, int speed)
         {
             var newY = y + speed + gForce;

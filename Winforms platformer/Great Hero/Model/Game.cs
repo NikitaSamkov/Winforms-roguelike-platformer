@@ -22,12 +22,6 @@ namespace Winforms_platformer.Model
         public static bool DeveloperToolsON = false;
         private static int superSecret;
 
-        static Game()
-        {
-            Create();
-            SetKeyBindings();
-        }
-
         public static void Create()
         {
             Player = new Player(150, 150, new Collider(Resources.Player.IdleSize, 0, 0,
@@ -86,7 +80,7 @@ namespace Winforms_platformer.Model
             return false;
         }
 
-        static void SetKeyBindings()
+        public static void SetKeyBindings()
         {
             KeyBindings[Keys.Left] = () =>
             {
@@ -195,7 +189,7 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.D5] = () =>
             {
                 if (DeveloperToolsON)
-                    Map.CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetEnemy(Player.x - 50, Player.y - 50, EnemyType.Swordsman));
+                    Map.CurrentRoom().EnemyList.Add(RandomEnemyGenerator.GetEnemy(Player.x - 50, Player.y - 50, EnemyType.Slime));
             };
 
             KeyBindings[Keys.T] = () =>

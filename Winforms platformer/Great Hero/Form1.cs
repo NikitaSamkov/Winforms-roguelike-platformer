@@ -20,6 +20,11 @@ namespace Winforms_platformer
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
+            Resources.Create();
+            Game.Create();
+            Game.SetKeyBindings();
+            GameRender.Create();
+
             var mainTimer = new Timer();
             mainTimer.Interval = 60;
             mainTimer.Tick += (sender, args) =>

@@ -5,23 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Winforms_platformer.Model;
+using Winforms_platformer;
 
-namespace Winforms_platformer
+[TestFixture]
+public class Tests
 {
-    [TestFixture]
-    public class TreasureTests
-    {
-        [SetUp]
-        public void SetUp()
-        {
-            
-        }
+    Player player;
+    Room room;
 
-        [Test]
-        public void TestRoom()
-        {
-            Assert.AreEqual(Game.Player.CurrentRoom(), Game.Map.CurrentRoom());
-        }
+    [SetUp]
+    public void SetUp()
+    {
+        player = new Player(0, 0, new Collider(new Size(40, 112)), () => room);
+        room = new Room(RoomType.RegularRoom);
+    }
+
+    [Test]
+    public void RoomTest()
+    {
+        Assert.AreEqual(player.CurrentRoom(), room);
     }
 }
