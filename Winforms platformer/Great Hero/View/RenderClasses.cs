@@ -98,12 +98,11 @@ namespace Winforms_platformer.View
         public void Paint(Graphics g)
         {
             ColorMatrix m = new ColorMatrix();
-            if (!(Entity is Player) && Entity.invincibility > Entity.damageInvincibility - 3)
+            if (!(Entity is Player) && Entity.invincibility > Entity.damageInvincibility - 5)
             {
-                m.Matrix00 = 2f;
-                m.Matrix11 = 0.5f;
-                m.Matrix22 = 0.5f;
-                m.Matrix33 = 0.9f;
+                m.Matrix40 = 0.5f;
+                m.Matrix41 = -0.3f;
+                m.Matrix42 = -0.3f;
             }
             ImageAttributes a = new ImageAttributes();
             a.SetColorMatrix(m, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
