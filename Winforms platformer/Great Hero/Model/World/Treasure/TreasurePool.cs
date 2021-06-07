@@ -9,7 +9,7 @@ namespace Winforms_platformer
 {
     public static class TreasurePool
     {
-        private static Random Random = Game.Map.Random;
+        private static Random Random;
 
         private static List<ITreasure> treasures = new List<ITreasure>
         {
@@ -36,31 +36,45 @@ namespace Winforms_platformer
             new SlimeLayer()
         };
 
-        public static void GiveToPlayer(int treasureID)
+        public static void SetRandom(int seed)
         {
+            Random = new Random(seed);
+        }
+
+        public static void SetRandom()
+        {
+            Random = Game.Map.Random;
+        }
+
+        public static void GiveToPlayer(int treasureID, Player player = null)
+        {
+            if (player == null)
+                player = Game.Player;
             if (treasureID < treasures.Count && treasureID >= 0)
             {
                 treasures[treasureID].Enable();
-                Game.Player.Treasures.Add(treasures[treasureID]);
+                player.Treasures.Add(treasures[treasureID]);
             }
         }
 
-        public static void RemoveFromPlayer(int index, bool treasureID = true)
+        public static void RemoveFromPlayer(int index, bool treasureID = true, Player player = null)
         {
+            if (player == null)
+                player = Game.Player;
             if (treasureID)
             {
-                for (var i = 0; i < Game.Player.Treasures.Count; i++)
-                    if (Game.Player.Treasures[i].ID == index)
+                for (var i = 0; i < player.Treasures.Count; i++)
+                    if (player.Treasures[i].ID == index)
                     {
-                        Game.Player.Treasures.RemoveAt(i);
+                        player.Treasures.RemoveAt(i);
                         treasures[index].Disable();
                         break;
                     }
             }
             else
             {
-                var id = Game.Player.Treasures[index].ID;
-                Game.Player.Treasures.RemoveAt(index);
+                var id = player.Treasures[index].ID;
+                player.Treasures.RemoveAt(index);
                 treasures[id].Disable();
             }
         }

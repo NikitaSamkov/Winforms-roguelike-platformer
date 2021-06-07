@@ -31,6 +31,7 @@ namespace Winforms_platformer.Model
             Map.SetRoomTemplates();
             Map.GenerateMap();
             Player.CurrentRoom = Map.CurrentRoom;
+            TreasurePool.SetRandom();
             TreasurePool.SortPool();
             BossZones.Create();
             Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, 500);
