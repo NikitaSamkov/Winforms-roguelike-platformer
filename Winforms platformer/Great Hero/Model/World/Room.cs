@@ -14,7 +14,7 @@ namespace Winforms_platformer
         public int gForce { get; set; }
         public RoomType Type { get; }
         public readonly int GroundLevel;
-        public readonly List<Platform> Platforms;
+        public List<Platform> Platforms;
         public List<Enemy> EnemyList = new List<Enemy>();
         public List<Enemy> AdditionalEnemies = new List<Enemy>();
         public List<Projectile> ProjectilesList = new List<Projectile>();

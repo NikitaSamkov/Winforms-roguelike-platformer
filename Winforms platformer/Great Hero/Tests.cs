@@ -176,5 +176,27 @@ namespace Winforms_platformer
         {
             Assert.AreEqual(expected, player.GetDistanceTo(x, y));
         }
+
+        [TestCase(0, 0, 10, 50, 50, -1, false)]
+        [TestCase(0, 486, 10, 50, 50, -1, true)]
+        [TestCase(0, 0, 10, 0, 50, 0, true)]
+        [TestCase(0, 15, 10, 50, 150, 15, false)]
+        [TestCase(0, 15, 51, 50, 150, 15, true)]
+        [TestCase(51, 15, 1, 50, 150, 15, true)]
+        [TestCase(149, 15, 50, 50, 150, 15, true)]
+        [TestCase(150, 15, 50, 50, 150, 15, false)]
+        [TestCase(0, 15, 50, 50, 150, 15, false)]
+        [TestCase(0, 487, 0, 50, 150, 15, false)]
+        public void OnTheSurfaceTests(int x, int y, int width, int platrformX1, int platrformX2, int platrformY, bool expected)
+        {
+            room.Platforms = new List<Platform>();
+            room.Platforms.Add(new Platform(platrformX1, platrformX2, platrformY));
+            Assert.AreEqual(expected, room.OnTheSurface(x, y, width));
+        }
+
+        public void GetIntersectedEntitiesTest()
+        {
+
+        }
     }
 }
