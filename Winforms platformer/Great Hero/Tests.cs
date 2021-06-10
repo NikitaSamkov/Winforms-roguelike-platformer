@@ -113,9 +113,9 @@ namespace Winforms_platformer
         [Test]
         public void MoveDownTest()
         {
-            player.TeleportTo(0, 0);
+            var expected = player.y + player.xSpeed;
             player.MoveDown();
-            Assert.AreEqual(player.xSpeed, player.y);
+            Assert.AreEqual(expected, player.y);
         }
 
         [TestCase(1)]
@@ -127,6 +127,54 @@ namespace Winforms_platformer
             player.TeleportTo(0, 0);
             player.MoveDown(distance);
             Assert.AreEqual(distance, player.y);
+        }
+
+        [TestCase(0, 0, 20, 66, true)]
+        [TestCase(0, 0, 0, 0, true)]
+        [TestCase(0, 0, 20, 0, true)]
+        [TestCase(20, 66, 0, 0, true)]
+        [TestCase(20, 0, 0, 0, true)]
+        [TestCase(0, 0, 40, 0, false)]
+        [TestCase(0, 0, 0, 112, false)]
+        [TestCase(0, 0, 100, 200, false)]
+        public void IntersectionTest(int playerX, int playerY, int dummyX, int dummyY, bool expected)
+        {
+            player.TeleportTo(playerX, playerY);
+            var dummy = new Enemy(dummyX, dummyY, player.collider, player.CurrentRoom);
+            Assert.AreEqual(expected, player.IntersectsWithBody(dummy));
+        }
+
+        [Test]
+        public void MoveUpTest()
+        {
+            var expected = player.y - player.xSpeed;
+            player.MoveUp();
+            Assert.AreEqual(expected, player.y);
+        }
+
+        [TestCase(0, 0)]
+        [TestCase(13, 37)]
+        [TestCase(1000000, -5000)]
+        [TestCase(-10, -10)]
+        [TestCase(-25, 30)]
+        public void TeleportTest(int x, int y)
+        {
+            player.TeleportTo(x, y);
+            Assert.AreEqual(x, player.x);
+            Assert.AreEqual(y, player.y);
+        }
+
+        [TestCase(0, 0, 0)]
+        [TestCase(3, 4, 5)]
+        [TestCase(6, 8, 10)]
+        [TestCase(1, 2, 2)]
+        [TestCase(2, 2, 2)]
+        [TestCase(999, 1, 999)]
+        [TestCase(999, 999, 1412)]
+        [TestCase(5, 0, 5)]
+        public void GetDistanceTests(int x, int y, int expected)
+        {
+            Assert.AreEqual(expected, player.GetDistanceTo(x, y));
         }
     }
 }
