@@ -169,7 +169,7 @@ namespace Winforms_platformer.Model
             };
 
             var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
-            //var treasureID = 3;
+            //var treasureID = 20;
 
             KeyBindings[Keys.D1] = () =>
             {
