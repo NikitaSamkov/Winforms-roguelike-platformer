@@ -193,10 +193,5 @@ namespace Winforms_platformer
             room.Platforms.Add(new Platform(platrformX1, platrformX2, platrformY));
             Assert.AreEqual(expected, room.OnTheSurface(x, y, width));
         }
-
-        public void GetIntersectedEntitiesTest()
-        {
-
-        }
     }
 }
