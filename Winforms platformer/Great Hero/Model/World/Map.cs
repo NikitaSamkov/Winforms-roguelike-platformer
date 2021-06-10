@@ -155,6 +155,10 @@ namespace Winforms_platformer.Model
 
         public void Update()
         {
+            if (player.HP <= 0)
+                Game.Death = true;
+            player.Update();
+
             if (Game.Boss.HP <= 0 && CurrentRoom().LootList.Where(t => t.ID == 15).Count() == 0)
                 CurrentRoom().LootList.Add(Game.Boss.GetDrop());
 

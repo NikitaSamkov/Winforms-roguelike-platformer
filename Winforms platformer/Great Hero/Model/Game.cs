@@ -42,13 +42,7 @@ namespace Winforms_platformer.Model
         public static void Update()
         {
             if (!(Death || Win))
-            {
-                if (Player.HP <= 0)
-                    Death = true;
-                Player.Update();
-
                 Map.Update();
-            }
         }
 
         public static void SetWindowSize(int width, int height)
@@ -61,7 +55,9 @@ namespace Winforms_platformer.Model
         {
             if (TryGetTreasureIndex(mouseX, mouseY, out var i))
             {
-                var treasure = new TreasureItem(Player.x + Player.collider.field.Width + 1, Player.y,
+                var x = (Player.direction == Direction.Right) ? Player.x + Player.collider.field.Width + 10 : 
+                    Player.x - Res.Treasures.Size.Width - 10;
+                var treasure = new TreasureItem(x, Player.y,
                     new Collider(Res.Treasures.Size), Map.CurrentRoom, Player.Treasures[i].ID);
                 TreasurePool.RemoveFromPlayer(i, false);
                 Map.CurrentRoom().LootList.Add(treasure);
@@ -75,7 +71,7 @@ namespace Winforms_platformer.Model
                 return false;
             var column = (mouseX - WindowSize.Width + 150) / 50;
             var row = (mouseY - 50) / 50;
-            index = row * 3 + column;
+            index = 3 * row + column;
             if (index < Player.Treasures.Count)
                 return true;
             return false;
@@ -155,8 +151,8 @@ namespace Winforms_platformer.Model
                     DeveloperToolsON = true;
             };
 
-            //var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
-            var treasureID = 3;
+            var treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
+            //var treasureID = 3;
 
             KeyBindings[Keys.D1] = () =>
             {
