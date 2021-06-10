@@ -287,7 +287,7 @@ namespace Winforms_platformer.Model
                     if ((i - 1) % 3 == 0)
                         rooms.Add(new Room(RoomType.TreasureRoom, new List<Platform>()
                         { new Platform(350, 450, 350) }, new List<Loot>
-                        { new TreasureItem(363, 250, new Collider(Resources.Treasures.Size), CurrentRoom,
+                        { new TreasureItem(363, 250, new Collider(Res.Treasures.Size), CurrentRoom,
                         treasures[(i - 1) / 3].ID)}));
                     else
                     {

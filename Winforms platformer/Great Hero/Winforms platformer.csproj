@@ -62,7 +62,7 @@
     <Compile Include="Tests.cs" />
     <Compile Include="View\GameRender.cs" />
     <Compile Include="View\IRenderable.cs" />
-    <Compile Include="View\Resources.cs" />
+    <Compile Include="View\Res.cs" />
     <Compile Include="Model\Entity\Collider.cs" />
     <Compile Include="Model\Entity\Creature.cs" />
     <Compile Include="Model\Entity\Enemy.cs" />
@@ -107,7 +107,306 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Body.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftFist.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftPalm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightFist.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightPalm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Summon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwordsmanWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurretFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurretIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArcherFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArcherIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ArcherWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BigCowFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BigCowIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BigCowWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloneFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloneIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloneWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dummy original.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DummyFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DummyIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DummyWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GhostFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GhostIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InvisibleManFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InvisibleManIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InvisibleManWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MagicianFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MagicianIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RollerFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RollerIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RollerWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlimeFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlimeIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlimeWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StickerAttackFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StickerAttackIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StickerFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StickerIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperMagicianFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperMagicianIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperRollerFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperRollerIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperRollerWalk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwordsmanAttack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwordsmanFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwordsmanIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NotFound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ammo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Heart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HeartAngry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayerMove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayerAttack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayerFullSize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlayerIdle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Plasma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Platform.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperSecret.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TreasureGround.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TreasureWall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\id19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\win.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bossFrame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bossHP.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\death.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eternalAmmo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eternalAmmoReloading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\frame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\frame100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ghostForm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ghostFormReloading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plasmaAmmo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plasmaAmmoReloading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ammoUI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperSecret.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

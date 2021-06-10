@@ -65,7 +65,7 @@ namespace Winforms_platformer
             if (Ammo > 0)
             {
                 var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Enemy, this);
+                        new Collider(Res.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Enemy, this);
                 arrow.MoveTo(direction);
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);

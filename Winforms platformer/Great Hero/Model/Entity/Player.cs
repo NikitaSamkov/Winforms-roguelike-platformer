@@ -43,7 +43,7 @@ namespace Winforms_platformer
             if (SecondaryWeapons[CurrentSecondaryWeapon] == SecondaryWeapon.Bow && Ammo > 0)
             {
                 var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
+                        new Collider(Res.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
                 arrow.MoveTo(direction);
                 arrow.status = Status.Move;
                 CurrentRoom().ProjectilesList.Add(arrow);
@@ -64,7 +64,7 @@ namespace Winforms_platformer
                 if (ball.timer == 0)
                 {
                     var plasma = new Plasma(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Plasma.IdleSize), CurrentRoom, (direction == Direction.Right) ? 0 : 180, ball.PlasmaSpeed, ProjectileType.Ally, this);
+                        new Collider(Res.Plasma.IdleSize), CurrentRoom, (direction == Direction.Right) ? 0 : 180, ball.PlasmaSpeed, ProjectileType.Ally, this);
                     plasma.status = Status.Move;
                     CurrentRoom().ProjectilesList.Add(plasma);
                     ball.SetTimer();
@@ -76,7 +76,7 @@ namespace Winforms_platformer
                 if (bow.timer == 0)
                 {
                     var arrow = new Arrow(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
+                        new Collider(Res.Arrow.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Ally, this);
                     arrow.MoveTo(direction);
                     arrow.status = Status.Move;
                     CurrentRoom().ProjectilesList.Add(arrow);

@@ -147,37 +147,37 @@ namespace Winforms_platformer.View
 
         public EntityResource GetResources(Enemy enemy)
         {
-            EntityResource resources = Resources.Dummy;
+            EntityResource resources = Res.Dummy;
 
             //вставить сюда if (enemy is CustomClass) resources = Resources.CustomClass
             if (enemy is Slime)
-                resources = Resources.Slime;
+                resources = Res.Slime;
             if (enemy is Roller)
-                resources = Resources.Roller;
+                resources = Res.Roller;
             if (enemy is SuperRoller)
-                resources = Resources.SuperRoller;
+                resources = Res.SuperRoller;
             if (enemy is Swordsman)
-                resources = Resources.Swordsman;
+                resources = Res.Swordsman;
             if (enemy is Archer)
-                resources = Resources.Archer;
+                resources = Res.Archer;
             if (enemy is Magician)
-                resources = Resources.Magician;
+                resources = Res.Magician;
             if (enemy is SuperMagician)
-                resources = Resources.SuperMagician;
+                resources = Res.SuperMagician;
             if (enemy is BigCow)
-                resources = Resources.BigCow;
+                resources = Res.BigCow;
             if (enemy is Ghost)
-                resources = Resources.Ghost;
+                resources = Res.Ghost;
             if (enemy is InvisibleMan)
-                resources = Resources.InvisibleMan;
+                resources = Res.InvisibleMan;
             if (enemy is Turret)
-                resources = Resources.Turret;
+                resources = Res.Turret;
             if (enemy is Sticker)
-                resources = Resources.Sticker;
+                resources = Res.Sticker;
             if (enemy is Clone)
-                resources = Resources.Clone;
+                resources = Res.Clone;
             if (enemy is Chameleon)
-                resources = Resources.Chameleon;
+                resources = Res.Chameleon;
 
             return resources;
         }
@@ -195,8 +195,8 @@ namespace Winforms_platformer.View
                     render = new EntityRender(enemy, GetResources(enemy), ticksPerFrame);
                     enemies.Add(render);
                 }
-                if (render.Entity is Sticker && (render.Entity as Sticker).stickerStatus == Status.Attack && render.Resource != Resources.StickerAttack)
-                    render.Resource = Resources.StickerAttack;
+                if (render.Entity is Sticker && (render.Entity as Sticker).stickerStatus == Status.Attack && render.Resource != Res.StickerAttack)
+                    render.Resource = Res.StickerAttack;
                 if (render.Entity is Chameleon)
                     render.Resource = GetResources((render.Entity as Chameleon).original);
                 render.Paint(g);
@@ -217,10 +217,10 @@ namespace Winforms_platformer.View
         {
             foreach (var projectile in CurrentRoom().ProjectilesList)
             {
-                EntityResource resources = Resources.Arrow;
+                EntityResource resources = Res.Arrow;
                 //вставить сюда if (projectile is CustomClass) resources = Resources.CustomClass
                 if (projectile is Plasma)
-                    resources = Resources.Plasma;
+                    resources = Res.Plasma;
                 var render = new EntityRender(projectile, resources);
                 render.Paint(g);
             }
@@ -242,10 +242,10 @@ namespace Winforms_platformer.View
             switch (CurrentRoom().Type)
             {
                 case RoomType.TreasureRoom:
-                    Resource = Resources.TreasureRoom;
+                    Resource = Winforms_platformer.Res.TreasureRoom;
                     break;
                 default:
-                    Resource = Resources.Room;
+                    Resource = Winforms_platformer.Res.Room;
                     break;
             }
         }
@@ -281,7 +281,7 @@ namespace Winforms_platformer.View
         {
             foreach (var loot in CurrentRoom().LootList)
             {
-                var resource = (loot is TreasureItem) ? (LootResource)Resources.Treasures : (LootResource)Resources.Loot;
+                var resource = (loot is TreasureItem) ? (LootResource)Res.Treasures : (LootResource)Res.Loot;
                 g.DrawImage(GetSprite(loot.ID, resource), loot.x, loot.y);
                 if (Game.DeveloperToolsON)
                     g.DrawRectangle(new Pen(Color.Green), loot.x, loot.y, loot.collider.field.Width,
@@ -306,45 +306,45 @@ namespace Winforms_platformer.View
         public void Paint(Graphics g)
         {
             #region HP
-            var hpSize = new Size(Resources.UI.HPSize100.Width * Game.Player.MaxHP / 100, Resources.UI.HPSize.Height);
-            g.DrawImage(Resources.UI.HPBar, 50, 50,
+            var hpSize = new Size(Res.UI.HPSize100.Width * Game.Player.MaxHP / 100, Res.UI.HPSize.Height);
+            g.DrawImage(Res.UI.HPBar, 50, 50,
                 new Rectangle(0, 0, hpSize.Width * Game.Player.HP / Game.Player.MaxHP, hpSize.Height),
                 GraphicsUnit.Pixel);
-            if (hpSize.Width >= Resources.UI.HPSize.Width)
-                g.DrawImage(Resources.UI.HPFrame, 50, 50, Resources.UI.HPSize.Width, Resources.UI.HPSize.Height);
+            if (hpSize.Width >= Res.UI.HPSize.Width)
+                g.DrawImage(Res.UI.HPFrame, 50, 50, Res.UI.HPSize.Width, Res.UI.HPSize.Height);
             else
             {
-                g.DrawImage(Resources.UI.HPFrame, 50, 50,
+                g.DrawImage(Res.UI.HPFrame, 50, 50,
                     new Rectangle(0, 0, hpSize.Width / 2 + 1, hpSize.Height), GraphicsUnit.Pixel);
-                g.DrawImage(Resources.UI.HPFrame, 50 + hpSize.Width / 2 + 1, 50,
-                    new Rectangle(Resources.UI.HPSize.Width - hpSize.Width / 2, 0, hpSize.Width / 2, hpSize.Height), GraphicsUnit.Pixel);
+                g.DrawImage(Res.UI.HPFrame, 50 + hpSize.Width / 2 + 1, 50,
+                    new Rectangle(Res.UI.HPSize.Width - hpSize.Width / 2, 0, hpSize.Width / 2, hpSize.Height), GraphicsUnit.Pixel);
             }
             #endregion
             #region Ammo
             if (Game.Player.SecondaryWeapons[Game.Player.CurrentSecondaryWeapon] == SecondaryWeapon.Bow)
                 for (var i = 0; i < Game.Player.Ammo; i++)
                 {
-                    g.DrawImage(Resources.UI.Ammo, i * 15 + 50, 100, Resources.UI.AmmoSize.Width, Resources.UI.AmmoSize.Height);
+                    g.DrawImage(Res.UI.Ammo, i * 15 + 50, 100, Res.UI.AmmoSize.Width, Res.UI.AmmoSize.Height);
                 }
             else
             {
                 EternalBow weapon = TreasurePool.GetTreasureByID(1) as EternalBow;
-                Bitmap ammo = Resources.UI.EternalAmmo;
-                Bitmap ammoReloading = Resources.UI.EternalAmmoReloading;
-                Size ammoSize = Resources.UI.EternalAmmoSize;
+                Bitmap ammo = Res.UI.EternalAmmo;
+                Bitmap ammoReloading = Res.UI.EternalAmmoReloading;
+                Size ammoSize = Res.UI.EternalAmmoSize;
                 if (Game.Player.SecondaryWeapons[Game.Player.CurrentSecondaryWeapon] == SecondaryWeapon.GhostForm)
                 {
                     weapon = TreasurePool.GetTreasureByID(19) as GhostForm;
-                    ammo = Resources.UI.GhostForm;
-                    ammoReloading = Resources.UI.GhostFormReloading;
-                    ammoSize = Resources.UI.GhostFormSize;
+                    ammo = Res.UI.GhostForm;
+                    ammoReloading = Res.UI.GhostFormReloading;
+                    ammoSize = Res.UI.GhostFormSize;
                 }
                 if (Game.Player.SecondaryWeapons[Game.Player.CurrentSecondaryWeapon] == SecondaryWeapon.PlasmaBall)
                 {
                     weapon = TreasurePool.GetTreasureByID(18) as PlasmaBall;
-                    ammo = Resources.UI.PlasmaAmmo;
-                    ammoReloading = Resources.UI.PlasmaAmmoReloading;
-                    ammoSize = Resources.UI.PlasmaAmmoSize;
+                    ammo = Res.UI.PlasmaAmmo;
+                    ammoReloading = Res.UI.PlasmaAmmoReloading;
+                    ammoSize = Res.UI.PlasmaAmmoSize;
                 }
                 if (weapon.timer == 0)
                     g.DrawImage(ammo, 50, 100, ammoSize.Width, ammoSize.Height);
@@ -360,7 +360,7 @@ namespace Winforms_platformer.View
             foreach (var treasure in Game.Player.Treasures)
             {
                 g.DrawImage(GetTreasureSprite(treasure.ID), Game.WindowSize.Width - 150 + 50 * column, 50 + 50 * row,
-                    50, (float)(Resources.Treasures.Size.Height / ((double)Resources.Treasures.Size.Width / 50)));
+                    50, (float)(Res.Treasures.Size.Height / ((double)Res.Treasures.Size.Width / 50)));
                 column++;
                 if (column > 2)
                 {
@@ -372,22 +372,22 @@ namespace Winforms_platformer.View
             #region BOSS HP
             if (Game.Map.CurrentRoom().Type == RoomType.BossRoom)
             {
-                g.DrawImage(Resources.UI.BossHPBar, Game.WindowSize.Width / 2 - Resources.UI.BossHPSize.Width / 2,
-                    Game.Map.CurrentRoom().GroundLevel + (Game.WindowSize.Height - Game.Map.CurrentRoom().GroundLevel) / 2 - Resources.UI.BossHPSize.Height / 2,
-                    new Rectangle(0, 0, Resources.UI.BossHPSize.Width * Game.Boss.HP / Game.Boss.MaxHP, hpSize.Height),
+                g.DrawImage(Res.UI.BossHPBar, Game.WindowSize.Width / 2 - Res.UI.BossHPSize.Width / 2,
+                    Game.Map.CurrentRoom().GroundLevel + (Game.WindowSize.Height - Game.Map.CurrentRoom().GroundLevel) / 2 - Res.UI.BossHPSize.Height / 2,
+                    new Rectangle(0, 0, Res.UI.BossHPSize.Width * Game.Boss.HP / Game.Boss.MaxHP, hpSize.Height),
                     GraphicsUnit.Pixel);
-                g.DrawImage(Resources.UI.BossHPFrame, Game.WindowSize.Width / 2 - Resources.UI.BossHPSize.Width / 2,
-                    Game.Map.CurrentRoom().GroundLevel + (Game.WindowSize.Height - Game.Map.CurrentRoom().GroundLevel) / 2 - Resources.UI.BossHPSize.Height / 2);
+                g.DrawImage(Res.UI.BossHPFrame, Game.WindowSize.Width / 2 - Res.UI.BossHPSize.Width / 2,
+                    Game.Map.CurrentRoom().GroundLevel + (Game.WindowSize.Height - Game.Map.CurrentRoom().GroundLevel) / 2 - Res.UI.BossHPSize.Height / 2);
             }
             #endregion
         }
 
         public Bitmap GetTreasureSprite(int treasureID)
         {
-            foreach (var field in Resources.Treasures.GetType().GetFields())
+            foreach (var field in Res.Treasures.GetType().GetFields())
                 if (field.Name == "id" + treasureID)
-                    return (Bitmap)field.GetValue(Resources.Treasures);
-            return Resources.Treasures.idNotFound;
+                    return (Bitmap)field.GetValue(Res.Treasures);
+            return Res.Treasures.idNotFound;
         }
     }
 
@@ -406,19 +406,19 @@ namespace Winforms_platformer.View
             {
                 if (Game.Boss.Status == BossStatus.SummonEnemies)
                 {
-                    g.DrawImage(Resources.Boss.Summon, Game.Boss.x, Game.Boss.y,
-                        new Rectangle(((5 - Game.Boss.summonTimer / 3 == 5) ? 4 : (5 - Game.Boss.summonTimer / 3)) * Resources.Boss.BodySize.Width, 0, Resources.Boss.BodySize.Width,
-                        Resources.Boss.BodySize.Height), GraphicsUnit.Pixel);
+                    g.DrawImage(Res.Boss.Summon, Game.Boss.x, Game.Boss.y,
+                        new Rectangle(((5 - Game.Boss.summonTimer / 3 == 5) ? 4 : (5 - Game.Boss.summonTimer / 3)) * Res.Boss.BodySize.Width, 0, Res.Boss.BodySize.Width,
+                        Res.Boss.BodySize.Height), GraphicsUnit.Pixel);
                 }
                 else
-                    g.DrawImage(Resources.Boss.Body, Game.Boss.x, Game.Boss.y);
+                    g.DrawImage(Res.Boss.Body, Game.Boss.x, Game.Boss.y);
                 foreach (var hand in Game.Boss.Hands)
                 {
                     Bitmap sprite;
                     if (hand.HandStatus == BossHandStatus.Palm)
-                        sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Resources.Boss.LeftPalm : Resources.Boss.RightPalm;
+                        sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Res.Boss.LeftPalm : Res.Boss.RightPalm;
                     else
-                        sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Resources.Boss.LeftFist : Resources.Boss.RightFist;
+                        sprite = (hand.CurrentZone == Zone.Left || hand.CurrentZone == Zone.CenterLeft) ? Res.Boss.LeftFist : Res.Boss.RightFist;
                     g.DrawImage(sprite, hand.x, hand.y);
                 }
                 if (Game.DeveloperToolsON)

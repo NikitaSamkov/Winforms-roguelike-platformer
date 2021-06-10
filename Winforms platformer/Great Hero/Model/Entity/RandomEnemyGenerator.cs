@@ -56,39 +56,39 @@ namespace Winforms_platformer.Model
             switch (type)
             {
                 case EnemyType.Dummy:
-                    return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom);
+                    return new Enemy(x, y, new Collider(Res.Dummy.IdleSize), currentRoom);
                 case EnemyType.Slime:
-                    return new Slime(x, y, new Collider(Resources.Slime.IdleSize), currentRoom);
+                    return new Slime(x, y, new Collider(Res.Slime.IdleSize), currentRoom);
                 case EnemyType.Roller:
-                    return new Roller(x, y, new Collider(Resources.Roller.IdleSize), currentRoom);
+                    return new Roller(x, y, new Collider(Res.Roller.IdleSize), currentRoom);
                 case EnemyType.SuperRoller:
-                    return new SuperRoller(x, y, new Collider(Resources.SuperRoller.IdleSize), currentRoom);
+                    return new SuperRoller(x, y, new Collider(Res.SuperRoller.IdleSize), currentRoom);
                 case EnemyType.Swordsman:
-                    return new Swordsman(x, y, new Collider(Resources.Swordsman.IdleSize, 0, 0,
-                new Collider(Resources.Swordsman.AttackRange, -10, Resources.Swordsman.Idle.Height / 8)),
+                    return new Swordsman(x, y, new Collider(Res.Swordsman.IdleSize, 0, 0,
+                new Collider(Res.Swordsman.AttackRange, -10, Res.Swordsman.Idle.Height / 8)),
                 currentRoom);
                 case EnemyType.Archer:
-                    return new Archer(x, y, new Collider(Resources.Archer.IdleSize), currentRoom);
+                    return new Archer(x, y, new Collider(Res.Archer.IdleSize), currentRoom);
                 case EnemyType.Magician:
-                    return new Magician(x, y, new Collider(Resources.Magician.IdleSize), currentRoom);
+                    return new Magician(x, y, new Collider(Res.Magician.IdleSize), currentRoom);
                 case EnemyType.SuperMagician:
-                    return new SuperMagician(x, y, new Collider(Resources.SuperMagician.IdleSize), currentRoom);
+                    return new SuperMagician(x, y, new Collider(Res.SuperMagician.IdleSize), currentRoom);
                 case EnemyType.BigCow:
-                    return new BigCow(x, y, new Collider(Resources.BigCow.ColliderSize, 0, 6), currentRoom);
+                    return new BigCow(x, y, new Collider(Res.BigCow.ColliderSize, 0, 6), currentRoom);
                 case EnemyType.Ghost:
-                    return new Ghost(x, y, new Collider(Resources.Ghost.IdleSize), currentRoom);
+                    return new Ghost(x, y, new Collider(Res.Ghost.IdleSize), currentRoom);
                 case EnemyType.InvisibleMan:
-                    return new InvisibleMan(x, y, new Collider(Resources.InvisibleMan.IdleSize), currentRoom);
+                    return new InvisibleMan(x, y, new Collider(Res.InvisibleMan.IdleSize), currentRoom);
                 case EnemyType.Turret:
-                    return new Turret(x, y, new Collider(Resources.Turret.IdleSize), currentRoom);
+                    return new Turret(x, y, new Collider(Res.Turret.IdleSize), currentRoom);
                 case EnemyType.Sticker:
-                    return new Sticker(x, y, new Collider(Resources.Sticker.IdleSize), currentRoom);
+                    return new Sticker(x, y, new Collider(Res.Sticker.IdleSize), currentRoom);
                 case EnemyType.Clone:
-                    return new Clone(x, y, new Collider(Resources.Clone.IdleSize), currentRoom);
+                    return new Clone(x, y, new Collider(Res.Clone.IdleSize), currentRoom);
                 case EnemyType.Chameleon:
-                    return new Chameleon(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom);
+                    return new Chameleon(x, y, new Collider(Res.Dummy.IdleSize), currentRoom);
             }
-            return new Enemy(x, y, new Collider(Resources.Dummy.IdleSize), currentRoom);
+            return new Enemy(x, y, new Collider(Res.Dummy.IdleSize), currentRoom);
         }
 
         public static EnemyType GetRandomEnemyType() => enemyTypes[random.Next(enemyTypes.Count)];

@@ -88,7 +88,7 @@ namespace Winforms_platformer.Model
                                 {
                                     tempTreasures.Add(
                                         new TreasureItem(tempTreasuresPoints[0].X, tempTreasuresPoints[0].Y,
-                                        new Collider(Resources.Treasures.Size), Game.Map.CurrentRoom, currentID));
+                                        new Collider(Res.Treasures.Size), Game.Map.CurrentRoom, currentID));
                                     currentID = 0;
                                     tempTreasuresPoints.Remove(tempTreasuresPoints[0]);
                                 }

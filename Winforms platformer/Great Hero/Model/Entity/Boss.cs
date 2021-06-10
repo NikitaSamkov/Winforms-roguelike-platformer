@@ -32,10 +32,10 @@ namespace Winforms_platformer.Model
             Hands = new List<BossHand>()
             {
                 new BossHand(BossZones.GetHandPosition(Zone.Left, BossHandStatus.Palm).X,
-                BossZones.GetHandPosition(Zone.Left, BossHandStatus.Palm).Y, new Collider(Resources.Boss.PalmSize), CurrentRoom, player, damage, Zone.Left),
+                BossZones.GetHandPosition(Zone.Left, BossHandStatus.Palm).Y, new Collider(Res.Boss.PalmSize), CurrentRoom, player, damage, Zone.Left),
 
                 new BossHand(BossZones.GetHandPosition(Zone.Right, BossHandStatus.Palm).X,
-                BossZones.GetHandPosition(Zone.Right, BossHandStatus.Palm).Y, new Collider(Resources.Boss.PalmSize), CurrentRoom, player, damage, Zone.Right)
+                BossZones.GetHandPosition(Zone.Right, BossHandStatus.Palm).Y, new Collider(Res.Boss.PalmSize), CurrentRoom, player, damage, Zone.Right)
             };
 
 
@@ -178,10 +178,10 @@ namespace Winforms_platformer.Model
 
         public static void Create()
         {
-            ZoneToRectangle[(int)Zone.Left] = new Rectangle(new Point(0, 0), Resources.Boss.LeftZoneSize);
-            ZoneToRectangle[(int)Zone.CenterLeft] = new Rectangle(new Point(Resources.Boss.LeftZoneSize.Width, 0), Resources.Boss.CenterZoneSize);
-            ZoneToRectangle[(int)Zone.CenterRight] = new Rectangle(new Point(Resources.Boss.LeftZoneSize.Width, 0), Resources.Boss.CenterZoneSize);
-            ZoneToRectangle[(int)Zone.Right] = new Rectangle(new Point(Resources.Boss.LeftZoneSize.Width + Resources.Boss.CenterZoneSize.Width, 0), Resources.Boss.RightZoneSize);
+            ZoneToRectangle[(int)Zone.Left] = new Rectangle(new Point(0, 0), Res.Boss.LeftZoneSize);
+            ZoneToRectangle[(int)Zone.CenterLeft] = new Rectangle(new Point(Res.Boss.LeftZoneSize.Width, 0), Res.Boss.CenterZoneSize);
+            ZoneToRectangle[(int)Zone.CenterRight] = new Rectangle(new Point(Res.Boss.LeftZoneSize.Width, 0), Res.Boss.CenterZoneSize);
+            ZoneToRectangle[(int)Zone.Right] = new Rectangle(new Point(Res.Boss.LeftZoneSize.Width + Res.Boss.CenterZoneSize.Width, 0), Res.Boss.RightZoneSize);
 
             var left = 0;
             var leftc = 200;

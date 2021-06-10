@@ -24,7 +24,7 @@ namespace Winforms_platformer.View
             Renders.Add(new BossRender(Game.Map.CurrentRoom));
             Renders.Add(new LootRender(Game.Map.CurrentRoom));
             Renders.Add(new EnemiesRender(Game.Map.CurrentRoom));
-            Renders.Add(new EntityRender(Game.Player, Resources.Player, 3));
+            Renders.Add(new EntityRender(Game.Player, Res.Player, 3));
             Renders.Add(new ProjectilesRender(Game.Map.CurrentRoom));
             Renders.Add(new UIRender());
         }
@@ -32,9 +32,9 @@ namespace Winforms_platformer.View
         public static void RenderAll(Graphics g)
         {
             if (Game.Death)
-                g.DrawImage(Resources.System.Death, 0, 0);
+                g.DrawImage(Res.System.Death, 0, 0);
             else if (Game.Win)
-                g.DrawImage(Resources.System.Win, 0, 0);
+                g.DrawImage(Res.System.Win, 0, 0);
             else
                 foreach (var render in Renders)
                     render.Paint(g);

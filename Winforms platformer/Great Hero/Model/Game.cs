@@ -24,8 +24,8 @@ namespace Winforms_platformer.Model
 
         public static void Create()
         {
-            Player = new Player(150, 150, new Collider(Resources.Player.IdleSize, 0, 0,
-                new Collider(Resources.Player.AttackRange, -10, 0)), null);
+            Player = new Player(150, 150, new Collider(Res.Player.IdleSize, 0, 0,
+                new Collider(Res.Player.AttackRange, -10, 0)), null);
             Map = new Map();
             TreasurePool.SetRandom();
             RandomEnemyGenerator.Start();
@@ -34,7 +34,7 @@ namespace Winforms_platformer.Model
             Player.CurrentRoom = Map.CurrentRoom;
             TreasurePool.SortPool();
             BossZones.Create();
-            Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, 500);
+            Boss = new Boss(150, 4, new Collider(Res.Boss.BodySize), Map.CurrentRoom, 500);
             Death = false;
             Win = false;
         }
@@ -62,7 +62,7 @@ namespace Winforms_platformer.Model
             if (TryGetTreasureIndex(mouseX, mouseY, out var i))
             {
                 var treasure = new TreasureItem(Player.x + Player.collider.field.Width + 1, Player.y,
-                    new Collider(Resources.Treasures.Size), Map.CurrentRoom, Player.Treasures[i].ID);
+                    new Collider(Res.Treasures.Size), Map.CurrentRoom, Player.Treasures[i].ID);
                 TreasurePool.RemoveFromPlayer(i, false);
                 Map.CurrentRoom().LootList.Add(treasure);
             }
@@ -162,7 +162,7 @@ namespace Winforms_platformer.Model
             {
                 if (DeveloperToolsON)
                     Map.CurrentRoom().LootList.Add(
-                    new TreasureItem(50, 0, new Collider(Resources.Treasures.Size), Map.CurrentRoom, treasureID));
+                    new TreasureItem(50, 0, new Collider(Res.Treasures.Size), Map.CurrentRoom, treasureID));
                 treasureID = TreasurePool.GetRandomItem(TreasurePool.GetPrice()).ID;
             };
 
@@ -177,14 +177,14 @@ namespace Winforms_platformer.Model
             {
                 if (DeveloperToolsON)
                     Map.CurrentRoom().LootList.Add(
-                new HeartLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+                new HeartLoot(Player.x - 50, Player.y, new Collider(Res.Loot.Size), Map.CurrentRoom));
             };
 
             KeyBindings[Keys.D4] = () =>
             {
                 if (DeveloperToolsON)
                     Map.CurrentRoom().LootList.Add(
-                new AmmoLoot(Player.x - 50, Player.y, new Collider(Resources.Loot.Size), Map.CurrentRoom));
+                new AmmoLoot(Player.x - 50, Player.y, new Collider(Res.Loot.Size), Map.CurrentRoom));
             };
 
             KeyBindings[Keys.D5] = () =>
@@ -223,7 +223,7 @@ namespace Winforms_platformer.Model
             KeyBindings[Keys.G] = () =>
             {
                 if (superSecret == 2 && Map.CurrentRoom().Type != RoomType.BossRoom)
-                    Resources.Boss.Body = new Bitmap(@"..\..\..\..\Sprites\Room\SuperSecret.txt");
+                    Res.Boss.Body = Res.Boss.Secret;
                 else
                     superSecret = 0;
             };

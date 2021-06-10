@@ -20,7 +20,7 @@ namespace Winforms_platformer
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
-            Resources.Create();
+            Res.Create();
             Game.Create();
             Game.SetKeyBindings();
             GameRender.Create();

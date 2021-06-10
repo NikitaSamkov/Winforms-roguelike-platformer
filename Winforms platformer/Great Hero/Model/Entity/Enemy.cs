@@ -97,13 +97,13 @@ namespace Winforms_platformer
                     switch (lootType)
                     {
                         case LootType.Heart:
-                            return new HeartLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                            return new HeartLoot(x, y, new Collider(Res.Loot.Size), CurrentRoom);
                         case LootType.Ammo:
-                            return new AmmoLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                            return new AmmoLoot(x, y, new Collider(Res.Loot.Size), CurrentRoom);
                         case LootType.Treasure:
-                            return new TreasureItem(x, y, new Collider(Resources.Treasures.Size), CurrentRoom, treasureDropID);
+                            return new TreasureItem(x, y, new Collider(Res.Treasures.Size), CurrentRoom, treasureDropID);
                         default:
-                            return new NotFoundedLoot(x, y, new Collider(Resources.Loot.Size), CurrentRoom);
+                            return new NotFoundedLoot(x, y, new Collider(Res.Loot.Size), CurrentRoom);
                     }
             }
             return null;
@@ -497,7 +497,7 @@ namespace Winforms_platformer
         public override void Shoot(int angle = 0)
         {
             var plasma = new Plasma(x, y + collider.field.Height / 2,
-                        new Collider(Resources.Plasma.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Enemy, this);
+                        new Collider(Res.Plasma.IdleSize), CurrentRoom, angle, ShootingPower, ProjectileType.Enemy, this);
             plasma.status = Status.Move;
             CurrentRoom().ProjectilesList.Add(plasma);
         }
@@ -531,7 +531,7 @@ namespace Winforms_platformer
             {
                 stickerStatus = Status.Attack;
                 flying = true;
-                collider = new Collider(Resources.StickerAttack.IdleSize);
+                collider = new Collider(Res.StickerAttack.IdleSize);
             }
             if (stickerStatus == Status.Attack)
                 TeleportTo(player.x, player.y);
@@ -651,7 +651,7 @@ namespace Winforms_platformer
                     target = Game.Map.Random.Next(CurrentRoom().EnemyList.Count);
                 original = CurrentRoom().EnemyList[target];
             }
-            else original = new Chameleon(x, y, new Collider(Resources.Chameleon.IdleSize), CurrentRoom);
+            else original = new Chameleon(x, y, new Collider(Res.Chameleon.IdleSize), CurrentRoom);
 
             collider = original.collider;
         }
