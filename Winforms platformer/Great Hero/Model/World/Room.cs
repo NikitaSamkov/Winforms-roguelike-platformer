@@ -43,6 +43,7 @@ namespace Winforms_platformer
 
         public Room(Player player, int g = 7, int ground = 486)
         {
+            this.player = player;
             Type = RoomType.RegularRoom;
             Platforms = new List<Platform>();
             LootList = new List<Loot>();

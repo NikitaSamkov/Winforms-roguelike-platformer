@@ -27,11 +27,11 @@ namespace Winforms_platformer.Model
             Player = new Player(150, 150, new Collider(Resources.Player.IdleSize, 0, 0,
                 new Collider(Resources.Player.AttackRange, -10, 0)), null);
             Map = new Map();
+            TreasurePool.SetRandom();
             RandomEnemyGenerator.Start();
             Map.SetRoomTemplates();
             Map.GenerateMap();
             Player.CurrentRoom = Map.CurrentRoom;
-            TreasurePool.SetRandom();
             TreasurePool.SortPool();
             BossZones.Create();
             Boss = new Boss(150, 4, new Collider(Resources.Boss.BodySize), Map.CurrentRoom, 500);
