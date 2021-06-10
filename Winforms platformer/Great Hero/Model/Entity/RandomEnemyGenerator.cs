@@ -13,7 +13,7 @@ namespace Winforms_platformer.Model
 
         public static void Start()
         {
-            random = Game.Map.Random;
+            random = new Random(Game.Map.seed);
             enemyTypes = new List<EnemyType>();
 
             enemyTypes.Add(EnemyType.Slime);

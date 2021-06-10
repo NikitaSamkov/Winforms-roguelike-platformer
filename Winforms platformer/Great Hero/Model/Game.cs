@@ -26,7 +26,7 @@ namespace Winforms_platformer.Model
         {
             Player = new Player(150, 150, new Collider(Res.Player.IdleSize, 0, 0,
                 new Collider(Res.Player.AttackRange, -10, 0)), null);
-            Map = new Map();
+            Map = new Map(1337);
             TreasurePool.SetRandom();
             RandomEnemyGenerator.Start();
             Map.SetRoomTemplates();
