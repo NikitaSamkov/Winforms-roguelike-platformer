@@ -26,7 +26,7 @@ namespace Winforms_platformer.Model
         {
             Player = new Player(150, 150, new Collider(Res.Player.IdleSize, 0, 0,
                 new Collider(Res.Player.AttackRange, -10, 0)), null);
-            Map = new Map(1337);
+            Map = new Map();
             TreasurePool.SetRandom();
             RandomEnemyGenerator.Start();
             Map.SetRoomTemplates();
@@ -81,6 +81,15 @@ namespace Winforms_platformer.Model
         {
             KeyBindings[Keys.Left] = () =>
             {
+                lastKey = Keys.Left;
+                Player.MoveTo(Direction.Left);
+                if (Player.status == Status.Attack)
+                    Player.status = Status.AttackMove;
+                if (Player.status != Status.AttackMove)
+                    Player.status = Status.Move;
+            };
+            KeyBindings[Keys.A] = () =>
+            {
                 lastKey = Keys.A;
                 Player.MoveTo(Direction.Left);
                 if (Player.status == Status.Attack)
@@ -88,9 +97,18 @@ namespace Winforms_platformer.Model
                 if (Player.status != Status.AttackMove)
                     Player.status = Status.Move;
             };
-            KeyBindings[Keys.A] = KeyBindings[Keys.Left];
 
             KeyBindings[Keys.Right] = () =>
+            {
+                lastKey = Keys.Right;
+                Player.MoveTo(Direction.Right);
+                if (Player.status == Status.Attack)
+                    Player.status = Status.AttackMove;
+                if (Player.status != Status.AttackMove)
+                    Player.status = Status.Move;
+            };
+
+            KeyBindings[Keys.D] = () =>
             {
                 lastKey = Keys.D;
                 Player.MoveTo(Direction.Right);
@@ -99,7 +117,6 @@ namespace Winforms_platformer.Model
                 if (Player.status != Status.AttackMove)
                     Player.status = Status.Move;
             };
-            KeyBindings[Keys.D] = KeyBindings[Keys.Right];
 
             KeyBindings[Keys.Up] = KeyBindings[Keys.Space] = () =>
             {
@@ -119,7 +136,7 @@ namespace Winforms_platformer.Model
             };
             KeyBindings[Keys.S] = KeyBindings[Keys.Down];
 
-            KeyBindings[Keys.M] = () => Console.WriteLine(Map.seed);
+            KeyBindings[Keys.K] = () => Console.WriteLine(Map.seed);
 
             KeyBindings[Keys.E] = () =>
             {
